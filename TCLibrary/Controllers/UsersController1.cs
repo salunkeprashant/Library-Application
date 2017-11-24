@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
+using TCLibrary.Model;
 
 namespace TCLibrary.Controllers
 {
@@ -33,9 +33,20 @@ namespace TCLibrary.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Create([FromBody]User user)
         {
+            var dbuser = new User();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            else {
+                dbuser.UserId = user.UserId;
+                dbuser.JoiningDate = user.JoiningDate;
+            }
+            return new NoContentResult();
         }
+
 
         // PUT api/values/5
         [HttpPut("{id}")]

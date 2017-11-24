@@ -9,13 +9,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace TCLibrary.Controllers
 {
     [Route("api/[controller]")]
-    public class AdminController1 : Controller
+    public class AdminController : Controller
     {
+        private readonly LibraryDataContext db;
+
+        public AdminController(LibraryDataContext context)
+        {
+            db = context;
+        }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IQueryable Get()
         {
-            return new string[] { "value1", "value2" };
+            return db.Admins;
         }
 
         // GET api/values/5

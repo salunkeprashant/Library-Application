@@ -38,5 +38,4 @@ dlldata.c
 [Nn]ode_modules
 
 # FrontEnd Build Artifacts
-[Ww]wwroot
-/TCLibrary/Touchcore/
+[Ww]swwroot

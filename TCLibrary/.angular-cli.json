@@ -1,12 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "touchcore"
+    "name": "Touchcore"
   },
   "apps": [
     {
       "root": "src",
-      "outDir": "./wwwroot",
+      "outDir": "wwwroot",
       "assets": [
         "assets",
         "library.png"

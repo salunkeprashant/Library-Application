@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TCLibrary.Model
 {
@@ -19,11 +20,14 @@ namespace TCLibrary.Model
 		}
 
 		/// <summary>Gets or sets the CategoryId field. </summary>
+        
 		public Nullable<System.Int32> CategoryId { get; set;}
 		/// <summary>Gets or sets the ItemDescription field. </summary>
 		public System.String ItemDescription { get; set;}
-		/// <summary>Gets or sets the ItemId field. </summary>
-		public System.Int32 ItemId { get; set;}
+        /// <summary>Gets or sets the ItemId field. </summary>
+
+        [Key]
+        public System.Int32 ItemId { get; set;}
 		/// <summary>Gets or sets the ItemName field. </summary>
 		public System.String ItemName { get; set;}
 		/// <summary>Gets or sets the Quantity field. </summary>

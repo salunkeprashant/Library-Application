@@ -38,4 +38,4 @@ dlldata.c
 [Nn]ode_modules
 
 # FrontEnd Build Artifacts
-[Ww]swwroot
+[Ww]wwroot

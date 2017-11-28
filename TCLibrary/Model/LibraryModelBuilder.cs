@@ -19,8 +19,8 @@ namespace TCLibrary
 			MapInventory(modelBuilder.Entity<Inventory>());
 			MapItemCategory(modelBuilder.Entity<ItemCategory>());
 			MapItemTransaction(modelBuilder.Entity<ItemTransaction>());
-			MapUser(modelBuilder.Entity<User>());
-			MapUserDetail(modelBuilder.Entity<UserDetail>());
+			MapMember(modelBuilder.Entity<Member>());
+            MapMemberDetail(modelBuilder.Entity<MemberDetail>());
 		}
 
 		protected virtual void MapAddress(EntityTypeBuilder<Address> config)
@@ -28,11 +28,11 @@ namespace TCLibrary
 			config.ToTable("Address");
 			config.HasKey(t => t.AddressId);
 			config.Property(t => t.AddressId).HasColumnName("AddressID").ValueGeneratedOnAdd();
-			config.Property(t => t.UserId).HasColumnName("UserId");
+			config.Property(t => t.MemberId).HasColumnName("MemberId");
 			config.Property(t => t.AddressLine).HasMaxLength(200);
 			config.Property(t => t.CityName).HasMaxLength(20);
 			config.Property(t => t.StateName).HasMaxLength(20);
-			config.HasOne(t => t.User).WithMany(t => t.Addresses).HasForeignKey(t => t.UserId).OnDelete(DeleteBehavior.Cascade);
+			config.HasOne(t => t.Members).WithMany(t => t.Addresses).HasForeignKey(t => t.MemberId).OnDelete(DeleteBehavior.Cascade);
 		}
 
 		protected virtual void MapAdmin(EntityTypeBuilder<Admin> config)
@@ -40,9 +40,9 @@ namespace TCLibrary
 			config.ToTable("Admins");
 			config.HasKey(t => t.AdminId);
 			config.Property(t => t.AdminId).HasColumnName("AdminID").ValueGeneratedOnAdd();
-			config.Property(t => t.AdminName).HasMaxLength(15);
-			config.Property(t => t.Username).HasMaxLength(30);
-			config.Property(t => t.Password).HasMaxLength(12);
+			//config.Property(t => t.AdminName).HasMaxLength(15);
+			//config.Property(t => t.Username).HasMaxLength(30);
+			//config.Property(t => t.Password).HasMaxLength(12);
 		}
 
 		protected virtual void MapAuthor(EntityTypeBuilder<Author> config)
@@ -84,13 +84,13 @@ namespace TCLibrary
 			config.HasKey(t => t.TransactionId);
 			config.Property(t => t.TransactionId).HasColumnName("TransactionID").ValueGeneratedOnAdd();
 			config.Property(t => t.AdminId).HasColumnName("AdminID");
-			config.Property(t => t.UserId).HasColumnName("UserId");
+			config.Property(t => t.MemberId).HasColumnName("MemberId");
 			config.Property(t => t.BookId).HasColumnName("BookID");
 			config.Property(t => t.IssueDate);
 			config.Property(t => t.ReturnDate);
 			config.HasOne(t => t.Admin).WithMany(t => t.BookTransactions).HasForeignKey(t => t.AdminId);
 			config.HasOne(t => t.Book).WithMany(t => t.BookTransactions).HasForeignKey(t => t.BookId);
-			config.HasOne(t => t.User).WithMany(t => t.BookTransactions).HasForeignKey(t => t.UserId);
+			config.HasOne(t => t.Members).WithMany(t => t.BookTransactions).HasForeignKey(t => t.MemberId);
 		}
 
 		protected virtual void MapContactDetail(EntityTypeBuilder<ContactDetail> config)
@@ -98,10 +98,10 @@ namespace TCLibrary
 			config.ToTable("ContactDetails");
 			config.HasKey(t => t.Id);
 			config.Property(t => t.Id).HasColumnName("ID").ValueGeneratedOnAdd();
-			config.Property(t => t.UserId).HasColumnName("UserId");
+			config.Property(t => t.MemberId).HasColumnName("MemberId");
 			config.Property(t => t.MobileNo);
 			config.Property(t => t.EmailAddress).HasMaxLength(30);
-			config.HasOne(t => t.User).WithMany(t => t.ContactDetails).HasForeignKey(t => t.UserId).OnDelete(DeleteBehavior.Cascade);
+			config.HasOne(t => t.Members).WithMany(t => t.ContactDetails).HasForeignKey(t => t.MemberId).OnDelete(DeleteBehavior.Cascade);
 		}
 
 		protected virtual void MapInventory(EntityTypeBuilder<Inventory> config)
@@ -130,32 +130,32 @@ namespace TCLibrary
 			config.HasKey(t => t.TransactionId);
 			config.Property(t => t.TransactionId).HasColumnName("TransactionID").ValueGeneratedOnAdd();
 			config.Property(t => t.AdminId).HasColumnName("AdminID");
-			config.Property(t => t.UserId).HasColumnName("UserId");
+			config.Property(t => t.MemberId).HasColumnName("MemberId");
 			config.Property(t => t.ItemId).HasColumnName("ItemID");
 			config.Property(t => t.IssueDate);
 			config.Property(t => t.ReturnDate);
 			config.HasOne(t => t.Admin).WithMany(t => t.ItemTransactions).HasForeignKey(t => t.AdminId);
 			config.HasOne(t => t.Inventory).WithMany(t => t.ItemTransactions).HasForeignKey(t => t.ItemId);
-			config.HasOne(t => t.User).WithMany(t => t.ItemTransactions).HasForeignKey(t => t.UserId);
+			config.HasOne(t => t.Members).WithMany(t => t.ItemTransactions).HasForeignKey(t => t.MemberId);
 		}
 
-		protected virtual void MapUser(EntityTypeBuilder<User> config)
+		protected virtual void MapMember(EntityTypeBuilder<Member> config)
 		{
-			config.ToTable("Users");
-			config.HasKey(t => t.UserId);
-			config.Property(t => t.UserId).HasColumnName("UserId").ValueGeneratedOnAdd();
+			config.ToTable("Members");
+			config.HasKey(t => t.MemberId);
+			config.Property(t => t.MemberId).HasColumnName("MemberId").ValueGeneratedOnAdd();
 			config.Property(t => t.JoiningDate);
 		}
 
-		protected virtual void MapUserDetail(EntityTypeBuilder<UserDetail> config)
+		protected virtual void MapMemberDetail(EntityTypeBuilder<MemberDetail> config)
 		{
-			config.ToTable("UserDetails");
+			config.ToTable("MemberDetails");
 			config.HasKey(t => t.Id);
 			config.Property(t => t.Id).HasColumnName("ID").ValueGeneratedOnAdd();
-			config.Property(t => t.UserId).HasColumnName("UserId");
+			config.Property(t => t.MemberId).HasColumnName("MemberId");
 			config.Property(t => t.FirstName).HasMaxLength(15);
 			config.Property(t => t.LastName).HasMaxLength(15);
-			config.HasOne(t => t.User).WithMany(t => t.UserDetails).HasForeignKey(t => t.UserId).OnDelete(DeleteBehavior.Cascade);
+			config.HasOne(t => t.Members).WithMany(t => t.MemberDetails).HasForeignKey(t => t.MemberId).OnDelete(DeleteBehavior.Cascade);
 		}
 	}
 

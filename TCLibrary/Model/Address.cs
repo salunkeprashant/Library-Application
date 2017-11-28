@@ -24,9 +24,9 @@ namespace TCLibrary.Model
 		public System.String CityName { get; set;}
 		/// <summary>Gets or sets the StateName field. </summary>
 		public System.String StateName { get; set;}
-		/// <summary>Gets or sets the UserId field. </summary>
-		public Nullable<System.Int32> UserId { get; set;}
-		/// <summary>Represents the navigator which is mapped onto the association 'Address.User - User.Addresses (m:1)'</summary>
-		public User User { get; set;}
+		/// <summary>Gets or sets the MemberId field. </summary>
+		public Nullable<System.Int32> MemberId { get; set;}
+		/// <summary>Represents the navigator which is mapped onto the association 'Address.Members - Members.Addresses (m:1)'</summary>
+		public Member Members { get; set;}
 	}
 }

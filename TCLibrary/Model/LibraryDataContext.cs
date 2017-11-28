@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using TCLibrary.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TCLibrary
 {
-	public partial class LibraryDataContext : DbContext
-	{
+	public partial class LibraryDataContext : IdentityDbContext<AppUser>
+    {
 
         public LibraryDataContext(DbContextOptions<LibraryDataContext> options)
             : base(options)
@@ -24,10 +25,6 @@ namespace TCLibrary
 			return base.SaveChanges();
 		}
 	
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
-		{
-			new LibraryModelBuilder().BuildModel(modelBuilder);
-		}
        
 
         public DbSet<Address> Addresses { get; set; } 
@@ -40,7 +37,7 @@ namespace TCLibrary
 		public DbSet<Inventory> Inventories { get; set; } 
 		public DbSet<ItemCategory> ItemCategories { get; set; } 
 		public DbSet<ItemTransaction> ItemTransactions { get; set; } 
-		public DbSet<User> Users { get; set; } 
-		public DbSet<UserDetail> UserDetails { get; set; } 
+		public DbSet<Member> Members { get; set; } 
+		public DbSet<MemberDetail> MembersDetails { get; set; } 
 	}
 }

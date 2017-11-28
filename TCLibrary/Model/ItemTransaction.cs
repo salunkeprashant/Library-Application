@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TCLibrary.Model
 {
@@ -25,15 +26,17 @@ namespace TCLibrary.Model
 		public Nullable<System.Int32> ItemId { get; set;}
 		/// <summary>Gets or sets the ReturnDate field. </summary>
 		public Nullable<System.DateTime> ReturnDate { get; set;}
-		/// <summary>Gets or sets the TransactionId field. </summary>
-		public System.Int32 TransactionId { get; set;}
-		/// <summary>Gets or sets the UserId field. </summary>
-		public Nullable<System.Int32> UserId { get; set;}
+        /// <summary>Gets or sets the TransactionId field. </summary>
+
+        [Key]
+        public System.Int32 TransactionId { get; set;}
+		/// <summary>Gets or sets the MemberId field. </summary>
+		public Nullable<System.Int32> MemberId { get; set;}
 		/// <summary>Represents the navigator which is mapped onto the association 'ItemTransaction.Admin - Admin.ItemTransactions (m:1)'</summary>
 		public Admin Admin { get; set;}
 		/// <summary>Represents the navigator which is mapped onto the association 'ItemTransaction.Inventory - Inventory.ItemTransactions (m:1)'</summary>
 		public Inventory Inventory { get; set;}
 		/// <summary>Represents the navigator which is mapped onto the association 'ItemTransaction.User - User.ItemTransactions (m:1)'</summary>
-		public User User { get; set;}
+		public Member Members { get; set;}
 	}
 }

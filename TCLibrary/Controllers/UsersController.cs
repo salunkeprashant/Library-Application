@@ -21,30 +21,34 @@ namespace TCLibrary.Controllers
         [HttpGet]
         public IQueryable Get()
         {
-            return db.Users;
+            return db.Members;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public IQueryable Get(int id)
         {
-            return db.Users.Where(x=>x.UserId ==id);
+            return db.Members.Where(x => x.MemberId == id);
         }
 
         // POST api/values
         [HttpPost]
-        public IActionResult Create([FromBody]User user)
+        public IActionResult Create([FromBody]Member model)
         {
-            var dbuser = new User();
-            if (!ModelState.IsValid)
+            //var dbuser = new User();
+
+            if (model == null)
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
-            else {
-                dbuser.UserId = user.UserId;
-                dbuser.JoiningDate = user.JoiningDate;
-            }
-            return new NoContentResult();
+            //dbuser.MemberId = user.MemberId;
+            //dbuser.JoiningDate = user.JoiningDate;
+
+            db.Members.Add(model);
+
+            db.SaveChanges();
+
+            return CreatedAtRoute("User Create", new { id = model.MemberId }, model);
         }
 
 

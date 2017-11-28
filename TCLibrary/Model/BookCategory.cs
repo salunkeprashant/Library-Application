@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TCLibrary.Model
 {
@@ -18,7 +19,9 @@ namespace TCLibrary.Model
 			OnCreated();
 		}
 
+
 		/// <summary>Gets or sets the CategoryId field. </summary>
+        [Key]
 		public System.Int32 CategoryId { get; set;}
 		/// <summary>Gets or sets the CategoryName field. </summary>
 		public System.String CategoryName { get; set;}

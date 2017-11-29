@@ -32,8 +32,6 @@ namespace TCLibrary.Model
         public List<BookTransaction> BookTransactions { get; set;}
 		/// <summary>Represents the navigator which is mapped onto the association 'ItemTransaction.Admin - Admin.ItemTransactions (m:1)'</summary>
 		public List<ItemTransaction> ItemTransactions { get; set;}
-        public string Email { get; set; }
-        public byte[] Password { get; set; }
-        public byte[] pssalt { get; internal set; }
+     
     }
 }

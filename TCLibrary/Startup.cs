@@ -38,7 +38,7 @@ namespace TCLibrary
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            
+
             string path = (Directory.GetCurrentDirectory()) + "\\TCLibrary.sqlite";
             var connection = "Data Source=" + path;
             services.AddDbContext<LibraryDataContext>(options => options.UseSqlite((connection),
@@ -46,13 +46,14 @@ namespace TCLibrary
 
             services.AddSingleton<IJwtFactory, JwtFactory>();
 
-            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            var jwtIssuer = Configuration.GetSection("JwtIssuerOptions").GetSection("Issuer").Value;
+            var jwtAudience = Configuration.GetSection("JwtIssuerOptions").GetSection("Audience").Value;
 
             // Configure JwtIssuerOptions
             services.Configure<JwtIssuerOptions>(options =>
             {
-                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
-                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                options.Issuer = jwtIssuer;
+                options.Audience = jwtAudience;
                 options.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             });
 
@@ -62,7 +63,16 @@ namespace TCLibrary
                 options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
             });
 
-            services.AddIdentity<AppUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>
+                (o =>
+                {
+                    // configure identity options
+                    o.Password.RequireDigit = false;
+                    o.Password.RequireLowercase = false;
+                    o.Password.RequireUppercase = false;
+                    o.Password.RequireNonAlphanumeric = false;
+                    o.Password.RequiredLength = 6;
+                })
                 .AddEntityFrameworkStores<LibraryDataContext>()
                 .AddDefaultTokenProviders();
 
@@ -95,14 +105,16 @@ namespace TCLibrary
                   });
             });
 
-            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            var jwtIssuer = Configuration.GetSection("JwtIssuerOptions").GetSection("Issuer").Value;
+            var jwtAudience = Configuration.GetSection("JwtIssuerOptions").GetSection("Audience").Value;
+
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
-                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+                ValidIssuer = jwtIssuer,
 
                 ValidateAudience = true,
-                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+                ValidAudience = jwtAudience,
 
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
@@ -134,6 +146,7 @@ namespace TCLibrary
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
+            //app.UseMvc();
             //DBinitialize.EnsureCreated(app.ApplicationServices);
         }
     }

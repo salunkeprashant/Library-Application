@@ -53,7 +53,7 @@ namespace TCLibrary.Controllers
 
         // POST api/accounts
 
-        [Route("api/accouts")]
+        [Route("api/accounts")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]RegistrationViewModel model)
         {

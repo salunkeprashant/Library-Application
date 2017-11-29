@@ -1,0 +1,29 @@
+ <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#">Touchcore Librar</a>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+      
+        <ul *ngIf="status" class="navbar-nav mr-auto">
+          <li class="nav-item">
+           	<a class="nav-link" (click)="logout()" href="#">Logoff</a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="/dashboard">Dashboard</a> 
+          </li>         
+        </ul>
+
+      <ul *ngIf="!status" class="nav navbar-nav navbar-right">
+			<li class="nav-item">
+				<a class="nav-link"  routerLinkActive="active" routerLink="/register">Sign Up</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" routerLinkActive="active" routerLink="/login">Login</a>
+			</li>
+		  </ul> 
+      </div>
+    </nav>
+
+
+ 

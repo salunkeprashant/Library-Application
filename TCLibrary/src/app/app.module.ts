@@ -1,49 +1,42 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms'; 
+import { HttpModule, XHRBackend } from '@angular/http';
+import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 
-// used to create fake backend
-import { MockBackend, MockConnection } from '@angular/http/testing';
-import { BaseRequestOptions } from '@angular/http';
-
-import { AppComponent } from '../component/app.component';
 import { routing } from './app.routing';
 
-import { fakeBackendProvider } from '../helper/index';
-import { AlertComponent } from '../component/alert.component';
-import { AuthGuard } from '../guards/index';
-import { AlertService, AuthenticationService, UserService } from '../services/index';
-import { HomeComponent } from '../component/home.component';
-import { LoginComponent } from '../component/login.component';
-import { RegisterComponent } from '../register/index';
+/* App Root */
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home/home.component';
+
+/* Account Imports */
+import { AccountModule }  from './account/account.module';
+/* Dashboard Imports */
+import { DashboardModule }  from './dashboard/dashboard.module';
+
+import { ConfigService } from './shared/utils/config.service';
+
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        FormsModule,
-        HttpModule,
-        routing
-    ],
-    declarations: [
-        AppComponent,
-        AlertComponent,
-        HomeComponent,
-        LoginComponent,
-        RegisterComponent
-    ],
-    providers: [
-        AuthGuard,
-        AlertService,
-        AuthenticationService,
-        UserService,
-
-        // providers used to create fake backend
-        fakeBackendProvider,
-        MockBackend,
-        BaseRequestOptions
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    HomeComponent
+  ],
+  imports: [
+    AccountModule,
+    DashboardModule,
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    routing
+  ],
+  providers: [ConfigService, { 
+    provide: XHRBackend, 
+    useClass: AuthenticateXHRBackend
+  }],
+  bootstrap: [AppComponent]
 })
-
 export class AppModule { }

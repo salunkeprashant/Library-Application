@@ -6,6 +6,7 @@ import { SharedModule }       from '../shared/modules/shared.module';
 import { routing }  from './dashboard.routing';
 import { RootComponent } from './root/root.component';
 import { HomeComponent } from './home/home.component';
+import { BookComponent } from './book/book.component';
 import { DashboardService } from './services/dashboard.service';
 
 import { AuthGuard } from '../auth.guard';
@@ -16,7 +17,7 @@ import { AuthGuard } from '../auth.guard';
     FormsModule,
     routing,
     SharedModule],
-  declarations: [RootComponent,HomeComponent],
+  declarations: [RootComponent,HomeComponent,BookComponent],
   exports:      [ ],
   providers:    [AuthGuard,DashboardService]
 })

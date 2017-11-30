@@ -3,6 +3,7 @@ import { RouterModule }        from '@angular/router';
 
 import { RootComponent }    from './root/root.component';
 import { HomeComponent }    from './home/home.component'; 
+import { BookComponent } from './book/book.component'; 
 
 import { AuthGuard } from '../auth.guard';
 
@@ -13,7 +14,8 @@ export const routing: ModuleWithProviders = RouterModule.forChild([
 
       children: [      
        { path: '', component: HomeComponent },
-       { path: 'home',  component: HomeComponent },
+       { path: 'home', component: HomeComponent },
+       { path: 'book', component: BookComponent },
       ]       
     }  
 ]);

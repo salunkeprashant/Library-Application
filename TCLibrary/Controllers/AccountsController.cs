@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TCLibrary.Model;
 using Microsoft.AspNetCore.Identity;
-using AutoMapper;
 using TCLibrary.Helpers;
 using TCLibrary.AccountModels;
 using Microsoft.Extensions.Logging;
@@ -13,12 +10,13 @@ using Newtonsoft.Json;
 using TCLibrary.Auth;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
+using TCLibrary.Data;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TCLibrary.Controllers
 {
-   
+
     public class AccountsController : Controller
     {
         private readonly LibraryDataContext appDbContext;

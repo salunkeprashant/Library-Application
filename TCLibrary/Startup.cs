@@ -15,6 +15,7 @@ using TCLibrary.Helpers;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using TCLibrary.Data;
 
 namespace TCLibrary
 {
@@ -86,7 +87,6 @@ namespace TCLibrary
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-
             app.UseExceptionHandler(
             builder =>
             {
@@ -94,7 +94,7 @@ namespace TCLibrary
                   async context =>
                   {
                       context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                      context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                      // context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
 
                       var error = context.Features.Get<IExceptionHandlerFeature>();
                       if (error != null)

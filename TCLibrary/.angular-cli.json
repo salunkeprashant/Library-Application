@@ -8,8 +8,8 @@
       "root": "src",
       "outDir": "wwwroot",
       "assets": [
-        "assets",
-        "library.png"
+        "resources/library.png",
+        "resources/BgLibrary.png"
       ],
       "index": "index.html",
       "main": "main.ts",

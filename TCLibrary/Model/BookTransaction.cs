@@ -22,8 +22,8 @@ namespace TCLibrary.Model
         /// <summary>Gets or sets the AdminId field. </summary>
         [Key]
         public Nullable<System.Int32> AdminId { get; set;}
-		/// <summary>Gets or sets the BookId field. </summary>
-		public Nullable<System.Int32> BookId { get; set;}
+		/// <summary>Gets or sets the ISBN field. </summary>
+		public Nullable<System.Int32> ISBN { get; set;}
 		/// <summary>Gets or sets the IssueDate field. </summary>
 		public Nullable<System.DateTime> IssueDate { get; set;}
 		/// <summary>Gets or sets the ReturnDate field. </summary>

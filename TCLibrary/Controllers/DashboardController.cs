@@ -23,5 +23,11 @@ namespace TCLibrary.Controllers
         {
             return new OkObjectResult(new { Message = "Prashant - You are Authorise " });
         }
+
+        [HttpGet("book")]
+        public IActionResult Book()
+        {
+            return new OkObjectResult(new { Message = "Prashant Salunke - You are Authorise " });
+        }
     }
 }

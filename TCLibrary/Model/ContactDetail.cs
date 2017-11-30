@@ -18,13 +18,13 @@ namespace TCLibrary.Model
 		}
 
 		/// <summary>Gets or sets the EmailAddress field. </summary>
-		public System.String EmailAddress { get; set;}
+		public string EmailAddress { get; set;}
 		/// <summary>Gets or sets the Id field. </summary>
-		public System.Int32 Id { get; set;}
+		public int Id { get; set;}
 		/// <summary>Gets or sets the MobileNo field. </summary>
 		public Nullable<System.Int64> MobileNo { get; set;}
 		/// <summary>Gets or sets the MemberId field. </summary>
-		public Nullable<System.Int32> MemberId { get; set;}
+		public int? MemberId { get; set;}
 		/// <summary>Represents the navigator which is mapped onto the association 'ContactDetail.User - User.ContactDetails (m:1)'</summary>
 		public Member Members { get; set;}
 	}

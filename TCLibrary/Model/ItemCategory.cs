@@ -21,9 +21,9 @@ namespace TCLibrary.Model
 
         /// <summary>Gets or sets the CategoryId field. </summary>
         [Key]
-        public System.Int32 CategoryId { get; set;}
+        public int CategoryId { get; set;}
 		/// <summary>Gets or sets the CategoryName field. </summary>
-		public System.String CategoryName { get; set;}
+		public string CategoryName { get; set;}
 		/// <summary>Represents the navigator which is mapped onto the association 'Inventory.ItemCategory - ItemCategory.Inventories (m:1)'</summary>
 		public List<Inventory> Inventories { get; set;}
 	}

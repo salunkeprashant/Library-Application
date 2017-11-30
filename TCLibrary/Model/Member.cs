@@ -23,9 +23,9 @@ namespace TCLibrary.Model
 		}
 
 		/// <summary>Gets or sets the JoiningDate field. </summary>
-		public Nullable<System.DateTime> JoiningDate { get; set;}
+		public DateTime? JoiningDate { get; set;}
 		/// <summary>Gets or sets the MemberId field. </summary>
-		public System.Int32 MemberId { get; set;}
+		public int MemberId { get; set;}
 		/// <summary>Represents the navigator which is mapped onto the association 'Address.Members - Members.Addresses (m:1)'</summary>
 		public List<Address> Addresses { get; set;}
 		/// <summary>Represents the navigator which is mapped onto the association 'BookTransaction.Members - Members.BookTransactions (m:1)'</summary>

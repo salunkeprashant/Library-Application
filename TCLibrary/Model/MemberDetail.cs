@@ -18,13 +18,13 @@ namespace TCLibrary.Model
 		}
 
 		/// <summary>Gets or sets the FirstName field. </summary>
-		public System.String FirstName { get; set;}
+		public string FirstName { get; set;}
 		/// <summary>Gets or sets the Id field. </summary>
-		public System.Int32 Id { get; set;}
+		public int Id { get; set;}
 		/// <summary>Gets or sets the LastName field. </summary>
-		public System.String LastName { get; set;}
+		public string LastName { get; set;}
 		/// <summary>Gets or sets the MemberId field. </summary>
-		public Nullable<System.Int32> MemberId { get; set;}
+		public int? MemberId { get; set;}
 		/// <summary>Represents the navigator which is mapped onto the association 'UserDetail.User - User.UserDetails (m:1)'</summary>
 		public Member Members { get; set;}
 	}

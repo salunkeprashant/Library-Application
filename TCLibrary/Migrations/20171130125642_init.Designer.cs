@@ -8,8 +8,8 @@ using TCLibrary.Data;
 namespace TCLibrary.Migrations
 {
     [DbContext(typeof(LibraryDataContext))]
-    [Migration("20171130090516_Init")]
-    partial class Init
+    [Migration("20171130125642_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -211,12 +211,12 @@ namespace TCLibrary.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.Author", b =>
+            modelBuilder.Entity("TCLibrary.Model.Authors", b =>
                 {
                     b.Property<int>("AuthorId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AuthorName");
+                    b.Property<string>("Author");
 
                     b.Property<string>("BookPublished");
 
@@ -230,10 +230,6 @@ namespace TCLibrary.Migrations
                     b.Property<int>("ISBN")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AuthorId");
-
-                    b.Property<string>("BookName");
-
                     b.Property<int?>("CategoryId");
 
                     b.Property<string>("Pages");
@@ -242,15 +238,33 @@ namespace TCLibrary.Migrations
 
                     b.Property<decimal?>("Ratings");
 
+                    b.Property<string>("Title");
+
                     b.Property<string>("YearOfPublish");
 
                     b.HasKey("ISBN");
 
-                    b.HasIndex("AuthorId");
-
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("TCLibrary.Model.BookAuthor", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AuthorId");
+
+                    b.Property<int?>("ISBN");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("ISBN");
+
+                    b.ToTable("BookAuthors");
                 });
 
             modelBuilder.Entity("TCLibrary.Model.BookCategory", b =>
@@ -270,9 +284,7 @@ namespace TCLibrary.Migrations
                     b.Property<int>("BookId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("BookMetadataBookId");
-
-                    b.Property<int>("ISBN");
+                    b.Property<int?>("ISBN");
 
                     b.Property<DateTime?>("IsuueTimestamp");
 
@@ -282,11 +294,9 @@ namespace TCLibrary.Migrations
 
                     b.HasKey("BookId");
 
-                    b.HasIndex("BookMetadataBookId");
-
                     b.HasIndex("ISBN");
 
-                    b.ToTable("BookMetadata");
+                    b.ToTable("BookMetadatas");
                 });
 
             modelBuilder.Entity("TCLibrary.Model.BookTransaction", b =>
@@ -374,7 +384,7 @@ namespace TCLibrary.Migrations
 
                     b.HasIndex("InventoryId");
 
-                    b.ToTable("InventoryMetadata");
+                    b.ToTable("InventoryMetadatas");
                 });
 
             modelBuilder.Entity("TCLibrary.Model.ItemCategory", b =>
@@ -502,25 +512,27 @@ namespace TCLibrary.Migrations
 
             modelBuilder.Entity("TCLibrary.Model.Book", b =>
                 {
-                    b.HasOne("TCLibrary.Model.Author", "Author")
-                        .WithMany("Books")
-                        .HasForeignKey("AuthorId");
-
                     b.HasOne("TCLibrary.Model.BookCategory", "BookCategory")
                         .WithMany("Books")
                         .HasForeignKey("CategoryId");
                 });
 
+            modelBuilder.Entity("TCLibrary.Model.BookAuthor", b =>
+                {
+                    b.HasOne("TCLibrary.Model.Authors", "Authors")
+                        .WithMany("BookAuthors")
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("TCLibrary.Model.Book", "Books")
+                        .WithMany("BookAuthor")
+                        .HasForeignKey("ISBN");
+                });
+
             modelBuilder.Entity("TCLibrary.Model.BookMetadata", b =>
                 {
-                    b.HasOne("TCLibrary.Model.BookMetadata")
-                        .WithMany("BookMetadatas")
-                        .HasForeignKey("BookMetadataBookId");
-
                     b.HasOne("TCLibrary.Model.Book", "books")
                         .WithMany("BokkMetadatas")
-                        .HasForeignKey("ISBN")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ISBN");
                 });
 
             modelBuilder.Entity("TCLibrary.Model.BookTransaction", b =>

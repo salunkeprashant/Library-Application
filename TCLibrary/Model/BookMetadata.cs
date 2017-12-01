@@ -20,11 +20,10 @@ namespace TCLibrary.Model
 
         [Key]
         public int BookId { get; set; }
-        public int ISBN { get; set; }
+        public int? ISBN { get; set; }
         public string Status { get; set; }
         public DateTime? IsuueTimestamp { get; set; }
         public DateTime? ReturnTimestamp { get; set; }
         public Book books { get; set; }
-        public List<BookMetadata> BookMetadatas { get; set; }
     }
 }

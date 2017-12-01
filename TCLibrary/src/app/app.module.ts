@@ -12,7 +12,8 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 
 /* Account Imports */
-import { AccountModule }  from './account/account.module';
+import { AccountModule } from './account/account.module';
+
 /* Dashboard Imports */
 import { DashboardModule }  from './dashboard/dashboard.module';
 
@@ -23,9 +24,9 @@ import { ConfigService } from './shared/utils/config.service';
   declarations: [
     AppComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
   ],
-  imports: [
+    imports: [
     AccountModule,
     DashboardModule,
     BrowserModule,

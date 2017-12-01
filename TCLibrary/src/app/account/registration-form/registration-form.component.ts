@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserRegistration } from '../../shared/models/user.registration.interface';
+import { IUserRegistration } from '../../shared/models/user.registration.interface';
 import { UserService } from '../../shared/services/user.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class RegistrationFormComponent implements OnInit {
 
     }
 
-    registerUser({ value, valid }: { value: UserRegistration, valid: boolean }) {
+    registerUser({ value, valid }: { value: IUserRegistration, valid: boolean }) {
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';

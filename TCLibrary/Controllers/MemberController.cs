@@ -11,25 +11,25 @@ namespace TCLibrary.Controllers
     [Route("api/[controller]")]
     public class MemberController : Controller
     {
-        private readonly LibraryDataContext db;
+        private readonly LibraryDataContext appDbContext;
 
         public MemberController(LibraryDataContext context)
         {
-            db = context;
+            appDbContext = context;
         }
 
         // GET: api/values
         [HttpGet]
         public IQueryable Get()
         {
-            return db.Members;
+            return appDbContext.Members;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public IQueryable Get(int id)
         {
-            return db.Members.Where(x => x.MemberId == id);
+            return appDbContext.Members.Where(x => x.MemberId == id);
         }
 
         // POST api/values
@@ -45,9 +45,9 @@ namespace TCLibrary.Controllers
             //dbuser.MemberId = user.MemberId;
             //dbuser.JoiningDate = user.JoiningDate;
 
-            db.Members.Add(model);
+            appDbContext.Members.Add(model);
 
-            db.SaveChanges();
+            appDbContext.SaveChanges();
 
             return CreatedAtRoute("User Create", new { id = model.MemberId }, model);
         }

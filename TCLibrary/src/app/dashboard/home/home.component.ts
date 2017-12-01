@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { HomeDetails } from '../models/home.details.interface';
+import { IHomeDetails } from '../models/home.details.interface';
 import { DashboardService } from '../services/dashboard.service';
 
 
@@ -10,14 +10,14 @@ import { DashboardService } from '../services/dashboard.service';
 })
 export class HomeComponent implements OnInit {
 
-    homeDetails: HomeDetails;
+    homeDetails: IHomeDetails;
 
     constructor(private dashboardService: DashboardService) { }
 
     ngOnInit() {
 
         this.dashboardService.getHomeDetails()
-            .subscribe((homeDetails: HomeDetails) => {
+            .subscribe((homeDetails: IHomeDetails) => {
                 this.homeDetails = homeDetails;
             },
             error => {

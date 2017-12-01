@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TCLibrary.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -67,7 +67,7 @@ namespace TCLibrary.Migrations
                 {
                     AuthorId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    AuthorName = table.Column<string>(nullable: true),
+                    Author = table.Column<string>(nullable: true),
                     BookPublished = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -227,23 +227,16 @@ namespace TCLibrary.Migrations
                 {
                     ISBN = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    AuthorId = table.Column<int>(nullable: true),
-                    BookName = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: true),
                     Pages = table.Column<string>(nullable: true),
                     Quantity = table.Column<string>(nullable: true),
                     Ratings = table.Column<decimal>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
                     YearOfPublish = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Books", x => x.ISBN);
-                    table.ForeignKey(
-                        name: "FK_Books_Authors_AuthorId",
-                        column: x => x.AuthorId,
-                        principalTable: "Authors",
-                        principalColumn: "AuthorId",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Books_BookCategories_CategoryId",
                         column: x => x.CategoryId,
@@ -338,36 +331,55 @@ namespace TCLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BookMetadata",
+                name: "BookAuthors",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    AuthorId = table.Column<int>(nullable: true),
+                    ISBN = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookAuthors", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_BookAuthors_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
+                        principalColumn: "AuthorId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_BookAuthors_Books_ISBN",
+                        column: x => x.ISBN,
+                        principalTable: "Books",
+                        principalColumn: "ISBN",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookMetadatas",
                 columns: table => new
                 {
                     BookId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    BookMetadataBookId = table.Column<int>(nullable: true),
-                    ISBN = table.Column<int>(nullable: false),
+                    ISBN = table.Column<int>(nullable: true),
                     IsuueTimestamp = table.Column<DateTime>(nullable: true),
                     ReturnTimestamp = table.Column<DateTime>(nullable: true),
                     Status = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookMetadata", x => x.BookId);
+                    table.PrimaryKey("PK_BookMetadatas", x => x.BookId);
                     table.ForeignKey(
-                        name: "FK_BookMetadata_BookMetadata_BookMetadataBookId",
-                        column: x => x.BookMetadataBookId,
-                        principalTable: "BookMetadata",
-                        principalColumn: "BookId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_BookMetadata_Books_ISBN",
+                        name: "FK_BookMetadatas_Books_ISBN",
                         column: x => x.ISBN,
                         principalTable: "Books",
                         principalColumn: "ISBN",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "InventoryMetadata",
+                name: "InventoryMetadatas",
                 columns: table => new
                 {
                     ItemId = table.Column<int>(nullable: false)
@@ -380,9 +392,9 @@ namespace TCLibrary.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InventoryMetadata", x => x.ItemId);
+                    table.PrimaryKey("PK_InventoryMetadatas", x => x.ItemId);
                     table.ForeignKey(
-                        name: "FK_InventoryMetadata_Inventories_InventoryId",
+                        name: "FK_InventoryMetadatas_Inventories_InventoryId",
                         column: x => x.InventoryId,
                         principalTable: "Inventories",
                         principalColumn: "InventoryId",
@@ -418,9 +430,9 @@ namespace TCLibrary.Migrations
                         principalColumn: "ISBN",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_BookTransactions_BookMetadata_BookId",
+                        name: "FK_BookTransactions_BookMetadatas_BookId",
                         column: x => x.BookId,
-                        principalTable: "BookMetadata",
+                        principalTable: "BookMetadatas",
                         principalColumn: "BookId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -460,9 +472,9 @@ namespace TCLibrary.Migrations
                         principalColumn: "InventoryId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ItemTransactions_InventoryMetadata_ItemId",
+                        name: "FK_ItemTransactions_InventoryMetadatas_ItemId",
                         column: x => x.ItemId,
-                        principalTable: "InventoryMetadata",
+                        principalTable: "InventoryMetadatas",
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -521,23 +533,23 @@ namespace TCLibrary.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Books_AuthorId",
-                table: "Books",
-                column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Books_CategoryId",
                 table: "Books",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookMetadata_BookMetadataBookId",
-                table: "BookMetadata",
-                column: "BookMetadataBookId");
+                name: "IX_BookAuthors_AuthorId",
+                table: "BookAuthors",
+                column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookMetadata_ISBN",
-                table: "BookMetadata",
+                name: "IX_BookAuthors_ISBN",
+                table: "BookAuthors",
+                column: "ISBN");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookMetadatas_ISBN",
+                table: "BookMetadatas",
                 column: "ISBN");
 
             migrationBuilder.CreateIndex(
@@ -571,8 +583,8 @@ namespace TCLibrary.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InventoryMetadata_InventoryId",
-                table: "InventoryMetadata",
+                name: "IX_InventoryMetadatas_InventoryId",
+                table: "InventoryMetadatas",
                 column: "InventoryId");
 
             migrationBuilder.CreateIndex(
@@ -622,6 +634,9 @@ namespace TCLibrary.Migrations
                 name: "Addresses");
 
             migrationBuilder.DropTable(
+                name: "BookAuthors");
+
+            migrationBuilder.DropTable(
                 name: "BookTransactions");
 
             migrationBuilder.DropTable(
@@ -637,13 +652,16 @@ namespace TCLibrary.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "BookMetadata");
+                name: "Authors");
+
+            migrationBuilder.DropTable(
+                name: "BookMetadatas");
 
             migrationBuilder.DropTable(
                 name: "Admins");
 
             migrationBuilder.DropTable(
-                name: "InventoryMetadata");
+                name: "InventoryMetadatas");
 
             migrationBuilder.DropTable(
                 name: "Members");
@@ -656,9 +674,6 @@ namespace TCLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "Inventories");
-
-            migrationBuilder.DropTable(
-                name: "Authors");
 
             migrationBuilder.DropTable(
                 name: "BookCategories");

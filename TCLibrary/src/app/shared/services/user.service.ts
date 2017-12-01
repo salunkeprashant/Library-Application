@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
-import { UserRegistration } from '../models/user.registration.interface';
+import { IUserRegistration } from '../models/user.registration.interface';
 import { ConfigService } from '../utils/config.service';
 
 import {BaseService} from "./base.service";
@@ -36,7 +36,7 @@ export class UserService extends BaseService {
     this.baseUrl = configService.getApiURI();
   }
 
-    register(email: string, password: string, firstName: string, lastName: string, confirmpassword: string): Observable<UserRegistration> {
+    register(email: string, password: string, firstName: string, lastName: string, confirmpassword: string): Observable<IUserRegistration> {
         let body = JSON.stringify({ email, password, firstName, lastName, confirmpassword });
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });

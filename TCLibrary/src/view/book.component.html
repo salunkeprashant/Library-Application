@@ -3,6 +3,7 @@
         <div class="col-md-9 col-md-offset-1">
             <button class="btn btn-primary" (click)='modalService.open(modalId)'>Add Book</button>
             <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
+
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -13,7 +14,6 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-
                 <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index">
                     <td>
                         {{a.isbn}}
@@ -35,15 +35,15 @@
 
 <app-modal [modalTitle]="'Add Book'" [blocking]='false' [modalId]='modalId'>
     <div class="card-block">
-        <form #f="ngForm" novalidate (ngSubmit)="addBook(f)">
+        <form #addbook="ngForm" novalidate (ngSubmit)="addBook(addbook)">
             <div class="form-group">
                 <label for="isbn">ISBN Number</label>
-                <input id="isbn" type="number" required name="isbn" class="form-control" placeholder="Enter Book ISBN Number" tmFocus ngModel>
+                <input id="isbn" type="text" required name="isbn" class="form-control" placeholder="Enter Book ISBN Number" tmFocus ngModel>
             </div>
 
             <div class="form-group">
                 <label for="BookId">Book Unique Id</label>
-                <input id="BookId" type="number" required name="BookId" class="form-control" placeholder="Enter Book Unique Id" ngModel>
+                <input id="bookId" type="text" required name="bookId" class="form-control" placeholder="Enter Book Unique Id" ngModel>
             </div>
 
             <div class="form-group">
@@ -58,11 +58,25 @@
 
             <div class="form-group">
                 <label for="Category">Category</label>
-                <select id="categoryId" #categoryId="ngModel" class="form-control" [(ngModel)]="cId" name="categoryId">
+                <!--<input id="categoryId" type="text" required name="categoryId" class="form-control" placeholder="Category ID" ngModel>-->
+                <select id="categoryId" #categoryId="ngModel" class="form-control" [(ngModel)]="cId" name="categoryId" ngModel>
                     <option [ngValue]="c.categoryId" *ngFor="let c of categoryList">
                         {{c.categoryName}}
                     </option>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="ratings">Ratings</label>
+                <input id="ratings" type="text" required name="ratings" class="form-control" placeholder="Enter Ratings of book" ngModel>
+            </div>
+
+            <div class="form-group">
+                <label for="yearofpublish">Year Of Publish</label>
+                <select id="yearofpublish" #yearofpublish="ngModel" class="form-control" [(ngModel)]="yy" name="yearofpublish" ngModel>
+                    <option *ngFor="let y of years" [selected]="yy === y ">{{y}}</option>
+                </select>
+                <!--<input id="rating" type="text" required name="rating" class="form-control" placeholder="Enter Ratings of book" ngModel>-->
             </div>
 
             <div class="form-group">
@@ -76,7 +90,7 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Submit</button>
+                <button type="submit" class="btn btn-primary" [disabled]="addbook.invalid || isRequesting">Submit</button>
                 <app-spinner [isRunning]="isRequesting"></app-spinner>
             </div>
             <div *ngIf="errors" class="alert alert-danger" role="alert">

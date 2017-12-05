@@ -66,8 +66,8 @@ export class DashboardService extends BaseService {
             .catch(this.handleError);
     }
 
-    AddBook(isbn: number, title: string, author: string, categoryId: number, bookId: number, pages: number, quantity: number): Observable<IBookDetails[]> {
-        let body = JSON.stringify({ isbn, title, author, categoryId, bookId, pages, quantity });
+    AddBook(isbn: number, title: string, author: string, categoryId: number, bookId: number, pages: number, quantity: number, ratings: number, yearofpublish: string): Observable<IBookDetails[]> {
+        let body = JSON.stringify({ isbn, title, author, categoryId, bookId, pages, quantity, ratings, yearofpublish});
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         let options = new RequestOptions({ headers: headers });

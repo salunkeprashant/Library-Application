@@ -14,7 +14,7 @@ using TCLibrary.ViewModels;
 
 namespace TCLibrary.Controllers
 {
-    [Authorize(Policy = "ApiUser")]
+   // [Authorize(Policy = "ApiUser")]
     [Route("api/[controller]")]
     public class DashboardController : Controller
     {
@@ -51,13 +51,13 @@ namespace TCLibrary.Controllers
 
 
             await appDbContext.Books.AddAsync(
-                new Book {Title=book.Title, ISBN = book.ISBN, CategoryId = book.CategoryId, Pages = book.Pages, Quantity = book.Quantity });
+                new Book {Title=book.Title, ISBN = book.ISBN, CategoryId = book.CategoryId, Pages = book.Pages, Quantity = book.Quantity, Ratings =book.Ratings,YearOfPublish = book.YearOfPublish });
 
             await appDbContext.Authors.AddAsync(
                   new Authors { Author = book.Author });
 
-            //await appDbContext.BookMetadatas.AddAsync(
-            //      new BookMetadata { BookId = book.BookId, ISBN = book.ISBN,Status = "Available" });
+            await appDbContext.BookMetadatas.AddAsync(
+                  new BookMetadata { BookId = book.BookId, ISBN = book.ISBN,Status = "Available" });
 
             //await appDbContext.BookAuthors.AddAsync(
             //    new BookAuthor { ISBN=book.ISBN});

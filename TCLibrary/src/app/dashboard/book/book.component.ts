@@ -24,12 +24,17 @@ export class BookComponent implements OnInit {
     errors: string;
     isRequesting: boolean;
     submitted: boolean = false;
-    saveSuccess : boolean = false;
+
+    saveSuccess: boolean = false;
+
+    private years: number[] = [];
+    private yy: number;
 
     constructor(private dashboardService: DashboardService, private userService: UserService,public modalService: ModalService) {
     }
 
     ngOnInit() {
+        this.getYear();
         this.getBooks();
         this.getCategoryList();
     }
@@ -50,12 +55,12 @@ export class BookComponent implements OnInit {
             )
     }
 
-    addBook({ value, valid }: { value: IBookDetails, valid: boolean }): void {
+    addBook({ value, valid }: { value: IBookDetails, valid: boolean }) {
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';
         if (valid) {
-            this.dashboardService.AddBook(value.isbn, value.title, value.author, value.categoryId, value.bookId, value.pages, value.quantity)
+            this.dashboardService.AddBook(value.isbn, value.title, value.author, value.categoryId, value.bookId, value.pages, value.quantity, value.ratings, value.yearofpublish)
                 .finally(() => this.isRequesting = false)
                 .subscribe(
                 result => {
@@ -64,6 +69,14 @@ export class BookComponent implements OnInit {
                     }
                 },
                 errors => this.errors = errors);
+        }
+    }
+
+    getYear() {
+        var today = new Date();
+        this.yy = today.getFullYear();
+        for (var i = (this.yy - 400); i <= this.yy; i++) {
+            this.years.push(i);
         }
     }
 }

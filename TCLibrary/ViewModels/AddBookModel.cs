@@ -14,5 +14,7 @@ namespace TCLibrary.ViewModels
         public string Pages { get; set; }
         public string Quantity { get; set; }
         public string Title { get; set; }
+        public decimal? Ratings { get; set; }
+        public string YearOfPublish { get; set; }
     }
 }

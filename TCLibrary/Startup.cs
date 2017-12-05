@@ -46,7 +46,6 @@ namespace TCLibrary
                 x => x.MigrationsAssembly("TCLibrary")));
 
             services.AddSingleton<IJwtFactory, JwtFactory>();
-
             var jwtIssuer = Configuration.GetSection("JwtIssuerOptions").GetSection("Issuer").Value;
             var jwtAudience = Configuration.GetSection("JwtIssuerOptions").GetSection("Audience").Value;
 
@@ -87,6 +86,7 @@ namespace TCLibrary
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+
             app.UseExceptionHandler(
             builder =>
             {
@@ -94,7 +94,7 @@ namespace TCLibrary
                   async context =>
                   {
                       context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                      context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                      context.Response.Headers.Add("Access-Control-Allow-Origin", "*" );
 
                       var error = context.Features.Get<IExceptionHandlerFeature>();
                       if (error != null)

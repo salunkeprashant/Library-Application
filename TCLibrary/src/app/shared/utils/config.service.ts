@@ -11,6 +11,14 @@ export class ConfigService {
  
      getApiURI() {
          return this._apiURI;
-     }    
+    }    
+    AuthHeader() {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let authToken = localStorage.getItem('auth_token');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        return headers;
+    }
 }
  

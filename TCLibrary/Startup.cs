@@ -94,7 +94,7 @@ namespace TCLibrary
                   async context =>
                   {
                       context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                      // context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                      context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
 
                       var error = context.Features.Get<IExceptionHandlerFeature>();
                       if (error != null)

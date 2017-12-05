@@ -1,50 +1,8 @@
 ﻿<div class="card">
     <div class="row">
         <div class="col-md-9 col-md-offset-1">
-
             <button class="btn btn-primary" (click)='modalService.open(modalId)'>Add Book</button>
-            <app-modal [modalTitle]="'Add Book'" [blocking]='false' [modalId]='modalId'>
-                <div class="card-block">
-                    <form #f="ngForm" novalidate (ngSubmit)="registerUser(f)">
-
-                        <div class="form-group">
-                            <label for="first-name">ISBN Number</label>
-                            <input id="first-name" type="text" required name="firstName" class="form-control" placeholder="Your first name" tmFocus ngModel>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Book Unique Id</label>
-                            <input id="email" type="text" required name="email" validateEmail class="form-control" placeholder="Email" ngModel #email="ngModel">
-                            <small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="last-name">Book Title</label>
-                            <input id="last-name" type="text" required name="lastName" class="form-control" placeholder="Your last name" ngModel>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="author">Author</label>
-                            <input id="author" type="text" required name="author" class="form-control" placeholder="Author Name" ngModel>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="pages">Pages</label>
-                            <input id="pages" type="text" required name="confirmpassword" class="form-control" placeholder="Confirm Password" ngModel>
-                        </div>
-
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Submit</button>
-                            <app-spinner [isRunning]="isRequesting"></app-spinner>
-                        </div>
-                        <div *ngIf="errors" class="alert alert-danger" role="alert">
-                            <strong>Oops!</strong> {{errors}}
-                        </div>
-                    </form>
-                </div>
-            </app-modal>
-
-            <input type="text" placeholder="Find Book here" class="input-lg form-control" />
+            <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -56,7 +14,7 @@
                     </tr>
                 </thead>
 
-                <tr *ngFor="let a of books">
+                <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index">
                     <td>
                         {{a.isbn}}
                     </td>
@@ -74,3 +32,59 @@
         </div>
     </div>
 </div>
+
+<app-modal [modalTitle]="'Add Book'" [blocking]='false' [modalId]='modalId'>
+    <div class="card-block">
+        <form #f="ngForm" novalidate (ngSubmit)="addBook(f)">
+            <div class="form-group">
+                <label for="isbn">ISBN Number</label>
+                <input id="isbn" type="number" required name="isbn" class="form-control" placeholder="Enter Book ISBN Number" tmFocus ngModel>
+            </div>
+
+            <div class="form-group">
+                <label for="BookId">Book Unique Id</label>
+                <input id="BookId" type="number" required name="BookId" class="form-control" placeholder="Enter Book Unique Id" ngModel>
+            </div>
+
+            <div class="form-group">
+                <label for="title">Book Title</label>
+                <input id="title" type="text" required name="title" class="form-control" placeholder="Book Title " ngModel>
+            </div>
+
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input id="author" type="text" required name="author" class="form-control" placeholder="Author Name" ngModel>
+            </div>
+
+            <div class="form-group">
+                <label for="Category">Category</label>
+                <select id="categoryId" #categoryId="ngModel" class="form-control" [(ngModel)]="cId" name="categoryId">
+                    <option [ngValue]="c.categoryId" *ngFor="let c of categoryList">
+                        {{c.categoryName}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="pages">Pages</label>
+                <input id="pages" type="text" required name="pages" class="form-control" placeholder="Enter Pages of Book" ngModel>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input id="quantity" type="text" required name="quantity" class="form-control" placeholder="Confirm Password" ngModel>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Submit</button>
+                <app-spinner [isRunning]="isRequesting"></app-spinner>
+            </div>
+            <div *ngIf="errors" class="alert alert-danger" role="alert">
+                <strong>Oops!</strong> {{errors}}
+            </div>
+            <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
+                <strong>Book Succesfullly saved...</strong>
+            </div>
+        </form>
+    </div>
+</app-modal>

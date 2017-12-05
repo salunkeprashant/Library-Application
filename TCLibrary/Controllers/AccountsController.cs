@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using TCLibrary.Model;
 using Microsoft.AspNetCore.Identity;
 using TCLibrary.Helpers;
-using TCLibrary.AccountModels;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using TCLibrary.Auth;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using TCLibrary.Data;
+using TCLibrary.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 

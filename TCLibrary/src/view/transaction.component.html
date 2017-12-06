@@ -31,10 +31,12 @@
                         {{a.author}}
                     </td>
                     <td>
-                        <span class="glyphicon glyphicon-log-in" (click)='modalService.open(modalId)'></span> &nbsp;&nbsp;
-                        <span class="glyphicon glyphicon-log-out" (click)='modalService.open(modalId)'></span>&nbsp;&nbsp;
-                        <span class="glyphicon glyphicon-edit" (click)='modalService.open(modalId)'></span>&nbsp;&nbsp;
-                        <span class="glyphicon glyphicon-floppy-remove" (click)='modalService.open(modalId)'></span>&nbsp;&nbsp;
+                        <div class="actions">
+                            <span class="glyphicon glyphicon-arrow-down" (click)='modalService.open(modalId)'></span> &nbsp;&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-arrow-up" (click)='modalService.open(modalId)'></span>&nbsp;&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-edit" (click)='modalService.open(modalId)'></span>&nbsp;&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-floppy-remove" (click)='modalService.open(modalId)'></span>&nbsp;&nbsp;&nbsp;
+                        </div>
                     </td>
                 </tr>
             </table>

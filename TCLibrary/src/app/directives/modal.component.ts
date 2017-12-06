@@ -1,7 +1,6 @@
 ﻿import { Component, Input, OnInit, HostListener } from '@angular/core';
 import { DashboardService } from '../dashboard/services/dashboard.service';
 import { ModalService } from '../dashboard/services/modal.service';
-
 @Component({
     selector: 'app-modal',
     styleUrls: ['../../css/modal.scss'],

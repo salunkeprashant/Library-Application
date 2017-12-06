@@ -11,6 +11,7 @@ import { BookComponent } from './book/book.component';
 import { MemberComponent } from './member/member.component';
 import { MemberRootComponent } from './root/member.root.component';
 import { ModalComponent } from '../directives/modal.component'
+import { TransactionComponent } from './transaction/transaction.component'
 
 import { EmailValidator } from '../directives/email.validator.directive';
 import { ModalService } from '../dashboard/services/modal.service'
@@ -30,6 +31,7 @@ import { AuthGuard } from '../auth.guard';
         RootComponent,
         HomeComponent,
         BookComponent,
+        TransactionComponent,
         MemberRootComponent,
         MemberComponent,
         FilterPipe

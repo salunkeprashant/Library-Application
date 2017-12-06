@@ -7,6 +7,7 @@ import { MemberRootComponent } from './root/member.root.component';
 import { HomeComponent } from './home/home.component';
 import { BookComponent } from './book/book.component';
 import { MemberComponent } from './member/member.component';
+import { TransactionComponent } from './transaction/transaction.component'
 
 import { AuthGuard } from '../auth.guard';
 
@@ -18,6 +19,7 @@ export const routing: ModuleWithProviders = RouterModule.forChild([
         children: [
             { path: '', component: HomeComponent },
             { path: 'home', component: HomeComponent },
+            { path: 'transaction', component: TransactionComponent },
             { path: 'book', component: BookComponent },
         ]
     },

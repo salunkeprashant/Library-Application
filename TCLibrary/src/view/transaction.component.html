@@ -1,0 +1,113 @@
+﻿<div class="card">
+    <div class="row">
+        <div class="col-md-9 col-md-offset-1">
+            <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
+            <br/>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>ISBN</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Author</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index">
+                    <td>
+                        {{a.isbn}}
+                    </td>
+                    <td>
+                        {{a.title}}
+                    </td>
+                    <td>
+                        {{a.categoryName}}
+                    </td>
+                    <td>
+                        {{a.author}}
+                    </td>
+                    <td>
+                        {{a.author}}
+                    </td>
+                    <td>
+                        <span class="glyphicon glyphicon-log-in" (click)='modalService.open(modalId)'></span> &nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-log-out" (click)='modalService.open(modalId)'></span>&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-edit" (click)='modalService.open(modalId)'></span>&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-floppy-remove" (click)='modalService.open(modalId)'></span>&nbsp;&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<app-modal [modalTitle]="'Add Book'" [blocking]='false' [modalId]='modalId'>
+    <div class="card-block">
+        <form #addbook="ngForm" novalidate (ngSubmit)="addBook(addbook)">
+            <div class="form-group">
+                <label for="isbn">ISBN Number</label>
+                <input id="isbn" type="text" required name="isbn" class="form-control" placeholder="Enter Book ISBN Number" tmFocus ngModel>
+            </div>
+
+            <div class="form-group">
+                <label for="BookId">Book Unique Id</label>
+                <input id="bookId" type="text" required name="bookId" class="form-control" placeholder="Enter Book Unique Id" ngModel>
+            </div>
+
+            <div class="form-group">
+                <label for="title">Book Title</label>
+                <input id="title" type="text" required name="title" class="form-control" placeholder="Book Title " ngModel>
+            </div>
+
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input id="author" type="text" required name="author" class="form-control" placeholder="Author Name" ngModel>
+            </div>
+
+            <div class="form-group">
+                <label for="Category">Category</label>
+                <!--<input id="categoryId" type="text" required name="categoryId" class="form-control" placeholder="Category ID" ngModel>-->
+                <select id="categoryId" #categoryId="ngModel" class="form-control" [(ngModel)]="cId" name="categoryId" ngModel>
+                    <option [ngValue]="c.categoryId" *ngFor="let c of categoryList">
+                        {{c.categoryName}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="ratings">Ratings</label>
+                <input id="ratings" type="text" required name="ratings" class="form-control" placeholder="Enter Ratings of book" ngModel>
+            </div>
+
+            <div class="form-group">
+                <label for="yearofpublish">Year Of Publish</label>
+                <select id="yearofpublish" #yearofpublish="ngModel" class="form-control" [(ngModel)]="yy" name="yearofpublish" ngModel>
+                    <option *ngFor="let y of years" [selected]="yy === y ">{{y}}</option>
+                </select>
+                <!--<input id="rating" type="text" required name="rating" class="form-control" placeholder="Enter Ratings of book" ngModel>-->
+            </div>
+
+            <div class="form-group">
+                <label for="pages">Pages</label>
+                <input id="pages" type="text" required name="pages" class="form-control" placeholder="Enter Pages of Book" ngModel>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input id="quantity" type="text" required name="quantity" class="form-control" placeholder="Confirm Password" ngModel>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" [disabled]="addbook.invalid || isRequesting">Submit</button>
+                <app-spinner [isRunning]="isRequesting"></app-spinner>
+            </div>
+            <div *ngIf="errors" class="alert alert-danger" role="alert">
+                <strong>Oops!</strong> {{errors}}
+            </div>
+            <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
+                <strong>Book Succesfullly saved...</strong>
+            </div>
+        </form>
+    </div>
+</app-modal>

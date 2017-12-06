@@ -10,7 +10,8 @@
       "assets": [
         "resources/library.png",
         "resources/BgLibrary.png",
-        "css/modal.scss"
+        "css/modal.scss",
+        "css/mystyle.scss"
       ],
       "index": "index.html",
       "main": "main.ts",

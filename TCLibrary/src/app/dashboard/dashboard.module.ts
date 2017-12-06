@@ -8,12 +8,14 @@ import { routing } from './dashboard.routing';
 import { RootComponent } from './root/root.component';
 import { HomeComponent } from './home/home.component';
 import { BookComponent } from './book/book.component';
+import { MemberComponent } from './member/member.component';
+import { MemberRootComponent } from './root/member.root.component';
 import { ModalComponent } from '../directives/modal.component'
+
+import { EmailValidator } from '../directives/email.validator.directive';
 import { ModalService } from '../dashboard/services/modal.service'
 import { FilterPipe} from '../dashboard/services/filterPipe'
-
 import { DashboardService } from './services/dashboard.service';
-
 import { AuthGuard } from '../auth.guard';
 
 @NgModule({
@@ -28,9 +30,11 @@ import { AuthGuard } from '../auth.guard';
         RootComponent,
         HomeComponent,
         BookComponent,
+        MemberRootComponent,
+        MemberComponent,
         FilterPipe
     ],
     exports: [ModalComponent, FilterPipe],
-    providers: [AuthGuard, DashboardService, ModalService]
+    providers: [AuthGuard, DashboardService, EmailValidator, ModalService]
 })
 export class DashboardModule { }

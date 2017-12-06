@@ -35,10 +35,25 @@ namespace TCLibrary.Controllers
         [HttpGet("book")]
         public IQueryable Book()
         {
-            return appDbContext.BookAuthors.Select(x => new { x.ISBN, x.Books.Title, x.Authors.Author });
+            var result = (from books in appDbContext.Books
+                         join bookAuthors in appDbContext.BookAuthors on books.ISBN equals bookAuthors.ISBN
+                         join author in appDbContext.Authors on bookAuthors.AuthorId equals author.AuthorId
+
+                         select new {
+                             books.ISBN,
+                             books.Title,
+                             books.BookCategory.CategoryName,
+                             author.Author,
+                             books.Ratings,
+                             books.Pages,
+                             books.YearOfPublish,
+                             books.Quantity
+                         });
+            return result;
+
+            //return appDbContext.BookAuthors.Select(x => new { x.ISBN, x.Books.Title, x.Authors.Author });
 
             // return new OkObjectResult(new { Message = "Prashant Salunke - You are Authorise " });
-
         }
 
         [HttpPost("addbook")]

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TCLibrary.Model;
 using TCLibrary.Data;
+using TCLibrary.ViewModels;
 
 namespace TCLibrary.Controllers
 {
@@ -22,7 +23,27 @@ namespace TCLibrary.Controllers
         [HttpGet]
         public IQueryable Get()
         {
-            return appDbContext.Members;
+            var result = (from members in appDbContext.Members
+                          join membersdetails in appDbContext.MembersDetails on members.MemberId equals membersdetails.MemberId
+                          join contactdetails in appDbContext.ContactDetails on members.MemberId equals contactdetails.MemberId
+                          join address in appDbContext.Addresses on members.MemberId equals address.MemberId
+
+                          select new
+                          {
+                              members.MemberId,
+                              members.JoiningDate,
+
+                              membersdetails.FirstName,
+                              membersdetails.LastName,
+
+                              contactdetails.EmailAddress,
+                              contactdetails.MobileNo,
+
+                              address.AddressLine,
+                              address.CityName,
+                              address.StateName,
+                          });
+            return result;
         }
 
         // GET api/values/5
@@ -34,22 +55,26 @@ namespace TCLibrary.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Create([FromBody]Member model)
+        public async Task<IActionResult> AddMember([FromBody]AddMemberModel model)
         {
-            //var dbuser = new User();
 
             if (model == null)
             {
                 return BadRequest();
             }
-            //dbuser.MemberId = user.MemberId;
-            //dbuser.JoiningDate = user.JoiningDate;
 
-            appDbContext.Members.Add(model);
+            await appDbContext.Members.AddAsync(new Member { MemberId = model.MemberId, JoiningDate = model.JoiningDate });
+
+            await appDbContext.MembersDetails.AddAsync(new MemberDetail { MemberId = model.MemberId, FirstName = model.FirstName, LastName = model.LastName });
+
+            await appDbContext.ContactDetails.AddAsync(new ContactDetail { MemberId = model.MemberId, EmailAddress = model.EmailAddress, MobileNo = model.MobileNo });
+
+            await appDbContext.Addresses.AddAsync(new Address { MemberId = model.MemberId, AddressLine = model.AddressLine, StateName = model.StateName });
 
             appDbContext.SaveChanges();
 
-            return CreatedAtRoute("User Create", new { id = model.MemberId }, model);
+
+            return new OkObjectResult("Done");
         }
 
 

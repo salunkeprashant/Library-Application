@@ -9,9 +9,12 @@
                     <tr>
                         <th>ISBN</th>
                         <th>Title</th>
+                        <th>Rating</th>
                         <th>Author</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>Category</th>
+                        <th>Pages</th>
+                        <th>Published Year</th>
+                        <th>Quantity</th>
                     </tr>
                 </thead>
                 <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index">
@@ -22,10 +25,22 @@
                         {{a.title}}
                     </td>
                     <td>
+                        {{a.ratings}}
+                    </td>
+                    <td>
                         {{a.author}}
                     </td>
                     <td>
-                        {{a.title}}
+                        {{a.categoryName}}
+                    </td>
+                    <td>
+                        {{a.pages}}
+                    </td>
+                    <td>
+                        {{a.yearOfPublish}}
+                    </td>
+                    <td>
+                        {{a.quantity}}
                     </td>
                 </tr>
             </table>

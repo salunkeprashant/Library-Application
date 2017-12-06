@@ -3,7 +3,8 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 
 import { IHomeDetails } from '../models/home.details.interface';
-import { IBookDetails } from '../models/book.details.interface'
+import { IBookDetails } from '../models/book.details.interface';
+import { IMemberDetails } from '../models/member.details.interface';
 import { IBookCategoryDetails } from '../models/bookcategory.details.inteface';
 
 import { ConfigService } from '../../shared/utils/config.service';
@@ -55,6 +56,17 @@ export class DashboardService extends BaseService {
             .catch(this.handleError);
     }
 
+    getMemberDetails(): Observable<IMemberDetails[]> {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let authToken = localStorage.getItem('auth_token');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        return this.http.get(this.baseUrl + "/member", { headers })
+            .map(response => { return response.json() })
+            .catch(this.handleError);
+    }
+
     getBookCatgory() {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -67,12 +79,32 @@ export class DashboardService extends BaseService {
     }
 
     AddBook(isbn: number, title: string, author: string, categoryId: number, bookId: number, pages: number, quantity: number, ratings: number, yearofpublish: string): Observable<IBookDetails[]> {
-        let body = JSON.stringify({ isbn, title, author, categoryId, bookId, pages, quantity, ratings, yearofpublish});
+        let body = JSON.stringify({ isbn, title, author, categoryId, bookId, pages, quantity, ratings, yearofpublish });
+
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
+        let authToken = localStorage.getItem('auth_token');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post(this.baseUrl + "/dashboard/addbook", body, options)
+            .map(res => true)
+            .catch(this.handleError);
+    }
+
+
+    AddMember(memberId: number, joiningDate: string, firstName: string, lastName: string, mobileNo: number, emailAddress: string, addressLine: string, cityName: string, stateName: string): Observable<IMemberDetails[]> {
+        let body = JSON.stringify({ memberId, joiningDate, firstName, lastName, emailAddress, mobileNo, addressLine, cityName, stateName });
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let authToken = localStorage.getItem('auth_token');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(this.baseUrl + "/member", body, options)
             .map(res => true)
             .catch(this.handleError);
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TCLibrary.Model
 {
@@ -22,8 +23,10 @@ namespace TCLibrary.Model
 			OnCreated();
 		}
 
-		/// <summary>Gets or sets the JoiningDate field. </summary>
-		public DateTime? JoiningDate { get; set;}
+        /// <summary>Gets or sets the JoiningDate field. </summary>
+
+        [Column(TypeName = "date")]
+        public DateTime? JoiningDate { get; set;}
 		/// <summary>Gets or sets the MemberId field. </summary>
 		public int MemberId { get; set;}
 		/// <summary>Represents the navigator which is mapped onto the association 'Address.Members - Members.Addresses (m:1)'</summary>

@@ -50,10 +50,6 @@ namespace TCLibrary.Controllers
                              books.Quantity
                          });
             return result;
-
-            //return appDbContext.BookAuthors.Select(x => new { x.ISBN, x.Books.Title, x.Authors.Author });
-
-            // return new OkObjectResult(new { Message = "Prashant Salunke - You are Authorise " });
         }
 
         [HttpPost("addbook")]
@@ -82,12 +78,34 @@ namespace TCLibrary.Controllers
             return new OkObjectResult("Done");
         }
 
+        [HttpPost("issuebook")]
+        public async Task<IActionResult> IssueBook([FromBody]IssueBookModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+
+            await appDbContext.BookTransactions.AddAsync(
+                new BookTransaction {AdminId = model.AdminId, ISBN = model.ISBN, BookId = model.BookId,IssueDate = model.IssueDate,MemberId = model.MemberId });
+            
+            await appDbContext.SaveChangesAsync();
+
+            return new OkObjectResult("Done");
+        }
+
         [HttpGet("category")]
         public IQueryable Category()
         {
             return appDbContext.BookCategories.Select(x => new { x.CategoryId, x.CategoryName });
 
-            // return new OkObjectResult(new { Message = "Prashant Salunke - You are Authorise " });
+        }
+
+        [HttpGet("bktxn")]
+        public IQueryable Txn()
+        {
+            return appDbContext.BookTransactions.Select(x=>new {x.TransactionId,x.IssueDate });
 
         }
     }

@@ -7,6 +7,7 @@ import { UserService } from '../../shared/services/user.service';
 
 @Component({
     selector: 'app-home',
+    styleUrls: ['../../../css/modal.scss'],
     templateUrl: '../../../view/member.component.html',
     encapsulation: ViewEncapsulation.None,
     providers: [DashboardService]

@@ -14,16 +14,18 @@ namespace TCLibrary.Model
         #endregion
 
         public BookMetadata() : base()
-		{
+        {
+            this.BookTransactions = new List<BookTransaction>();
             OnCreated();
         }
 
         [Key]
         public int BookId { get; set; }
-        public int? ISBN { get; set; }
         public string Status { get; set; }
         public DateTime? IsuueTimestamp { get; set; }
         public DateTime? ReturnTimestamp { get; set; }
+        public int? ISBN { get; set; }
         public Book books { get; set; }
+        public List<BookTransaction> BookTransactions { get; set; }
     }
 }

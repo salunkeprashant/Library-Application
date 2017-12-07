@@ -73,7 +73,6 @@
 
             <div class="form-group">
                 <label for="Category">Category</label>
-                <!--<input id="categoryId" type="text" required name="categoryId" class="form-control" placeholder="Category ID" ngModel>-->
                 <select id="categoryId" #categoryId="ngModel" class="form-control" [(ngModel)]="cId" name="categoryId" ngModel>
                     <option [ngValue]="c.categoryId" *ngFor="let c of categoryList">
                         {{c.categoryName}}

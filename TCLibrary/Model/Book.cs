@@ -12,9 +12,9 @@ namespace TCLibrary.Model
 
         public Book() : base()
         {
-            this.BookAuthor = new List<BookAuthor>();
-            this.BokkMetadatas = new List<BookMetadata>();
+            this.BookMetadatas = new List<BookMetadata>();
             this.BookTransactions = new List<BookTransaction>();
+            this.BookAuthors = new List<BookAuthor>();
             OnCreated();
         }
 
@@ -27,9 +27,9 @@ namespace TCLibrary.Model
         public string YearOfPublish { get; set; }
         public int? CategoryId { get; set; }
 
+        public List<BookAuthor> BookAuthors { get; set; }
         public BookCategory BookCategory { get; set; }
+        public List<BookMetadata> BookMetadatas { get; set; }
         public List<BookTransaction> BookTransactions { get; set; }
-        public List<BookMetadata> BokkMetadatas { get; set; }
-        public List<BookAuthor> BookAuthor { get; set; }
     }
 }

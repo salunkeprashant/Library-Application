@@ -4,6 +4,7 @@ import { ModalComponent } from '../../directives/modal.component';
 @Injectable()
 export class ModalService {
     private modals: Array<ModalComponent>;
+    row:any ='';
 
     constructor() {
         this.modals = [];
@@ -27,7 +28,9 @@ export class ModalService {
             modal.isOpen = true;
         }
     }
-
+    
+    getdetails() {
+    }
     close(modalId: string, checkBlocking = false): void {
         const modal = this.findModal(modalId);
 

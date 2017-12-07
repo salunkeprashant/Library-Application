@@ -3,7 +3,6 @@ import { DashboardService } from '../dashboard/services/dashboard.service';
 import { ModalService } from '../dashboard/services/modal.service';
 @Component({
     selector: 'app-modal',
-    styleUrls: ['../../css/modal.scss'],
     templateUrl: '../../view/book.modal.html',
     providers: [DashboardService]
 })

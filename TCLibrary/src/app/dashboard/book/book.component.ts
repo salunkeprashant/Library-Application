@@ -18,8 +18,11 @@ export class BookComponent implements OnInit {
 
     public title: IBookDetails;
     public searchString: string;
-    cId: Number;
+    cId: number;
     categoryList: any;
+
+    aId: number;
+    authorList: any;
 
     errors: string;
     isRequesting: boolean;
@@ -37,6 +40,7 @@ export class BookComponent implements OnInit {
         this.getYear();
         this.getBooks();
         this.getCategoryList();
+        this.getAuthors();
     }
 
     getBooks(): void {
@@ -55,12 +59,20 @@ export class BookComponent implements OnInit {
             )
     }
 
+    getAuthors(): void {
+        this.dashboardService.getAuthors()
+            .subscribe(
+            result => this.authorList = result,
+            error => console.log("Error :: " + error)
+            )
+    }
+
     addBook({ value, valid }: { value: IBookDetails, valid: boolean }) {
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';
         if (valid) {
-            this.dashboardService.AddBook(value.isbn, value.title, value.author, value.categoryId, value.bookId, value.pages, value.quantity, value.ratings, value.yearofpublish)
+            this.dashboardService.AddBook(value.isbn,value.authorId, value.title, value.author, value.categoryId, value.bookId, value.pages, value.quantity, value.ratings, value.yearofpublish)
                 .finally(() => this.isRequesting = false)
                 .subscribe(
                 result => {

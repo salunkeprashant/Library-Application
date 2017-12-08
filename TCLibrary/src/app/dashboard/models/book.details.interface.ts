@@ -2,6 +2,7 @@
     isbn: number,
     title: string,
     author: string,
+    authorId:number,
     bookId: number,
     categoryId: number,
     pages: number,

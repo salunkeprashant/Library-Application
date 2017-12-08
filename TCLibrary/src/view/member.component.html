@@ -14,8 +14,9 @@
                         <th>Email</th>
                         <th>Mobile</th>
                         <th>Addresss</th>
-                        <th>city</th>
-                        <th>state</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tr *ngFor="let a of members | filter : 'firstName' : searchString; let i = index">
@@ -43,6 +44,12 @@
                     </td>
                     <td>
                         {{a.stateName}}
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <span class="glyphicon glyphicon-edit" (click)='updatemodal(modalId2,a,a.memberId)'></span>&nbsp;&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-floppy-remove" (click)='deletemodal(modalId1,a,a.memberId)'></span> &nbsp;&nbsp;&nbsp;
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -108,6 +115,25 @@
             </div>
             <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
                 <strong>Member succesfullly added...</strong>
+            </div>
+        </form>
+    </div>
+</app-modal>
+
+<app-modal [modalTitle]="'Delete Member'" [blocking]='false' [modalId]='modalId1'>
+    <div class="card-block">
+        <form #deletemember="ngForm" class="form-inline" (ngSubmit)="deleteMember(deletemember)">
+            <h3>Do You Wants to Delete {{member.firstName}} ? </h3>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" [disabled]="addmember.valid || isRequesting">Delete</button>
+                <app-spinner [isRunning]="isRequesting"></app-spinner>
+            </div>
+            <input type="button" class="btn btn-primary" value="Cancel" (click)="modalService.close(ModalId1)"/>
+            <div *ngIf="errors" class="alert alert-danger" role="alert">
+                <strong>Oops!</strong> {{errors}}
+            </div>
+            <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
+                <strong>Member deleted...</strong>
             </div>
         </form>
     </div>

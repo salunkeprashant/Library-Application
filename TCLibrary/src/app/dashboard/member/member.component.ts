@@ -14,6 +14,9 @@ import { UserService } from '../../shared/services/user.service';
 })
 export class MemberComponent implements OnInit {
     modalId = 'AddMemberModal';
+    modalId1 = 'DeleteModal';
+    modalId2 = 'UpdateModal';
+
     members: IMemberDetails[];
 
     public title: IMemberDetails;
@@ -24,13 +27,27 @@ export class MemberComponent implements OnInit {
     submitted: boolean = false;
 
     saveSuccess: boolean = false;
-
+    member: any = '';
+    memberId: any = '';
     constructor(private dashboardService: DashboardService, private userService: UserService, public modalService: ModalService) {
     }
 
     ngOnInit() {
         this.getBooks();
     }
+    deletemodal(modalId: string, member,Id): void {
+        this.member = member;
+        this.memberId = Id;
+        this.modalService.open(modalId);
+    }
+
+    updatemodal(modalId: string, member, Id): void {
+        this.member = member;
+        this.memberId = Id;
+        this.modalService.open(modalId);
+    }
+
+
     getBooks(): void {
         this.dashboardService.getMemberDetails()
             .subscribe(
@@ -54,5 +71,21 @@ export class MemberComponent implements OnInit {
                 errors => this.errors = errors);
         }
     }
+
+    deleteMember({ value, valid }: { value:null, valid: boolean }) {
+        this.submitted = true;
+        this.isRequesting = true;
+        this.errors = '';
+        this.dashboardService.deleteMember(this.memberId)
+            .finally(() => this.isRequesting = false)
+            .subscribe(
+            result => {
+                if (result) {
+                    this.saveSuccess = true;
+                }
+            },
+            errors => this.errors = errors);
+    }
+
 
 }

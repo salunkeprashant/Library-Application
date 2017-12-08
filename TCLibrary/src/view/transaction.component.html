@@ -84,6 +84,8 @@
                 </select>
             </div>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br/>
+            <br/>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" [disabled]="issuebook.invalid || isRequesting">Issue</button>
                 <app-spinner [isRunning]="isRequesting"></app-spinner>
@@ -92,7 +94,7 @@
                 <strong>Oops!</strong> {{errors}}
             </div>
             <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
-                <strong>Done...</strong>
+                <strong>Book issued</strong>
             </div>
         </form>
     </div>

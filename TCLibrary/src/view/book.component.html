@@ -67,8 +67,12 @@
             </div>
 
             <div class="form-group">
-                <label for="author">Author</label>
-                <input id="author" type="text" required name="author" class="form-control" placeholder="Author Name" ngModel>
+                <label for="Author">Author</label>
+                <select id="authorId" #authorId="ngModel" class="form-control" [(ngModel)]="aId" name="authorId" ngModel>
+                    <option [ngValue]="d.authorId" *ngFor="let d of authorList">
+                        {{d.author}}
+                    </option>
+                </select>
             </div>
 
             <div class="form-group">

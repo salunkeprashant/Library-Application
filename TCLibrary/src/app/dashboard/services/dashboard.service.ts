@@ -76,7 +76,7 @@ export class DashboardService extends BaseService {
         return this.http.get(this.baseUrl + "/dashboard/category", { headers })
             .map(response => { return response.json() })
             .catch(this.handleError);
-    }
+    } 
 
     getAdmins() {
         let headers = new Headers();
@@ -85,6 +85,17 @@ export class DashboardService extends BaseService {
         headers.append('Authorization', `Bearer ${authToken}`);
 
         return this.http.get(this.baseUrl + "/admins", { headers })
+            .map(response => { return response.json() })
+            .catch(this.handleError);
+    }
+
+    getAuthors() {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let authToken = localStorage.getItem('auth_token');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        return this.http.get(this.baseUrl + "/dashboard/authors", { headers })
             .map(response => { return response.json() })
             .catch(this.handleError);
     }
@@ -105,8 +116,8 @@ export class DashboardService extends BaseService {
     }
 
 
-    AddBook(isbn: number, title: string, author: string, categoryId: number, bookId: number, pages: number, quantity: number, ratings: number, yearofpublish: string): Observable<IBookDetails[]> {
-        let body = JSON.stringify({ isbn, title, author, categoryId, bookId, pages, quantity, ratings, yearofpublish });
+    AddBook(isbn: number, authorId:number, title:string, author: string, categoryId: number, bookId: number, pages: number, quantity: number, ratings: number, yearofpublish: string): Observable<IBookDetails[]> {
+        let body = JSON.stringify({ isbn, title, author,authorId, categoryId, bookId, pages, quantity, ratings, yearofpublish });
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -132,6 +143,19 @@ export class DashboardService extends BaseService {
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post(this.baseUrl + "/member", body, options)
+            .map(res => true)
+            .catch(this.handleError);
+    }
+
+    deleteMember(memberId: number) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let authToken = localStorage.getItem('auth_token');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.delete(this.baseUrl + "/member" + "/" +memberId, options)
             .map(res => true)
             .catch(this.handleError);
     }

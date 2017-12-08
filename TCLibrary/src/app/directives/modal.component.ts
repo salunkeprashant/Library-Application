@@ -3,7 +3,7 @@ import { DashboardService } from '../dashboard/services/dashboard.service';
 import { ModalService } from '../dashboard/services/modal.service';
 @Component({
     selector: 'app-modal',
-    templateUrl: '../../view/book.modal.html',
+    templateUrl: '../../view/modal.html',
     providers: [DashboardService]
 })
 export class ModalComponent implements OnInit {

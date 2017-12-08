@@ -18,7 +18,6 @@ export class TransactionComponent implements OnInit {
     modalId = 'Issue Book';
     books: IBookDetails[];
 
-
     public title: IBookDetails;
     public searchString: string;
 
@@ -33,9 +32,7 @@ export class TransactionComponent implements OnInit {
     submitted: boolean = false;
 
     saveSuccess: boolean = false;
-    today:any;
-    
-    
+    today: any;
 
     row: any = '';
     constructor(private dashboardService: DashboardService,
@@ -45,7 +42,7 @@ export class TransactionComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.today = this.datePipe.transform(new Date(),'yyyy-MM-dd HH:MM a')
+        this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:MM a')
         this.getBooks();
         this.getMemberList();
         this.getAdmins();
@@ -53,7 +50,6 @@ export class TransactionComponent implements OnInit {
 
     openmodal(modalId: string, a): void {
         this.row = a;
-        console.log(this.row);
         this.modalService.open(modalId);
     }
     getBooks(): void {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using TCLibrary.Model;
 using TCLibrary.Data;
 using TCLibrary.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace TCLibrary.Controllers
 {
@@ -53,6 +54,8 @@ namespace TCLibrary.Controllers
             return appDbContext.Members.Where(x => x.MemberId == id);
         }
 
+
+
         // POST api/values
         [HttpPost]
         public async Task<IActionResult> AddMember([FromBody]AddMemberModel model)
@@ -69,7 +72,7 @@ namespace TCLibrary.Controllers
 
             await appDbContext.ContactDetails.AddAsync(new ContactDetail { MemberId = model.MemberId, EmailAddress = model.EmailAddress, MobileNo = model.MobileNo });
 
-            await appDbContext.Addresses.AddAsync(new Address { MemberId = model.MemberId, AddressLine = model.AddressLine, StateName = model.StateName });
+            await appDbContext.Addresses.AddAsync(new Address { MemberId = model.MemberId, AddressLine = model.AddressLine, CityName = model.CityName, StateName = model.StateName });
 
             appDbContext.SaveChanges();
 
@@ -84,10 +87,16 @@ namespace TCLibrary.Controllers
         {
         }
 
-        // DELETE api/values/5
+        // DELETE api/member/delete
+        //[Route("api/member/delete")]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var result = appDbContext.Members.Where(x => x.MemberId == id).FirstOrDefault();
+            appDbContext.Members.Remove(result);
+            appDbContext.SaveChanges();
+
+            return new OkObjectResult("Done");
         }
     }
 }

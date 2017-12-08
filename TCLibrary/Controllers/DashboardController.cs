@@ -14,7 +14,7 @@ using TCLibrary.ViewModels;
 
 namespace TCLibrary.Controllers
 {
-   // [Authorize(Policy = "ApiUser")]
+    // [Authorize(Policy = "ApiUser")]
     [Route("api/[controller]")]
     public class DashboardController : Controller
     {
@@ -36,19 +36,20 @@ namespace TCLibrary.Controllers
         public IQueryable Book()
         {
             var result = (from books in appDbContext.Books
-                         join bookAuthors in appDbContext.BookAuthors on books.ISBN equals bookAuthors.ISBN
-                         join author in appDbContext.Authors on bookAuthors.AuthorId equals author.AuthorId
+                          join bookAuthors in appDbContext.BookAuthors on books.ISBN equals bookAuthors.ISBN
+                          join author in appDbContext.Authors on bookAuthors.AuthorId equals author.AuthorId
 
-                         select new {
-                             books.ISBN,
-                             books.Title,
-                             books.BookCategory.CategoryName,
-                             author.Author,
-                             books.Ratings,
-                             books.Pages,
-                             books.YearOfPublish,
-                             books.Quantity
-                         });
+                          select new
+                          {
+                              books.ISBN,
+                              books.Title,
+                              books.BookCategory.CategoryName,
+                              author.Author,
+                              books.Ratings,
+                              books.Pages,
+                              books.YearOfPublish,
+                              books.Quantity
+                          });
             return result;
         }
 
@@ -62,16 +63,15 @@ namespace TCLibrary.Controllers
 
 
             await appDbContext.Books.AddAsync(
-                new Book {Title=book.Title, ISBN = book.ISBN, CategoryId = book.CategoryId, Pages = book.Pages, Quantity = book.Quantity, Ratings =book.Ratings,YearOfPublish = book.YearOfPublish });
+                new Book { Title = book.Title, ISBN = book.ISBN, CategoryId = book.CategoryId, Pages = book.Pages, Quantity = book.Quantity, Ratings = book.Ratings, YearOfPublish = book.YearOfPublish });
 
             await appDbContext.Authors.AddAsync(
                   new Authors { Author = book.Author });
 
             await appDbContext.BookMetadatas.AddAsync(
-                  new BookMetadata { BookId = book.BookId, ISBN = book.ISBN,Status = "Available" });
+                  new BookMetadata { BookId = book.BookId, ISBN = book.ISBN, Status = "Available" });
 
-            //await appDbContext.BookAuthors.AddAsync(
-            //    new BookAuthor { ISBN=book.ISBN});
+            await appDbContext.BookAuthors.AddAsync(new BookAuthor { ISBN = book.ISBN, AuthorId = book.AuthorId });
 
             await appDbContext.SaveChangesAsync();
 
@@ -88,8 +88,8 @@ namespace TCLibrary.Controllers
 
 
             await appDbContext.BookTransactions.AddAsync(
-                new BookTransaction {AdminId = model.AdminId, ISBN = model.ISBN, BookId = model.BookId,IssueDate = model.IssueDate,MemberId = model.MemberId });
-            
+                new BookTransaction { AdminId = model.AdminId, ISBN = model.ISBN, BookId = model.BookId, IssueDate = model.IssueDate, MemberId = model.MemberId });
+
             await appDbContext.SaveChangesAsync();
 
             return new OkObjectResult("Done");
@@ -102,10 +102,17 @@ namespace TCLibrary.Controllers
 
         }
 
+        [HttpGet("authors")]
+        public IQueryable Authors()
+        {
+            return appDbContext.Authors.Select(x => new { x.AuthorId, x.Author });
+
+        }
+
         [HttpGet("bktxn")]
         public IQueryable Txn()
         {
-            return appDbContext.BookTransactions.Select(x=>new {x.TransactionId,x.IssueDate });
+            return appDbContext.BookTransactions.Select(x => new { x.TransactionId, x.IssueDate });
 
         }
     }

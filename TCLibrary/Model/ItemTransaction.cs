@@ -24,9 +24,11 @@ namespace TCLibrary.Model
         public int? AdminId { get; set; }
         public int? ItemId { get; set; }
         public int? MemberId { get; set; }
+        public int? InventoryId { get; set; }
 
         public Admin Admin { get; set;}
 		public InventoryMetadata InventoryMetadatas { get; set;}
 		public Member Members { get; set;}
+        public Inventory Inventories { get; set; }
 	}
 }

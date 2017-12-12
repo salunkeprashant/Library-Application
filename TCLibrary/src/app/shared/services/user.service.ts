@@ -38,7 +38,12 @@ export class UserService extends BaseService {
 
     register(email: string, password: string, firstName: string, lastName: string, confirmpassword: string): Observable<IUserRegistration> {
         let body = JSON.stringify({ email, password, firstName, lastName, confirmpassword });
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let authToken = localStorage.getItem('auth_token');
+        headers.append('Authorization', `Bearer ${authToken}`);
+        headers.append('Access-Control-Allow-Origin', 'http://localhost:5000');
+        headers.append('Access-Control-Allow-Credentials', 'true')
     let options = new RequestOptions({ headers: headers });
 
     return this.http.post(this.baseUrl + "/accounts", body, options)

@@ -8,16 +8,6 @@ namespace TCLibrary.Model
 {
     public partial class InventoryMetadata
     {
-        #region Class Extensibility Methods
-        /// <summary>Method called from the constructor</summary>
-        partial void OnCreated();
-        #endregion
-
-        public InventoryMetadata() : base()
-		{
-            OnCreated();
-        }
-
         [Key]
         public int ItemId { get; set; }
         public int InventoryId { get; set; }

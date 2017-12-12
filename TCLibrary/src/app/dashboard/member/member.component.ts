@@ -35,13 +35,7 @@ export class MemberComponent implements OnInit {
     ngOnInit() {
         this.getBooks();
     }
-    deletemodal(modalId: string, member,Id): void {
-        this.member = member;
-        this.memberId = Id;
-        this.modalService.open(modalId);
-    }
-
-    updatemodal(modalId: string, member, Id): void {
+    openmembermodal(modalId: string, member,Id): void {
         this.member = member;
         this.memberId = Id;
         this.modalService.open(modalId);

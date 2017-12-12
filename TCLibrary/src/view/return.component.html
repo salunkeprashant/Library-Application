@@ -1,0 +1,76 @@
+﻿<div class="card">
+    <div class="row">
+        <div class="col-md-9 col-md-offset-1">
+            <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
+            <br />
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Member Id</th>
+                        <th>Issued Item</th>
+                        <th>Issue Date</th>
+                        <th>Issued By</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tr *ngFor="let a of details | filter : 'title' : searchString; let i = index">
+                    <td>
+                        {{a.memberId}}
+                    </td>
+                    <td>
+                        {{a.bookId}}
+                    </td>
+                    <td>
+                        {{a.issueDate}}
+                    </td>
+                    <td>
+                        {{a.adminId}}
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <span class="glyphicon glyphicon-arrow-up" (click)='openmodal(modalId,a)'></span>&nbsp;&nbsp;&nbsp;
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<app-modal [modalTitle]="'Return Book'" [blocking]='false' [modalId]='modalId'>
+    <div class="card-block">
+        <form class="form-inline" #issuebook="ngForm" novalidate (ngSubmit)="issueBook(issuebook)">
+            <div class="form-group">
+                <label for="memberId">Member ID</label>
+                <input id="memberId" type="text" required name="memberId" class="form-control" value="{{rows.memberId}}" ngModel>
+            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="form-group">
+                <label for="bookId">Book ID</label>
+                <input id="bookId" type="text" required name="bookId" class="form-control" value="{{rows.bookId}}" ngModel>
+            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="form-group">
+                <label for="issueDate">Issue Date :</label>
+                <input id="issueDate" type="text" required name="issueDate" class="form-control" placeholder="{{rows.issueDate}}" ngModel>
+            </div>
+            <div class="form-group">
+                <label for="adminId">AdminId</label>
+                <input id="adminId" type="text" required name="adminId" class="form-control" placeholder="{{rows.adminId}}" ngModel>
+            </div>
+            <br />
+            <br />
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br />
+            <br />
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" [disabled]="issuebook.invalid || isRequesting">Return</button>
+                <app-spinner [isRunning]="isRequesting"></app-spinner>
+            </div>
+            <div *ngIf="errors" class="alert alert-danger" role="alert">
+                <strong>Oops!</strong> {{errors}}
+            </div>
+            <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
+                <strong>Book Returned</strong>
+            </div>
+        </form>
+    </div>
+</app-modal>

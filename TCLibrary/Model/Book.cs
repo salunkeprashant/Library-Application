@@ -4,17 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TCLibrary.Model
 {
-    public partial class Book : CommonEntityBase
+    public partial class Book
     {
-        #region Class Extensibility Methods
-        partial void OnCreated();
-        #endregion
-
-        public Book() : base()
-        {
-            OnCreated();
-        }
-
         [Key]
         public int ISBN { get; set; }
         public string Title { get; set; }

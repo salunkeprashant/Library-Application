@@ -1,25 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TCLibrary.Model
 {
-    public partial class Address : CommonEntityBase
+    public partial class Address
     {
-        #region Class Extensibility Methods
-        partial void OnCreated();
-        #endregion
-
-        public Address() : base()
-        {
-            OnCreated();
-        }
-
-        public int AddressId { get; set; }
+        [Key]
+        public int Id { get; set; }
+        public int MemberId { get; set; }
         public string AddressLine { get; set; }
         public string CityName { get; set; }
         public string StateName { get; set; }
-        public int? MemberId { get; set; }
-
+       
         public Member Members { get; set; }
     }
 }

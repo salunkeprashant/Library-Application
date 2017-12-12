@@ -25,7 +25,6 @@ namespace TCLibrary.Controllers
         public IQueryable Get()
         {
             var result = (from members in appDbContext.Members
-                          join membersdetails in appDbContext.MembersDetails on members.MemberId equals membersdetails.MemberId
                           join contactdetails in appDbContext.ContactDetails on members.MemberId equals contactdetails.MemberId
                           join address in appDbContext.Addresses on members.MemberId equals address.MemberId
 
@@ -33,9 +32,8 @@ namespace TCLibrary.Controllers
                           {
                               members.MemberId,
                               members.JoiningDate,
-
-                              membersdetails.FirstName,
-                              membersdetails.LastName,
+                              members.FirstName,
+                              members.LastName,
 
                               contactdetails.EmailAddress,
                               contactdetails.MobileNo,
@@ -66,9 +64,8 @@ namespace TCLibrary.Controllers
                 return BadRequest();
             }
 
-            await appDbContext.Members.AddAsync(new Member { MemberId = model.MemberId, JoiningDate = model.JoiningDate });
+            await appDbContext.Members.AddAsync(new Member { MemberId = model.MemberId, JoiningDate = model.JoiningDate, FirstName = model.FirstName, LastName = model.LastName });
 
-            await appDbContext.MembersDetails.AddAsync(new MemberDetail { MemberId = model.MemberId, FirstName = model.FirstName, LastName = model.LastName });
 
             await appDbContext.ContactDetails.AddAsync(new ContactDetail { MemberId = model.MemberId, EmailAddress = model.EmailAddress, MobileNo = model.MobileNo });
 

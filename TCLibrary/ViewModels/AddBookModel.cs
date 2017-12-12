@@ -8,7 +8,6 @@ namespace TCLibrary.ViewModels
     public class AddBookModel
     {
         public string Author { get; set; }
-        public int BookId { get; set; }
         public int? CategoryId { get; set; }
         public int ISBN { get; set; }
         public string Pages { get; set; }

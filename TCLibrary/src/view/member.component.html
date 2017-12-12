@@ -24,7 +24,7 @@
                         {{a.memberId}}
                     </td>
                     <td>
-                        {{a.joiningDate}}
+                        {{a.joiningDate | date: "dd-MM-yyyy" }}
                     </td>
                     <td>
                         {{a.firstName}}
@@ -47,8 +47,8 @@
                     </td>
                     <td>
                         <div class="actions">
-                            <span class="glyphicon glyphicon-edit" (click)='updatemodal(modalId2,a,a.memberId)'></span>&nbsp;&nbsp;&nbsp;
-                            <span class="glyphicon glyphicon-floppy-remove" (click)='deletemodal(modalId1,a,a.memberId)'></span> &nbsp;&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-edit" (click)='openmembermodal(modalId2,a,a.memberId)'></span>&nbsp;&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-floppy-remove" (click)='openmembermodal(modalId1,a,a.memberId)'></span> &nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
                 </tr>

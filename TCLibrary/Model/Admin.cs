@@ -1,23 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TCLibrary.Model
 {
-    /// <summary>Class which represents the entity 'Admin'.</summary>
-    public partial class Admin : CommonEntityBase
+    public partial class Admin 
     {
-        #region Class Extensibility Methods
-        partial void OnCreated();
-        #endregion
-
-        public Admin() : base()
-        {
-            this.BookTransactions = new List<BookTransaction>();
-            this.ItemTransactions = new List<ItemTransaction>();
-            OnCreated();
-        }
-
+        [Key]
         public int AdminId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

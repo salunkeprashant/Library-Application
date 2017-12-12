@@ -29,6 +29,5 @@ namespace TCLibrary.Data
         public DbSet<InventoryMetadata> InventoryMetadatas { get; set; }
         public DbSet<ItemTransaction> ItemTransactions { get; set; }
         public DbSet<Member> Members { get; set; }
-        public DbSet<MemberDetail> MembersDetails { get; set; }
     }
 }

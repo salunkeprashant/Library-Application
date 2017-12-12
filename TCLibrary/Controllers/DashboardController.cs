@@ -53,6 +53,13 @@ namespace TCLibrary.Controllers
             return result;
         }
 
+        [HttpGet("details")]
+        public IQueryable Details()
+        {
+            var result = appDbContext.BookTransactions.Select(x => new {x.MemberId,x.BookId,x.IssueDate,x.AdminId});
+            return result;
+        }
+
         [HttpPost("addbook")]
         public async Task<IActionResult> AddBook([FromBody]AddBookModel book)
         {
@@ -69,7 +76,7 @@ namespace TCLibrary.Controllers
                   new Authors { Author = book.Author });
 
             await appDbContext.BookMetadatas.AddAsync(
-                  new BookMetadata { BookId = book.BookId, ISBN = book.ISBN, Status = "Available" });
+                  new BookMetadata { ISBN = book.ISBN, Status = true });
 
             await appDbContext.BookAuthors.AddAsync(new BookAuthor { ISBN = book.ISBN, AuthorId = book.AuthorId });
 

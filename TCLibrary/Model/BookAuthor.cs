@@ -2,16 +2,8 @@
 
 namespace TCLibrary.Model
 {
-    public partial class BookAuthor : CommonEntityBase
+    public partial class BookAuthor 
     {
-        #region Class Extensibility Methods
-        /// <summary>Method called from the constructor</summary>
-        partial void OnCreated();
-        #endregion
-        public BookAuthor() : base()
-        {
-            OnCreated();
-        }
         [Key]
         public int id { get; set; }
         public int? ISBN { get; set; }

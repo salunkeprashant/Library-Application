@@ -4,20 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TCLibrary.Model
 {
-    /// <summary>Class which represents the entity 'Inventory'.</summary>
-    public partial class Inventory : CommonEntityBase
+    public partial class Inventory 
     {
-        #region Class Extensibility Methods
-        /// <summary>Method called from the constructor</summary>
-        partial void OnCreated();
-        #endregion
-
-        public Inventory() : base()
-        {
-            this.ItemTransactions = new List<ItemTransaction>();
-            OnCreated();
-        }
-
         [Key]
         public int InventoryId { get; set; }
         public string ItemDescription { get; set; }

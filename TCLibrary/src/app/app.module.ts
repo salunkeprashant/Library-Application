@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; 
 import { HttpModule, XHRBackend } from '@angular/http';
 import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
-
+import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { routing } from './app.routing';
+
 
 /* App Root */
 import { AppComponent } from './app.component';
@@ -27,6 +28,7 @@ import { ConfigService } from './shared/utils/config.service';
     HomeComponent,
   ],
     imports: [
+    BootstrapModalModule,
     AccountModule,
     DashboardModule,
     BrowserModule,

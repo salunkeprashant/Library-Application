@@ -10,7 +10,7 @@ namespace TCLibrary.Model
         public int ISBN { get; set; }
         public string Title { get; set; }
         public string Pages { get; set; }
-        public string Quantity { get; set; }
+        public int Quantity { get; set; }
         public decimal? Ratings { get; set; }
         public string YearOfPublish { get; set; }
         public int? CategoryId { get; set; }

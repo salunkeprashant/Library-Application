@@ -57,31 +57,32 @@
             </div>
 
             <div class="form-group">
-                <label for="BookId">Book Unique Id</label>
-                <input id="bookId" type="text" required name="bookId" class="form-control" placeholder="Enter Book Unique Id" ngModel>
-            </div>
-
-            <div class="form-group">
                 <label for="title">Book Title</label>
                 <input id="title" type="text" required name="title" class="form-control" placeholder="Book Title " ngModel>
             </div>
 
             <div class="form-group">
                 <label for="Author">Author</label>
-                <select id="authorId" #authorId="ngModel" class="form-control" [(ngModel)]="aId" name="authorId" ngModel>
-                    <option [ngValue]="d.authorId" *ngFor="let d of authorList">
-                        {{d.author}}
-                    </option>
-                </select>
+                <ng-select [items]="authorList"
+                           bindLabel="author"
+                           bindValue="authorId"
+                           [addTag]="enterAuthor"
+                           [multiple]="false"
+                           placeholder="Select Author or enter"
+                           name="authorId" ngModel>
+                </ng-select>
             </div>
 
             <div class="form-group">
                 <label for="Category">Category</label>
-                <select id="categoryId" #categoryId="ngModel" class="form-control" [(ngModel)]="cId" name="categoryId" ngModel>
-                    <option [ngValue]="c.categoryId" *ngFor="let c of categoryList">
-                        {{c.categoryName}}
-                    </option>
-                </select>
+                <ng-select [items]="categoryList"
+                           bindLabel="categoryName"
+                           bindValue="categoryId"
+                           [addTag]="enterCategory"
+                           [multiple]="false"
+                           placeholder="Select Category or enter"
+                           name="categoryId" ngModel>
+                </ng-select>
             </div>
 
             <div class="form-group">

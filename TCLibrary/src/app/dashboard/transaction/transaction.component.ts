@@ -74,13 +74,15 @@ export class TransactionComponent implements OnInit {
             )
     }
 
+    bookId: any;
     issueBook({ value, valid }: { value: any, valid: boolean }) {
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';
-
+        this.bookId = this.row.bookId
+        console.log(this.bookId)
         if (valid) {
-            this.dashboardService.IssueBook(value.isbn, value.bookId, value.memberId, value.adminId, value.issueDate)
+            this.dashboardService.IssueBook(value.isbn, this.bookId, value.memberId, value.adminId, value.issueDate)
                 .finally(() => this.isRequesting = false)
                 .subscribe(
                 result => {

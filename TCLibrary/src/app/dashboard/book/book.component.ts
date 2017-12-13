@@ -4,6 +4,7 @@ import { IBookCategoryDetails } from '../models/bookcategory.details.inteface';
 import { DashboardService } from '../services/dashboard.service';
 import { ModalService } from '../services/modal.service'
 import { UserService } from '../../shared/services/user.service';
+import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 
 @Component({
     selector: 'app-home',
@@ -18,11 +19,11 @@ export class BookComponent implements OnInit {
 
     public title: IBookDetails;
     public searchString: string;
-    cId: number;
     categoryList: any;
-
-    aId: number;
     authorList: any;
+
+    enterCategory = (term) => ({ categoryId: term, categoryName: term });
+    enterAuthor = (term) => ({ authorId: term, author: term });
 
     errors: string;
     isRequesting: boolean;
@@ -33,7 +34,7 @@ export class BookComponent implements OnInit {
     private years: number[] = [];
     private yy: number;
 
-    constructor(private dashboardService: DashboardService, private userService: UserService,public modalService: ModalService) {
+    constructor(private dashboardService: DashboardService, private userService: UserService, public modalService: ModalService) {
     }
 
     ngOnInit() {
@@ -66,13 +67,24 @@ export class BookComponent implements OnInit {
             error => console.log("Error :: " + error)
             )
     }
-
-    addBook({ value, valid }: { value: IBookDetails, valid: boolean }) {
+    categoryName: any;
+    author: any;
+    addBook({ value, valid }: { value: any, valid: boolean }) {
+        console.log(value);
+        if (typeof value.categoryId === "string") {
+            this.categoryName = value.categoryId;
+            value.categoryId = (this.categoryList).length + 1
+        }
+        if (typeof value.authorId === "string") {
+            this.author = value.authorId;
+            value.authorId = (this.authorList).length + 1
+        }
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';
+        console.log(value);
         if (valid) {
-            this.dashboardService.AddBook(value.isbn,value.authorId, value.title, value.author, value.categoryId, value.bookId, value.pages, value.quantity, value.ratings, value.yearofpublish)
+            this.dashboardService.AddBook(value.isbn, value.title, value.authorId, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity, )
                 .finally(() => this.isRequesting = false)
                 .subscribe(
                 result => {

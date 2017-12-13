@@ -6,7 +6,6 @@ import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { routing } from './app.routing';
 
-
 /* App Root */
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';

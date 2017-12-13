@@ -6,31 +6,34 @@
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>Member Id</th>
+                        <th>ID</th>
                         <th>Issued Item</th>
+                        <th>Member Name </th>
                         <th>Issue Date</th>
                         <th>Issued By</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
-                <tr *ngFor="let a of details | filter : 'title' : searchString; let i = index">
+                <tr *ngFor="let a of details | filter : 'title' : searchString; let i = index" (click)='openmodal(modalId,a)'>
                     <td>
-                        {{a.memberId}}
+                        {{a.transactionId}}
                     </td>
                     <td>
-                        {{a.bookId}}
+                        {{a.title}}
+                    </td>
+                    <td>
+                        {{a.memberName}}
                     </td>
                     <td>
                         {{a.issueDate}}
                     </td>
                     <td>
-                        {{a.adminId}}
+                        {{a.adminName}}
                     </td>
-                    <td>
+                    <!--<td>
                         <div class="actions">
                             <span class="glyphicon glyphicon-arrow-up" (click)='openmodal(modalId,a)'></span>&nbsp;&nbsp;&nbsp;
                         </div>
-                    </td>
+                    </td>-->
                 </tr>
             </table>
         </div>

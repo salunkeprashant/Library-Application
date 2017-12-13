@@ -62,7 +62,7 @@ export class DashboardService extends BaseService {
         let authToken = localStorage.getItem('auth_token');
         headers.append('Authorization', `Bearer ${authToken}`);
 
-        return this.http.get(this.baseUrl + "/dashboard/details", { headers })
+        return this.http.get(this.baseUrl + "/dashboard/issuedetails", { headers })
             .map(response => { return response.json() })
             .catch(this.handleError);
     }
@@ -127,8 +127,8 @@ export class DashboardService extends BaseService {
     }
 
 
-    AddBook(isbn: number, authorId: number, title: string, author: string, categoryId: number, bookId: number, pages: number, quantity: number, ratings: number, yearofpublish: string): Observable<IBookDetails[]> {
-        let body = JSON.stringify({ isbn, title, author, authorId, categoryId, bookId, pages, quantity, ratings, yearofpublish });
+    AddBook(isbn: number, title: string, authorId: number,author: string, categoryId: number, categoryName: string, ratings: number, yearofpublish: string, pages: number, quantity: number): Observable<IBookDetails[]> {
+        let body = JSON.stringify({ isbn, title, authorId,author,categoryId,categoryName, pages, quantity, ratings, yearofpublish });
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');

@@ -48,15 +48,28 @@ namespace TCLibrary.Controllers
                               books.Ratings,
                               books.Pages,
                               books.YearOfPublish,
-                              books.Quantity
+                              books.Quantity,
+                              Count = appDbContext.BookMetadatas
+                                    .Where(x => x.Status == true && x.ISBN==books.ISBN)
+                                    .Count()
+
                           });
+
             return result;
         }
 
-        [HttpGet("details")]
-        public IQueryable Details()
+        [HttpGet("issuedetails")]
+        public IQueryable IssueDetails()
         {
-            var result = appDbContext.BookTransactions.Select(x => new {x.MemberId,x.BookId,x.IssueDate,x.AdminId});
+            var result = appDbContext.BookTransactions.Select(x => new
+            {
+                x.TransactionId,
+                MemberName = x.Member.FirstName + ' ' + x.Member.LastName,
+                x.Books.Title,
+                x.IssueDate,
+                AdminName = x.Admin.FirstName + ' ' + x.Admin.LastName,
+                x.ReturnDate
+            }).Where(x => x.ReturnDate == null);
             return result;
         }
 
@@ -68,15 +81,17 @@ namespace TCLibrary.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (book.Author != null) await appDbContext.Authors.AddAsync(new Authors { Author = book.Author });
+            if (book.CategoryName != null) await appDbContext.BookCategories.AddAsync(new BookCategory { CategoryName = book.CategoryName });
+
+            appDbContext.SaveChanges();
 
             await appDbContext.Books.AddAsync(
                 new Book { Title = book.Title, ISBN = book.ISBN, CategoryId = book.CategoryId, Pages = book.Pages, Quantity = book.Quantity, Ratings = book.Ratings, YearOfPublish = book.YearOfPublish });
 
-            await appDbContext.Authors.AddAsync(
-                  new Authors { Author = book.Author });
-
+            for(int i=1;i<=book.Quantity;i++)
             await appDbContext.BookMetadatas.AddAsync(
-                  new BookMetadata { ISBN = book.ISBN, Status = true });
+                new BookMetadata { ISBN = book.ISBN, Status = true });
 
             await appDbContext.BookAuthors.AddAsync(new BookAuthor { ISBN = book.ISBN, AuthorId = book.AuthorId });
 

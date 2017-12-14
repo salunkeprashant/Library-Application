@@ -23,6 +23,7 @@ import { AuthGuard } from '../auth.guard';
 
 @NgModule({
     imports: [
+
         NgSelectModule,
         BrowserModule,
         CommonModule,

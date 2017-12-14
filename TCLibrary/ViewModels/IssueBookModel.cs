@@ -11,6 +11,6 @@ namespace TCLibrary.ViewModels
         public Guid BookId { get; set; }
         public int ISBN { get; set; }
         public DateTime? IssueDate { get; set; }
-        public int? MemberId { get; set; }
+        public int MemberId { get; set; }
     }
 }

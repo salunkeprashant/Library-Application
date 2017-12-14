@@ -14,7 +14,7 @@ namespace TCLibrary.Model
         public DateTime? ReturnDate { get; set; }
         public int? AdminId { get; set; }
         public Guid BookId { get; set; }
-        public int? MemberId { get; set; }
+        public int MemberId { get; set; }
         public int? ISBN { get; set; }
 
         public Admin Admin { get; set; }

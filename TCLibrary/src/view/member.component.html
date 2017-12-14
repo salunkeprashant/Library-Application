@@ -27,8 +27,7 @@
                         {{a.joiningDate | date: "dd-MM-yyyy" }}
                     </td>
                     <td>
-                        {{a.firstName}}
-                        {{a.lastName}}
+                        {{a.memberName}}
                     </td>
                     <td>
                         {{a.emailAddress}}
@@ -62,7 +61,7 @@
         <form #addmember="ngForm" novalidate (ngSubmit)="addMember(addmember)">
             <div class="form-group">
                 <label for="memberId">Member ID</label>
-                <input id="memberId" type="text" required name="memberId" class="form-control" placeholder="Enter Member Number" tmFocus ngModel>
+                <input id="memberId" type="text" required name="memberId" class="form-control" value="{{members.length + 1}}" tmFocus ngModel>
             </div>
 
             <div class="form-group">
@@ -123,7 +122,7 @@
 <app-modal [modalTitle]="'Delete Member'" [blocking]='false' [modalId]='modalId1'>
     <div class="card-block">
         <form #deletemember="ngForm" class="form-inline" (ngSubmit)="deleteMember(deletemember)">
-            <h3>Do You Wants to Delete {{member.firstName}} ? </h3>
+            <h3>Do You Wants to Delete {{member.memberName}} ? </h3>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" [disabled]="addmember.valid || isRequesting">Delete</button>
                 <app-spinner [isRunning]="isRequesting"></app-spinner>

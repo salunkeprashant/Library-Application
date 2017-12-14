@@ -233,7 +233,7 @@ namespace TCLibrary.Migrations
 
                     b.Property<string>("Pages");
 
-                    b.Property<string>("Quantity");
+                    b.Property<int>("Quantity");
 
                     b.Property<decimal?>("Ratings");
 
@@ -309,7 +309,7 @@ namespace TCLibrary.Migrations
 
                     b.Property<DateTime?>("IssueDate");
 
-                    b.Property<int?>("MemberId");
+                    b.Property<int>("MemberId");
 
                     b.Property<DateTime?>("ReturnDate");
 
@@ -537,7 +537,8 @@ namespace TCLibrary.Migrations
 
                     b.HasOne("TCLibrary.Model.Member", "Member")
                         .WithMany("BookTransactions")
-                        .HasForeignKey("MemberId");
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TCLibrary.Model.ContactDetail", b =>

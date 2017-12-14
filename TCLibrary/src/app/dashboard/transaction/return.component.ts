@@ -15,13 +15,13 @@ import { DatePipe } from '@angular/common';
 })
 export class ReturnComponent implements OnInit {
 
-    modalId = 'Issue Book';
+    modalId = 'Return Book';
     books: IBookDetails[];
-
-    details: any;
 
     public title: IBookDetails;
     public searchString: string;
+
+    details: any;
 
     aId: number
     adminList: any;
@@ -36,7 +36,7 @@ export class ReturnComponent implements OnInit {
     saveSuccess: boolean = false;
     today: any;
 
-    rows: any = '';
+
     constructor(private dashboardService: DashboardService,
         private userService: UserService,
         public modalService: ModalService,
@@ -44,11 +44,11 @@ export class ReturnComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:MM a')
         this.getDetails();
     }
-
+    rows: any = '';
     openmodal(modalId: string, a): void {
+        this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss a')
         this.rows = a;
         this.modalService.open(modalId);
     }
@@ -59,13 +59,16 @@ export class ReturnComponent implements OnInit {
             error => console.log("Error :: " + error)
             )
     }
+
+    transactionId: any; bookId: any;
     returnBook({ value, valid }: { value: any, valid: boolean }) {
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';
-
+        this.transactionId = this.rows.transactionId;
+        this.bookId = this.rows.bookId;
         if (valid) {
-            this.dashboardService.IssueBook(value.isbn, value.bookId, value.memberId, value.adminId, value.issueDate)
+            this.dashboardService.ReturnBook(this.transactionId,this.bookId,value.returnDate)
                 .finally(() => this.isRequesting = false)
                 .subscribe(
                 result => {

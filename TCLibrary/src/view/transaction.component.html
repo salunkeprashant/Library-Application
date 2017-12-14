@@ -13,7 +13,7 @@
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index">
+                <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index" (click)='openmodal(modalId,a)'>
                     <td>
                         {{a.isbn}}
                     </td>
@@ -49,16 +49,13 @@
                 <label for="title">Book Name</label>
                 <input id="title" type="text" required name="title" class="form-control" value="{{row.title}}" ngModel>
             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            
             <br /><br />
-
             <div class="form-group">
                 <label for="memberId">Member Name</label>
-                <select id="memberId" #memberId="ngModel" class="form-control" [(ngModel)]="mId" name="memberId" ngModel>
-                    <option [ngValue]="c.memberId" *ngFor="let c of memberList">
-                        {{c.firstName}} {{c.lastName}}
-                    </option>
-                </select>
+                
+                <ng-select [items]="memberList" bindLabel="memberName" bindValue="memberId"[multiple]="false" placeholder="Select Member" name="memberId" ngModel>
+                </ng-select>
+
             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="form-group">
                 <label for="issueDate">Issue Date :</label>
@@ -67,13 +64,10 @@
             <br /><br />
 
             <div class="form-group">
-                <label for="adminId">Member Name</label>
-                <select id="adminId" #memberId="ngModel" class="form-control" [(ngModel)]="aId" name="adminId" ngModel>
-                    <option [ngValue]="d.adminId" *ngFor="let d of adminList">
-                        {{d.firstName}} {{d.lastName}}
-                    </option>
-                </select>
-            </div>
+                <label for="adminId">Issuer Name</label>
+                <ng-select [items]="adminList" bindLabel="adminName" bindValue="adminId" [multiple]="false" placeholder="Select Issuer" name="adminId" ngModel>
+                </ng-select>
+            </div> 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <br/>
             <br/>

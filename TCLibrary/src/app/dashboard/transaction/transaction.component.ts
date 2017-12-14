@@ -32,17 +32,18 @@ export class TransactionComponent implements OnInit {
     submitted: boolean = false;
 
     saveSuccess: boolean = false;
-    today: any;
+    today;
 
     row: any = '';
     constructor(private dashboardService: DashboardService,
         private userService: UserService,
         public modalService: ModalService,
         public datePipe: DatePipe) {
+        
     }
 
     ngOnInit() {
-        this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:MM a')
+        this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss a')
         this.getBooks();
         this.getMemberList();
         this.getAdmins();

@@ -17,7 +17,7 @@ export class MemberComponent implements OnInit {
     modalId1 = 'DeleteModal';
     modalId2 = 'UpdateModal';
 
-    members: IMemberDetails[];
+    members: any;
 
     public title: IMemberDetails;
     public searchString: string;
@@ -33,8 +33,9 @@ export class MemberComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getBooks();
+        this.getMembers();
     }
+
     openmembermodal(modalId: string, member,Id): void {
         this.member = member;
         this.memberId = Id;
@@ -42,7 +43,7 @@ export class MemberComponent implements OnInit {
     }
 
 
-    getBooks(): void {
+    getMembers(): void {
         this.dashboardService.getMemberDetails()
             .subscribe(
             result => this.members = result,

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TCLibrary.Migrations
 {
-    public partial class First : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -231,7 +231,7 @@ namespace TCLibrary.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     CategoryId = table.Column<int>(nullable: true),
                     Pages = table.Column<string>(nullable: true),
-                    Quantity = table.Column<string>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false),
                     Ratings = table.Column<decimal>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     YearOfPublish = table.Column<string>(nullable: true)
@@ -390,7 +390,7 @@ namespace TCLibrary.Migrations
                     BookId = table.Column<Guid>(nullable: false),
                     ISBN = table.Column<int>(nullable: true),
                     IssueDate = table.Column<DateTime>(nullable: true),
-                    MemberId = table.Column<int>(nullable: true),
+                    MemberId = table.Column<int>(nullable: false),
                     ReturnDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
@@ -419,7 +419,7 @@ namespace TCLibrary.Migrations
                         column: x => x.MemberId,
                         principalTable: "Members",
                         principalColumn: "MemberId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

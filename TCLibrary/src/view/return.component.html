@@ -11,6 +11,7 @@
                         <th>Member Name </th>
                         <th>Issue Date</th>
                         <th>Issued By</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tr *ngFor="let a of details | filter : 'title' : searchString; let i = index" (click)='openmodal(modalId,a)'>
@@ -29,11 +30,11 @@
                     <td>
                         {{a.adminName}}
                     </td>
-                    <!--<td>
+                    <td>
                         <div class="actions">
-                            <span class="glyphicon glyphicon-arrow-up" (click)='openmodal(modalId,a)'></span>&nbsp;&nbsp;&nbsp;
+                            <label class="actions" (click)='openmodal(modalId,a)' style="color: blue;">return</label>&nbsp;&nbsp;&nbsp;
                         </div>
-                    </td>-->
+                    </td>
                 </tr>
             </table>
         </div>
@@ -41,23 +42,29 @@
 </div>
 <app-modal [modalTitle]="'Return Book'" [blocking]='false' [modalId]='modalId'>
     <div class="card-block">
-        <form class="form-inline" #issuebook="ngForm" novalidate (ngSubmit)="issueBook(issuebook)">
+        <form class="form-inline" #returnbook="ngForm" novalidate (ngSubmit)="returnBook(returnbook)">
             <div class="form-group">
-                <label for="memberId">Member ID</label>
-                <input id="memberId" type="text" required name="memberId" class="form-control" value="{{rows.memberId}}" ngModel>
-            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="form-group">
-                <label for="bookId">Book ID</label>
-                <input id="bookId" type="text" required name="bookId" class="form-control" value="{{rows.bookId}}" ngModel>
-            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="form-group">
-                <label for="issueDate">Issue Date :</label>
-                <input id="issueDate" type="text" required name="issueDate" class="form-control" placeholder="{{rows.issueDate}}" ngModel>
+                <label for="memberId" required name="memberId" class="form-control">{{rows.transactionId}}</label>
             </div>
             <div class="form-group">
-                <label for="adminId">AdminId</label>
+                <label for="memberName">Member Name</label>
+                <input id="memberName" type="text" required name="memberName" class="form-control" value="{{rows.memberName}}" ngModel>
+            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            
+            <div class="form-group">
+                <label for="issueDate">Issue Date </label>
+                <input id="issueDate" type="text" required name="issueDate" class="form-control" value="{{rows.issueDate}}" ngModel>
+            </div>
+
+            <div class="form-group">
+                <label for="returnDate">Return Date </label>
+                <input id="returnDate" required name="returnDate" type="text" [(ngModel)]="today" ngModel>
+            </div>
+
+            <!--<div class="form-group">
+                <label for="adminId">Issuer Name</label>
                 <input id="adminId" type="text" required name="adminId" class="form-control" placeholder="{{rows.adminId}}" ngModel>
-            </div>
+            </div>-->
             <br />
             <br />
 
@@ -65,7 +72,7 @@
             <br />
             <br />
             <div class="form-group">
-                <button type="submit" class="btn btn-primary" [disabled]="issuebook.invalid || isRequesting">Return</button>
+                <button type="submit" class="btn btn-primary" [disabled]="returnbook.invalid || isRequesting">Return</button>
                 <app-spinner [isRunning]="isRequesting"></app-spinner>
             </div>
             <div *ngIf="errors" class="alert alert-danger" role="alert">

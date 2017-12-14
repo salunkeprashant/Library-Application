@@ -63,11 +63,7 @@
 
             <div class="form-group">
                 <label for="Author">Author</label>
-                <ng-select [items]="authorList"
-                           bindLabel="author"
-                           bindValue="authorId"
-                           [addTag]="enterAuthor"
-                           [multiple]="false"
+                <ng-select [items]="authorList" bindLabel="author" bindValue="authorId" [addTag]="enterAuthor"[multiple]="false" 
                            placeholder="Select Author or enter"
                            name="authorId" ngModel>
                 </ng-select>
@@ -75,11 +71,7 @@
 
             <div class="form-group">
                 <label for="Category">Category</label>
-                <ng-select [items]="categoryList"
-                           bindLabel="categoryName"
-                           bindValue="categoryId"
-                           [addTag]="enterCategory"
-                           [multiple]="false"
+                <ng-select [items]="categoryList" bindLabel="categoryName" bindValue="categoryId" [addTag]="enterCategory" [multiple]="false"
                            placeholder="Select Category or enter"
                            name="categoryId" ngModel>
                 </ng-select>

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using TCLibrary.Model;
 using TCLibrary.Helpers;
 using TCLibrary.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -49,8 +50,12 @@ namespace TCLibrary.Controllers
                               books.Pages,
                               books.YearOfPublish,
                               books.Quantity,
+                              bookId = appDbContext.BookMetadatas
+                                    .Where(x => x.ISBN == books.ISBN && x.Status == true)
+                                    .Select(x => x.BookId)
+                                    .FirstOrDefault(),
                               Count = appDbContext.BookMetadatas
-                                    .Where(x => x.Status == true && x.ISBN==books.ISBN)
+                                    .Where(x => x.Status == true && x.ISBN == books.ISBN)
                                     .Count()
 
                           });
@@ -67,6 +72,7 @@ namespace TCLibrary.Controllers
                 MemberName = x.Member.FirstName + ' ' + x.Member.LastName,
                 x.Books.Title,
                 x.IssueDate,
+                x.BookId,
                 AdminName = x.Admin.FirstName + ' ' + x.Admin.LastName,
                 x.ReturnDate
             }).Where(x => x.ReturnDate == null);
@@ -89,9 +95,9 @@ namespace TCLibrary.Controllers
             await appDbContext.Books.AddAsync(
                 new Book { Title = book.Title, ISBN = book.ISBN, CategoryId = book.CategoryId, Pages = book.Pages, Quantity = book.Quantity, Ratings = book.Ratings, YearOfPublish = book.YearOfPublish });
 
-            for(int i=1;i<=book.Quantity;i++)
-            await appDbContext.BookMetadatas.AddAsync(
-                new BookMetadata { ISBN = book.ISBN, Status = true });
+            for (int i = 1; i <= book.Quantity; i++)
+                await appDbContext.BookMetadatas.AddAsync(
+                    new BookMetadata { ISBN = book.ISBN, Status = true });
 
             await appDbContext.BookAuthors.AddAsync(new BookAuthor { ISBN = book.ISBN, AuthorId = book.AuthorId });
 
@@ -108,9 +114,35 @@ namespace TCLibrary.Controllers
                 return BadRequest(ModelState);
             }
 
-
             await appDbContext.BookTransactions.AddAsync(
                 new BookTransaction { AdminId = model.AdminId, ISBN = model.ISBN, BookId = model.BookId, IssueDate = model.IssueDate, MemberId = model.MemberId });
+
+            var mdToUpdate = await appDbContext.BookMetadatas.SingleOrDefaultAsync(s => s.BookId == model.BookId);
+            if (mdToUpdate !=null)
+            {
+                mdToUpdate.Status = false;
+            }
+
+            await appDbContext.SaveChangesAsync();
+
+            return new OkObjectResult("Done");
+        }
+
+        [HttpPost("returnbook")]
+        public async Task<IActionResult> ReturnBook([FromBody]ReturnBookModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var BT_ToUpdate = await appDbContext.BookTransactions.SingleOrDefaultAsync(s => s.TransactionId == model.TransactionId);
+            var BM_ToUpdate = await appDbContext.BookMetadatas.SingleOrDefaultAsync(s => s.BookId == model.BookId);
+            if (BM_ToUpdate != null &&  BT_ToUpdate !=null)
+            {
+                BM_ToUpdate.Status = true;
+                BT_ToUpdate.ReturnDate = model.ReturnDate;
+            }
 
             await appDbContext.SaveChangesAsync();
 
@@ -131,11 +163,5 @@ namespace TCLibrary.Controllers
 
         }
 
-        [HttpGet("bktxn")]
-        public IQueryable Txn()
-        {
-            return appDbContext.BookTransactions.Select(x => new { x.TransactionId, x.IssueDate });
-
-        }
     }
 }

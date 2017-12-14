@@ -8,8 +8,8 @@ using TCLibrary.Data;
 namespace TCLibrary.Migrations
 {
     [DbContext(typeof(LibraryDataContext))]
-    [Migration("20171211105231_First")]
-    partial class First
+    [Migration("20171214133214_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -234,7 +234,7 @@ namespace TCLibrary.Migrations
 
                     b.Property<string>("Pages");
 
-                    b.Property<string>("Quantity");
+                    b.Property<int>("Quantity");
 
                     b.Property<decimal?>("Ratings");
 
@@ -310,7 +310,7 @@ namespace TCLibrary.Migrations
 
                     b.Property<DateTime?>("IssueDate");
 
-                    b.Property<int?>("MemberId");
+                    b.Property<int>("MemberId");
 
                     b.Property<DateTime?>("ReturnDate");
 
@@ -538,7 +538,8 @@ namespace TCLibrary.Migrations
 
                     b.HasOne("TCLibrary.Model.Member", "Member")
                         .WithMany("BookTransactions")
-                        .HasForeignKey("MemberId");
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TCLibrary.Model.ContactDetail", b =>

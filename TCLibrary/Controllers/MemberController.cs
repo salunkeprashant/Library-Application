@@ -32,8 +32,8 @@ namespace TCLibrary.Controllers
                           {
                               members.MemberId,
                               members.JoiningDate,
-                              members.FirstName,
-                              members.LastName,
+
+                              memberName = members.FirstName + ' '+ members.LastName,
 
                               contactdetails.EmailAddress,
                               contactdetails.MobileNo,

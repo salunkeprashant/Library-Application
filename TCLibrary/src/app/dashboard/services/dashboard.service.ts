@@ -126,6 +126,21 @@ export class DashboardService extends BaseService {
             .catch(this.handleError);
     }
 
+    ReturnBook(transactionId: number, bookId:number,returnDate:number) {
+        let body = JSON.stringify({ transactionId,bookId,returnDate});
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let authToken = localStorage.getItem('auth_token');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(this.baseUrl + "/dashboard/returnbook", body, options)
+            .map(res => true)
+            .catch(this.handleError);
+    }
+
 
     AddBook(isbn: number, title: string, authorId: number,author: string, categoryId: number, categoryName: string, ratings: number, yearofpublish: string, pages: number, quantity: number): Observable<IBookDetails[]> {
         let body = JSON.stringify({ isbn, title, authorId,author,categoryId,categoryName, pages, quantity, ratings, yearofpublish });

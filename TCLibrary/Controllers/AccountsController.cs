@@ -46,7 +46,7 @@ namespace TCLibrary.Controllers
         [HttpGet]
         public IQueryable Get()
         {
-            return appDbContext.Admins.Select(x => new { x.AdminId, x.FirstName, x.LastName });
+            return appDbContext.Admins.Select(x => new { x.AdminId, adminName = x.FirstName + ' '+ x.LastName });
         }
 
         // POST api/accounts

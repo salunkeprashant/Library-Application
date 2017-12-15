@@ -5,6 +5,7 @@ import { HttpModule, XHRBackend } from '@angular/http';
 import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { routing } from './app.routing';
+import { CommonModule } from '@angular/common';
 
 /* App Root */
 import { AppComponent } from './app.component';
@@ -27,6 +28,7 @@ import { ConfigService } from './shared/utils/config.service';
     HomeComponent,
   ],
     imports: [
+        CommonModule,
     BootstrapModalModule,
     AccountModule,
     DashboardModule,

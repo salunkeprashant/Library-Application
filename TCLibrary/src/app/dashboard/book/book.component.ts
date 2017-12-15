@@ -5,6 +5,7 @@ import { DashboardService } from '../services/dashboard.service';
 import { ModalService } from '../services/modal.service'
 import { UserService } from '../../shared/services/user.service';
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
+import { CommonModule,DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-home',
@@ -15,7 +16,13 @@ import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 })
 export class BookComponent implements OnInit {
     modalId = 'AddBookModal';
-    books: IBookDetails[];
+    modalId1 = 'UpdateBookModal';
+    modalId2 = 'DeleteBookModal';
+
+    books: any;
+
+    book: any = '';
+    bookId: any;
 
     public title: IBookDetails;
     public searchString: string;
@@ -44,6 +51,13 @@ export class BookComponent implements OnInit {
         this.getAuthors();
     }
 
+   
+    openmembermodal(modalId: string, member, Id): void {
+        this.book = member;
+        this.bookId = Id;
+        this.modalService.open(modalId);
+    }
+
     getBooks(): void {
         this.dashboardService.getBookDetails()
             .subscribe(
@@ -67,10 +81,10 @@ export class BookComponent implements OnInit {
             error => console.log("Error :: " + error)
             )
     }
+
     categoryName: any;
     author: any;
     addBook({ value, valid }: { value: any, valid: boolean }) {
-        console.log(value);
         if (typeof value.categoryId === "string") {
             this.categoryName = value.categoryId;
             value.categoryId = (this.categoryList).length + 1
@@ -82,7 +96,6 @@ export class BookComponent implements OnInit {
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';
-        console.log(value);
         if (valid) {
             this.dashboardService.AddBook(value.isbn, value.title, value.authorId, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity, )
                 .finally(() => this.isRequesting = false)
@@ -94,6 +107,30 @@ export class BookComponent implements OnInit {
                 },
                 errors => this.errors = errors);
         }
+    }
+
+    updateBook({ value }: { value: any,}) {
+        if (typeof value.categoryId === "string") {
+            this.categoryName = value.categoryId;
+            value.categoryId = (this.categoryList).length + 1
+        }
+        if (typeof value.authorId === "string") {
+            this.author = value.authorId;
+            value.authorId = (this.authorList).length + 1
+        }
+        console.log(value);
+        this.submitted = true;
+        this.isRequesting = true;
+        this.errors = '';
+            this.dashboardService.UpdateBook(value.isbn, value.title, value.authorId, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity, )
+                .finally(() => this.isRequesting = false)
+                .subscribe(
+                result => {
+                    if (result) {
+                        this.saveSuccess = true;
+                    }
+                },
+                errors => this.errors = errors);
     }
 
     getYear() {

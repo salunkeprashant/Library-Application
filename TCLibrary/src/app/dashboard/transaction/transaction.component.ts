@@ -8,7 +8,8 @@ import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-home',
-    styleUrls: ['../../../css/txnmodal.scss'],
+   // styleUrls: ['../../../css/txnmodal.scss'],
+    styleUrls: ['../../../css/modal.scss'],
     templateUrl: '../../../view/transaction.component.html',
     encapsulation: ViewEncapsulation.None,
     providers: [DashboardService, DatePipe]
@@ -25,6 +26,7 @@ export class TransactionComponent implements OnInit {
     adminList: any;
 
     mId: number;
+    memberName: any;
     memberList: any;
 
     errors: string;

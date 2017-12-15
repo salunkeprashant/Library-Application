@@ -106,6 +106,41 @@ namespace TCLibrary.Controllers
             return new OkObjectResult("Done");
         }
 
+        [HttpPost("updatebook")]
+        public async Task<IActionResult> UpdateBook([FromBody]AddBookModel book)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            bool isAuthorExist = appDbContext.Authors.Any(x => x.Author == book.Author);
+            bool isCaregoryExist = appDbContext.BookCategories.Any(x => x.CategoryName == book.CategoryName);
+
+            if (!isAuthorExist) await appDbContext.Authors.AddAsync(new Authors { Author = book.Author });
+            if (!isCaregoryExist) await appDbContext.BookCategories.AddAsync(new BookCategory { CategoryName = book.CategoryName });
+
+            appDbContext.SaveChanges();
+
+            await appDbContext.Books.AddAsync(
+                new Book { Title = book.Title, ISBN = book.ISBN, CategoryId = book.CategoryId, Pages = book.Pages, Quantity = book.Quantity, Ratings = book.Ratings, YearOfPublish = book.YearOfPublish });
+
+            var BookToUpdate = await appDbContext.Books.SingleOrDefaultAsync(s => s.ISBN == book.ISBN);
+            if (BookToUpdate != null)
+            {
+                BookToUpdate.Title = book.Title;
+                BookToUpdate.Ratings = book.Ratings;
+                BookToUpdate.Pages = book.Pages;
+                BookToUpdate.Quantity = book.Quantity;
+                BookToUpdate.YearOfPublish = book.YearOfPublish;
+            }
+
+            await appDbContext.SaveChangesAsync();
+
+
+            return new OkObjectResult("Done");
+        }
+
         [HttpPost("issuebook")]
         public async Task<IActionResult> IssueBook([FromBody]IssueBookModel model)
         {

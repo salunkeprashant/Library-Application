@@ -8,7 +8,8 @@ import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-home',
-    styleUrls: ['../../../css/txnmodal.scss'],
+    //styleUrls: ['../../../css/txnmodal.scss'],
+    styleUrls: ['../../../css/modal.scss'],
     templateUrl: '../../../view/return.component.html',
     encapsulation: ViewEncapsulation.None,
     providers: [DashboardService, DatePipe]
@@ -60,24 +61,24 @@ export class ReturnComponent implements OnInit {
             )
     }
 
-    transactionId: any; bookId: any;
-    returnBook({ value, valid }: { value: any, valid: boolean }) {
+    transactionId: any;
+    bookId: any;
+    returnBook({ value }: { value: any, }) {
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';
         this.transactionId = this.rows.transactionId;
         this.bookId = this.rows.bookId;
-        if (valid) {
-            this.dashboardService.ReturnBook(this.transactionId,this.bookId,value.returnDate)
-                .finally(() => this.isRequesting = false)
-                .subscribe(
-                result => {
-                    if (result) {
-                        this.saveSuccess = true;
-                    }
-                },
-                errors => this.errors = errors);
-        }
+
+        this.dashboardService.ReturnBook(this.transactionId, this.bookId, value.returnDate)
+            .finally(() => this.isRequesting = false)
+            .subscribe(
+            result => {
+                if (result) {
+                    this.saveSuccess = true;
+                }
+            },
+            errors => this.errors = errors);
     }
 
 }

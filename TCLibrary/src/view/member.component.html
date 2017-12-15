@@ -1,8 +1,11 @@
 ﻿<div class="card">
     <div class="row">
         <div class="col-md-9 col-md-offset-1">
-            <input type="text" placeholder="Find Member here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
-            <button class="btn btn-primary" (click)='modalService.open(modalId)'>Add Member</button>
+            <button class="btn btn-primary" (click)='modalService.open(modalId)' style="float: right">Add New Member</button>
+            <div style="overflow: hidden; padding-right: .5em;">
+                <input type="text" placeholder="Find Member here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
+            </div>
+
             <br />
             <br />
             <table class="table table-striped table-bordered">
@@ -27,7 +30,7 @@
                         {{a.joiningDate | date: "dd-MM-yyyy" }}
                     </td>
                     <td>
-                        {{a.memberName}}
+                        {{a.firstName}} {{a.lastName}}
                     </td>
                     <td>
                         {{a.emailAddress}}
@@ -58,56 +61,69 @@
 
 <app-modal [modalTitle]="'Add Member'" [blocking]='false' [modalId]='modalId'>
     <div class="card-block">
-        <form #addmember="ngForm" novalidate (ngSubmit)="addMember(addmember)">
+        <form #addmember="ngForm" class="form-horizontal" novalidate (ngSubmit)="addMember(addmember)">
             <div class="form-group">
-                <label for="memberId">Member ID</label>
-                <input id="memberId" type="text" required name="memberId" class="form-control" value="{{members.length + 1}}" tmFocus ngModel>
+                <label class="control-label col-sm-4" for="firstName">First Name</label>
+                <div class="col-sm-8">
+                    <input id="firstName" type="text" required name="firstName" class="form-control" placeholder="Enter First Name" ngModel>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="joiningDate">Date of Joining</label>
-                <input id="joiningDate" type="text" required name="joiningDate" class="form-control" placeholder="Enter Join date for Member" ngModel>
+                <label class="control-label col-sm-4" for="lastName">Last Name</label>
+                <div class="col-sm-8">
+                    <input id="lastName" type="text" required name="lastName" class="form-control" placeholder="Enter Last Name" ngModel>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="joiningDate">Date of Joining</label>
+                <div class="col-sm-8">
+                    <input id="joiningDate" type="text" required name="joiningDate" class="form-control" [(ngModel)]="today" ngModel>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="emailAddress">Email</label>
+                <div class="col-sm-8">
+                    <input id="emailAddress" type="text" required name="emailAddress" validateEmail class="form-control" placeholder="Email Address" ngModel #emailAddress="ngModel">
+                    <small [hidden]="emailAddress.valid || (emailAddress.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input id="firstName" type="text" required name="firstName" class="form-control" placeholder="Enter First Name" ngModel>
+                <label class="control-label col-sm-4" for="mobileNo">Mobile Number</label>
+                <div class="col-sm-8">
+                    <input id="mobileNo" type="text" required name="mobileNo" class="form-control" placeholder="Enter Mobile Number" ngModel>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input id="lastName" type="text" required name="lastName" class="form-control" placeholder="Enter Last Name" ngModel>
+                <label class="control-label col-sm-4" for="addressLine">Residential Address</label>
+                <div class="col-sm-8">
+                    <input id="addressLine" type="text" required name="addressLine" class="form-control" placeholder="Enter Members Address" ngModel>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="emailAddress">Email</label>
-                <input id="emailAddress" type="text" required name="emailAddress" validateEmail class="form-control" placeholder="Email Address" ngModel #emailAddress="ngModel">
-                <small [hidden]="emailAddress.valid || (emailAddress.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
+                <label class="control-label col-sm-4" for="cityName">City</label>
+                <div class="col-sm-8">
+                    <input id="cityName" type="text" required name="cityName" class="form-control" placeholder="Enter City" ngModel>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="mobileNo">Mobile Number</label>
-                <input id="mobileNo" type="text" required name="mobileNo" class="form-control" placeholder="Enter Mobile Number" ngModel>
+                <label class="control-label col-sm-4" for="stateName">State</label>
+                <div class="col-sm-8">
+                    <input id="stateName" type="text" required name="stateName" class="form-control" placeholder="Enter State Name" ngModel>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="addressLine">Residential Address</label>
-                <input id="addressLine" type="text" required name="addressLine" class="form-control" placeholder="Enter Members Address" ngModel>
-            </div>
-
-            <div class="form-group">
-                <label for="cityName">City</label>
-                <input id="cityName" type="text" required name="cityName" class="form-control" placeholder="Enter City" ngModel>
-            </div>
-
-            <div class="form-group">
-                <label for="stateName">State</label>
-                <input id="stateName" type="text" required name="stateName" class="form-control" placeholder="Enter State Name" ngModel>
-            </div>
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary" [disabled]="addmember.invalid || isRequesting">Submit</button>
-                <app-spinner [isRunning]="isRequesting"></app-spinner>
+                <div class="col-sm-offset-4 col-sm-8">
+                    <button type="submit" class="btn btn-primary" [disabled]="addmember.invalid || isRequesting">Submit</button>
+                    <app-spinner [isRunning]="isRequesting"></app-spinner>
+                </div>
             </div>
             <div *ngIf="errors" class="alert alert-danger" role="alert">
                 <strong>Oops!</strong> {{errors}}
@@ -122,17 +138,94 @@
 <app-modal [modalTitle]="'Delete Member'" [blocking]='false' [modalId]='modalId1'>
     <div class="card-block">
         <form #deletemember="ngForm" class="form-inline" (ngSubmit)="deleteMember(deletemember)">
-            <h3>Do You Wants to Delete {{member.memberName}} ? </h3>
+            <h3>Do You Wants to Delete {{member.firstName}} {{member.lastName}} ? </h3>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" [disabled]="addmember.valid || isRequesting">Delete</button>
                 <app-spinner [isRunning]="isRequesting"></app-spinner>
             </div>
-            <input type="button" class="btn btn-primary" value="Cancel" (click)="modalService.close(ModalId1)"/>
+            <input type="button" class="btn btn-primary" value="Cancel" (click)="modalService.close(ModalId1)" />
             <div *ngIf="errors" class="alert alert-danger" role="alert">
                 <strong>Oops!</strong> {{errors}}
             </div>
             <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
                 <strong>Member deleted...</strong>
+            </div>
+        </form>
+    </div>
+</app-modal>
+
+<app-modal [modalTitle]="'Update Member'" [blocking]='false' [modalId]='modalId2'>
+    <div class="card-block">
+        <form #updatemember="ngForm" class="form-horizontal" novalidate (ngSubmit)="updateMember(updatemember)">
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="firstName">First Name</label>
+                <div class="col-sm-8">
+                    <input id="firstName" type="text" required name="firstName" class="form-control" value="{{member.firstName}}" ngModel>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="lastName">Last Name</label>
+                <div class="col-sm-8">
+                    <input id="lastName" type="text" required name="lastName" class="form-control" value="{{member.lastName}}" ngModel>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="joiningDate">Date of Joining</label>
+                <div class="col-sm-8">
+                    <input id="joiningDate" type="text" required name="joiningDate" class="form-control" value="{{member.joiningDate}}" ngModel>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="emailAddress">Email</label>
+                <div class="col-sm-8">
+                    <input id="emailAddress" type="text" required name="emailAddress" validateEmail class="form-control" value="{{member.emailAddress}}" ngModel #emailAddress="ngModel">
+                    <small [hidden]="emailAddress.valid || (emailAddress.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="mobileNo">Mobile Number</label>
+                <div class="col-sm-8">
+                    <input id="mobileNo" type="text" required name="mobileNo" class="form-control" value="{{member.mobileNo}}" ngModel>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="addressLine">Residential Address</label>
+                <div class="col-sm-8">
+                    <input id="addressLine" type="text" required name="addressLine" class="form-control" value="{{member.addressLine}}" ngModel>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="cityName">City</label>
+                <div class="col-sm-8">
+                    <input id="cityName" type="text" required name="cityName" class="form-control" value="{{member.cityName}}" ngModel>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="stateName">State</label>
+                <div class="col-sm-8">
+                    <input id="stateName" type="text" required name="stateName" class="form-control" value="{{member.stateName}}" ngModel>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                    <button type="submit" class="btn btn-primary" [disabled]="updatemember.valid || isRequesting">Update Member</button>
+                    <app-spinner [isRunning]="isRequesting"></app-spinner>
+                </div>
+            </div>
+            <div *ngIf="errors" class="alert alert-danger" role="alert">
+                <strong>Oops!</strong> {{errors}}
+            </div>
+            <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
+                <strong>Member succesfullly updated...</strong>
             </div>
         </form>
     </div>

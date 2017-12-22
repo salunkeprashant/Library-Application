@@ -1,8 +1,8 @@
 ﻿import { Component, Input, OnInit, HostListener, ViewEncapsulation } from '@angular/core';
+import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { IMemberDetails } from '../models/member.details.interface';
 import { DashboardService } from '../services/dashboard.service';
-import { ModalService } from '../services/modal.service'
 import { UserService } from '../../shared/services/user.service';
 import { DatePipe } from '@angular/common';
 
@@ -14,14 +14,11 @@ import { DatePipe } from '@angular/common';
     providers: [DashboardService, DatePipe]
 })
 export class MemberComponent implements OnInit {
-    modalId = 'AddMemberModal';
-    modalId1 = 'DeleteModal';
-    modalId2 = 'UpdateModal';
-
     members: any;
 
     public title: IMemberDetails;
     public searchString: string;
+    private modalRef: NgbModalRef;
 
     errors: string;
     isRequesting: boolean;
@@ -35,7 +32,7 @@ export class MemberComponent implements OnInit {
     constructor(
         private dashboardService: DashboardService,
         private userService: UserService,
-        public modalService: ModalService,
+        public modalService: NgbModal,
         public datePipe: DatePipe,
     ) { }
 
@@ -44,10 +41,10 @@ export class MemberComponent implements OnInit {
         this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
     }
 
-    openmembermodal(modalId: string, member, Id): void {
+    openmodal(content, member?, memberId?): void {
         this.member = member;
-        this.memberId = Id;
-        this.modalService.open(modalId);
+        this.memberId = member.memberId;
+        this.modalRef = this.modalService.open(content);
     }
 
 
@@ -79,7 +76,7 @@ export class MemberComponent implements OnInit {
         }
     }
 
-    deleteMember({ value, valid }: { value: null, valid: boolean }) {
+    deleteMember({ value }: { value: null }) {
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';

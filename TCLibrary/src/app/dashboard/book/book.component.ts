@@ -2,10 +2,11 @@ import { Component, Input, OnInit, HostListener, ViewEncapsulation } from '@angu
 import { IBookDetails } from '../models/book.details.interface';
 import { IBookCategoryDetails } from '../models/bookcategory.details.inteface';
 import { DashboardService } from '../services/dashboard.service';
-import { ModalService } from '../services/modal.service'
 import { UserService } from '../../shared/services/user.service';
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
-import { CommonModule,DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+
+import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-home',
@@ -15,14 +16,9 @@ import { CommonModule,DatePipe } from '@angular/common';
     providers: [DashboardService]
 })
 export class BookComponent implements OnInit {
-    modalId = 'AddBookModal';
-    modalId1 = 'UpdateBookModal';
-    modalId2 = 'DeleteBookModal';
-
     books: any;
-
+    isbn: any;
     book: any = '';
-    bookId: any;
 
     public title: IBookDetails;
     public searchString: string;
@@ -30,7 +26,7 @@ export class BookComponent implements OnInit {
     authorList: any;
 
     enterCategory = (term) => ({ categoryId: term, categoryName: term });
-    enterAuthor = (term) => ({ authorId: term, author: term });
+    enterAuthor = (term) => ({ authorId: (this.authorList).length + 1, author: term });
 
     errors: string;
     isRequesting: boolean;
@@ -41,9 +37,22 @@ export class BookComponent implements OnInit {
     private years: number[] = [];
     private yy: number;
 
-    constructor(private dashboardService: DashboardService, private userService: UserService, public modalService: ModalService) {
+    constructor(private dashboardService: DashboardService,
+        private userService: UserService,
+        public modalService: NgbModal) {
     }
-
+    closeResult: string;
+    private modalRef: NgbModalRef;
+  
+    private getDismissReason(reason: any): string {
+        if (reason === ModalDismissReasons.ESC) {
+            return 'by pressing ESC';
+        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        } else {
+            return `with: ${reason}`;
+        }
+    }
     ngOnInit() {
         this.getYear();
         this.getBooks();
@@ -51,11 +60,10 @@ export class BookComponent implements OnInit {
         this.getAuthors();
     }
 
-   
-    openmembermodal(modalId: string, member, Id): void {
-        this.book = member;
-        this.bookId = Id;
-        this.modalService.open(modalId);
+    openmodal(content, book?): void {
+        this.book = book;
+        this.isbn = book.isbn;
+        this.modalRef = this.modalService.open(content);
     }
 
     getBooks(): void {
@@ -96,13 +104,18 @@ export class BookComponent implements OnInit {
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';
+        let localmodalRef = this.modalRef;
+
+        console.log(value);
         if (valid) {
-            this.dashboardService.AddBook(value.isbn, value.title, value.authorId, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity, )
+            this.dashboardService.AddBook(value.isbn, value.title, value.authors, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity, )
                 .finally(() => this.isRequesting = false)
                 .subscribe(
                 result => {
                     if (result) {
                         this.saveSuccess = true;
+                        localmodalRef.close();
+                        this.getBooks();
                     }
                 },
                 errors => this.errors = errors);
@@ -130,7 +143,22 @@ export class BookComponent implements OnInit {
                         this.saveSuccess = true;
                     }
                 },
-                errors => this.errors = errors);
+            errors => this.errors = errors);
+    }
+
+    deleteBook({ value }: { value: null }) {
+        this.submitted = true;
+        this.isRequesting = true;
+        this.errors = '';
+        this.dashboardService.deleteBook(this.isbn)
+            .finally(() => this.isRequesting = false)
+            .subscribe(
+            result => {
+                if (result) {
+                    this.saveSuccess = true;
+                }
+            },
+            errors => this.errors = errors);
     }
 
     getYear() {

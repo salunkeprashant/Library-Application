@@ -11,9 +11,10 @@
                         <th>Category</th>
                         <th>Author</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
-                <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index" (click)='openmodal(modalId,a)'>
+                <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index">
                     <td>
                         {{a.isbn}}
                     </td>
@@ -32,25 +33,36 @@
                         </div>
                         <ng-template #other_content><div style="color:red">Not Available</div></ng-template>
                     </td>
+                    <td >
+                       <span class="glyphicon glyphicon-check" (click)='openmodal(issuecontent,a)'></span>&nbsp;&nbsp;&nbsp;-->
+                    </td>
                 </tr>
             </table>
         </div>
     </div>
 </div>
 
-<app-modal [modalTitle]="'Issue Book'" [blocking]='false' [modalId]='modalId'>
-    <div class="card-block">
-        <form class="form-horizontal" #issuebook="ngForm" novalidate (ngSubmit)="issueBook(issuebook)">
+<ng-template #issuecontent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div style="overflow: hidden; padding-right: .5em;">
+            <h4 class="modal-title">Issue Book</h4>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form #issuebook="ngForm" class="form-horizontal" novalidate (ngSubmit)="issueBook(issuebook)">
             <div class="form-group">
                 <label class="control-label col-sm-4" for="isbn">ISBN</label>
                 <div class="col-sm-8">
-                    <input id="isbn" type="text" required name="isbn" class="form-control" value="{{row.isbn}}" ngModel>
+                    <input id="isbn" type="text" required name="isbn" class="form-control" ngModel="{{row.isbn}}" disabled>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-4" for="title">Book Name</label>
                 <div class="col-sm-8">
-                    <input id="title" type="text" required name="title" class="form-control" value="{{row.title}}" ngModel>
+                    <input id="title" type="text" required name="title" class="form-control" ngModel="{{row.title}}" disabled>
                 </div>
             </div>
             <div class="form-group">
@@ -63,7 +75,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="issueDate">Issue Date :</label>
                 <div class="col-sm-8">
-                    <input id="issueDate" required name="issueDate" type="text" [(ngModel)]="today" ngModel>
+                    <input id="issueDate" required name="issueDate" type="text" class="form-control" [(ngModel)]="today" disabled>
                 </div>
             </div>
 
@@ -88,4 +100,6 @@
             </div>
         </form>
     </div>
-</app-modal>
+    <div class="modal-footer">
+    </div>
+</ng-template>

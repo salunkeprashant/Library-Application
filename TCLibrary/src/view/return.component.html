@@ -14,7 +14,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tr *ngFor="let a of details | filter : 'title' : searchString; let i = index" (click)='openmodal(modalId,a)'>
+                <tr *ngFor="let a of details | filter : 'title' : searchString; let i = index" (click)='openmodal(returncontent,a)'>
                     <td>
                         {{a.transactionId}}
                     </td>
@@ -32,7 +32,7 @@
                     </td>
                     <td>
                         <div class="actions">
-                            <label class="actions" (click)='openmodal(modalId,a)' style="color: blue;">return</label>&nbsp;&nbsp;&nbsp;
+                            <label class="actions" (click)='openmodal(returncontent,a)' style="color: blue;">Return</label>&nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
                 </tr>
@@ -41,20 +41,35 @@
     </div>
 </div>
 
-<app-modal [modalTitle]="'Return Book'" [blocking]='false' [modalId]='modalId'>
-    <div class="card-block">
+<ng-template #returncontent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div style="overflow: hidden; padding-right: .5em;">
+            <h4 class="modal-title">Return Book</h4>
+        </div>
+    </div>
+    <div class="modal-body">
         <form class="form-horizontal" #returnbook="ngForm" novalidate (ngSubmit)="returnBook(returnbook)">
             <div class="form-group">
                 <label class="control-label col-sm-4" for="memberName">Member Name</label>
                 <div class="col-sm-8">
-                    <input id="memberName" type="text" required name="memberName" class="form-control" value="{{rows.memberName}}" ngModel disabled>
+                    <input id="memberName" type="text" required name="memberName" class="form-control" ngModel="{{rows.memberName}}"  disabled>
                 </div>
             </div>
-            
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="title">Book Name</label>
+                <div class="col-sm-8">
+                    <input id="title" type="text" required name="title" class="form-control" ngModel="{{rows.title}}" disabled>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label class="control-label col-sm-4" for="issueDate">Issue Date </label>
                 <div class="col-sm-8">
-                    <input id="issueDate" type="text" required name="issueDate" class="form-control" value="{{rows.issueDate}}" ngModel disabled>
+                    <input id="issueDate" type="text" required name="issueDate" class="form-control" ngModel="{{rows.issueDate}}"  disabled>
                 </div>
             </div>
 
@@ -79,4 +94,6 @@
             </div>
         </form>
     </div>
-</app-modal>
+    <div class="modal-footer">
+    </div>
+</ng-template>

@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TCLibrary.Controllers
 {
-    // [Authorize(Policy = "ApiUser")]
+    [Authorize(Policy = "ApiUser")]
     [Route("api/[controller]")]
     public class DashboardController : Controller
     {
@@ -37,15 +37,13 @@ namespace TCLibrary.Controllers
         public IQueryable Book()
         {
             var result = (from books in appDbContext.Books
-                          join bookAuthors in appDbContext.BookAuthors on books.ISBN equals bookAuthors.ISBN
-                          join author in appDbContext.Authors on bookAuthors.AuthorId equals author.AuthorId
 
                           select new
                           {
                               books.ISBN,
                               books.Title,
                               books.BookCategory.CategoryName,
-                              author.Author,
+                              Author = appDbContext.BookAuthors.Where(x=>x.ISBN == books.ISBN).Select(x => x.Authors.Author),
                               books.Ratings,
                               books.Pages,
                               books.YearOfPublish,
@@ -86,8 +84,14 @@ namespace TCLibrary.Controllers
             {
                 return BadRequest(ModelState);
             }
+            
+            foreach (var author in book.authors)
+            {
+                if (!appDbContext.Authors.Any(x => x.Author == author.Author)) {
+                   await appDbContext.Authors.AddAsync(new Authors { Author = author.Author });
+                }
+            }
 
-            if (book.Author != null) await appDbContext.Authors.AddAsync(new Authors { Author = book.Author });
             if (book.CategoryName != null) await appDbContext.BookCategories.AddAsync(new BookCategory { CategoryName = book.CategoryName });
 
             appDbContext.SaveChanges();
@@ -96,8 +100,7 @@ namespace TCLibrary.Controllers
                 new Book { Title = book.Title, ISBN = book.ISBN, CategoryId = book.CategoryId, Pages = book.Pages, Quantity = book.Quantity, Ratings = book.Ratings, YearOfPublish = book.YearOfPublish });
 
             for (int i = 1; i <= book.Quantity; i++)
-                await appDbContext.BookMetadatas.AddAsync(
-                    new BookMetadata { ISBN = book.ISBN, Status = true });
+                await appDbContext.BookMetadatas.AddAsync(new BookMetadata { ISBN = book.ISBN, Status = true });
 
             await appDbContext.BookAuthors.AddAsync(new BookAuthor { ISBN = book.ISBN, AuthorId = book.AuthorId });
 
@@ -196,6 +199,16 @@ namespace TCLibrary.Controllers
         {
             return appDbContext.Authors.Select(x => new { x.AuthorId, x.Author });
 
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var result = appDbContext.Books.Where(x => x.ISBN == id).FirstOrDefault();
+            appDbContext.Books.Remove(result);
+            appDbContext.SaveChanges();
+
+            return new OkObjectResult("Done");
         }
 
     }

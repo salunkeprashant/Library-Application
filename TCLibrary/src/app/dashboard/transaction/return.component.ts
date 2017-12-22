@@ -2,9 +2,9 @@
 import { IBookDetails } from '../models/book.details.interface';
 import { IBookCategoryDetails } from '../models/bookcategory.details.inteface';
 import { DashboardService } from '../services/dashboard.service';
-import { ModalService } from '../services/modal.service'
 import { UserService } from '../../shared/services/user.service';
 import { DatePipe } from '@angular/common';
+import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-home',
@@ -16,7 +16,6 @@ import { DatePipe } from '@angular/common';
 })
 export class ReturnComponent implements OnInit {
 
-    modalId = 'Return Book';
     books: IBookDetails[];
 
     public title: IBookDetails;
@@ -36,23 +35,26 @@ export class ReturnComponent implements OnInit {
 
     saveSuccess: boolean = false;
     today: any;
-
+    private modalRef: NgbModalRef;
 
     constructor(private dashboardService: DashboardService,
         private userService: UserService,
-        public modalService: ModalService,
-        public datePipe: DatePipe) {
+        public datePipe: DatePipe,
+        public modalService: NgbModal) {
     }
 
     ngOnInit() {
         this.getDetails();
     }
-    rows: any = '';
-    openmodal(modalId: string, a): void {
+
+    rows: any;
+    openmodal(content, rows?): void {
         this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss a')
-        this.rows = a;
-        this.modalService.open(modalId);
+        this.rows = rows;
+        console.log(this.rows);
+        this.modalRef = this.modalService.open(content);
     }
+
     getDetails(): void {
         this.dashboardService.getDetails()
             .subscribe(

@@ -142,9 +142,9 @@ export class DashboardService extends BaseService {
     }
 
 
-    AddBook(isbn: number, title: string, authorId: number,author: string, categoryId: number, categoryName: string, ratings: number, yearofpublish: string, pages: number, quantity: number): Observable<IBookDetails[]> {
-        let body = JSON.stringify({ isbn, title, authorId,author,categoryId,categoryName, pages, quantity, ratings, yearofpublish });
-
+    AddBook(isbn: number, title: string, authors: any,author: string, categoryId: number, categoryName: string, ratings: number, yearofpublish: string, pages: number, quantity: number): Observable<IBookDetails[]> {
+        let body = JSON.stringify({ isbn, title, authors,author,categoryId,categoryName, pages, quantity, ratings, yearofpublish });
+        console.log(authors);
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         let authToken = localStorage.getItem('auth_token');
@@ -209,7 +209,7 @@ export class DashboardService extends BaseService {
 
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(this.baseUrl + "/member" + "/" + isbn, options)
+        return this.http.delete(this.baseUrl + "/dashboard/book" + "/" + isbn, options)
             .map(res => true)
             .catch(this.handleError);
     }

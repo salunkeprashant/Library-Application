@@ -2,9 +2,9 @@
 import { IBookDetails } from '../models/book.details.interface';
 import { IBookCategoryDetails } from '../models/bookcategory.details.inteface';
 import { DashboardService } from '../services/dashboard.service';
-import { ModalService } from '../services/modal.service'
 import { UserService } from '../../shared/services/user.service';
 import { DatePipe } from '@angular/common';
+import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-home',
@@ -16,10 +16,9 @@ import { DatePipe } from '@angular/common';
 })
 export class TransactionComponent implements OnInit {
 
-    modalId = 'Issue Book';
-    books: IBookDetails[];
+    books: any;
 
-    public title: IBookDetails;
+    public title: any;
     public searchString: string;
 
     aId: number
@@ -35,11 +34,12 @@ export class TransactionComponent implements OnInit {
 
     saveSuccess: boolean = false;
     today;
+    private modalRef: NgbModalRef;
 
     row: any = '';
     constructor(private dashboardService: DashboardService,
         private userService: UserService,
-        public modalService: ModalService,
+        public modalService: NgbModal,
         public datePipe: DatePipe) {
         
     }
@@ -51,9 +51,10 @@ export class TransactionComponent implements OnInit {
         this.getAdmins();
     }
 
-    openmodal(modalId: string, a): void {
-        this.row = a;
-        this.modalService.open(modalId);
+    openmodal(content, row?): void {
+        console.log(row.isbn);
+        this.row = row;
+        this.modalRef = this.modalService.open(content);
     }
     getBooks(): void {
         this.dashboardService.getBookDetails()

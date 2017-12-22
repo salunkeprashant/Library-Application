@@ -1,7 +1,7 @@
 ﻿<div class="card">
     <div class="row">
         <div class="col-md-9 col-md-offset-1">
-            <button class="btn btn-primary" (click)='modalService.open(modalId)' style="float: right">Add New Member</button>
+            <button class="btn btn-primary" (click)='modalService.open(addcontent)' style="float: right">Add New Member</button>
             <div style="overflow: hidden; padding-right: .5em;">
                 <input type="text" placeholder="Find Member here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
             </div>
@@ -49,8 +49,8 @@
                     </td>
                     <td>
                         <div class="actions">
-                            <span class="glyphicon glyphicon-edit" (click)='openmembermodal(modalId2,a,a.memberId)'></span>&nbsp;&nbsp;&nbsp;
-                            <span class="glyphicon glyphicon-floppy-remove" (click)='openmembermodal(modalId1,a,a.memberId)'></span> &nbsp;&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-edit" (click)='openmodal(updatecontent,a)'></span>&nbsp;&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-floppy-remove" (click)='openmodal(deletecontent,a)'></span> &nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
                 </tr>
@@ -59,8 +59,16 @@
     </div>
 </div>
 
-<app-modal [modalTitle]="'Add Member'" [blocking]='false' [modalId]='modalId'>
-    <div class="card-block">
+<ng-template #addcontent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div style="overflow: hidden; padding-right: .5em;">
+            <h4 class="modal-title">Add New Member</h4>
+        </div>
+    </div>
+    <div class="modal-body">
         <form #addmember="ngForm" class="form-horizontal" novalidate (ngSubmit)="addMember(addmember)">
             <div class="form-group">
                 <label class="control-label col-sm-4" for="firstName">First Name</label>
@@ -133,17 +141,27 @@
             </div>
         </form>
     </div>
-</app-modal>
+    <div class="modal-footer">
+    </div>
+</ng-template>
 
-<app-modal [modalTitle]="'Delete Member'" [blocking]='false' [modalId]='modalId1'>
-    <div class="card-block">
+<ng-template #deletecontent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div style="overflow: hidden; padding-right: .5em;">
+            <h4 class="modal-title">Delete Book</h4>
+        </div>
+    </div>
+    <div class="modal-body">
         <form #deletemember="ngForm" class="form-inline" (ngSubmit)="deleteMember(deletemember)">
             <h3>Do You Wants to Delete {{member.firstName}} {{member.lastName}} ? </h3>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary" [disabled]="addmember.valid || isRequesting">Delete</button>
+                <button type="submit" class="btn btn-primary" [disabled]="isRequesting">Delete</button>
                 <app-spinner [isRunning]="isRequesting"></app-spinner>
             </div>
-            <input type="button" class="btn btn-primary" value="Cancel" (click)="modalService.close(ModalId1)" />
+            <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
             <div *ngIf="errors" class="alert alert-danger" role="alert">
                 <strong>Oops!</strong> {{errors}}
             </div>
@@ -152,37 +170,46 @@
             </div>
         </form>
     </div>
-</app-modal>
+    <div class="modal-footer">
+    </div>
+</ng-template>
 
-<app-modal [modalTitle]="'Update Member'" [blocking]='false' [modalId]='modalId2'>
-    <div class="card-block">
+<ng-template #updatecontent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div style="overflow: hidden; padding-right: .5em;">
+            <h4 class="modal-title">Update Book</h4>
+        </div>
+    </div>
+    <div class="modal-body">
         <form #updatemember="ngForm" class="form-horizontal" novalidate (ngSubmit)="updateMember(updatemember)">
-
             <div class="form-group">
                 <label class="control-label col-sm-4" for="firstName">First Name</label>
                 <div class="col-sm-8">
-                    <input id="firstName" type="text" required name="firstName" class="form-control" value="{{member.firstName}}" ngModel>
+                    <input id="firstName" type="text" name="firstName" class="form-control" ngModel="{{member.firstName}}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-4" for="lastName">Last Name</label>
                 <div class="col-sm-8">
-                    <input id="lastName" type="text" required name="lastName" class="form-control" value="{{member.lastName}}" ngModel>
+                    <input id="lastName" type="text" name="lastName" class="form-control" ngModel="{{member.lastName}}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-4" for="joiningDate">Date of Joining</label>
                 <div class="col-sm-8">
-                    <input id="joiningDate" type="text" required name="joiningDate" class="form-control" value="{{member.joiningDate}}" ngModel>
+                    <input id="joiningDate" type="text" name="joiningDate" class="form-control" ngModel="{{member.joiningDate}}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-4" for="emailAddress">Email</label>
                 <div class="col-sm-8">
-                    <input id="emailAddress" type="text" required name="emailAddress" validateEmail class="form-control" value="{{member.emailAddress}}" ngModel #emailAddress="ngModel">
+                    <input id="emailAddress" type="text" name="emailAddress" validateEmail class="form-control" ngModel="{{member.emailAddress}}"  #emailAddress="ngModel">
                     <small [hidden]="emailAddress.valid || (emailAddress.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
                 </div>
             </div>
@@ -190,34 +217,34 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="mobileNo">Mobile Number</label>
                 <div class="col-sm-8">
-                    <input id="mobileNo" type="text" required name="mobileNo" class="form-control" value="{{member.mobileNo}}" ngModel>
+                    <input id="mobileNo" type="text" name="mobileNo" class="form-control" ngModel="{{member.mobileNo}}" >
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-4" for="addressLine">Residential Address</label>
                 <div class="col-sm-8">
-                    <input id="addressLine" type="text" required name="addressLine" class="form-control" value="{{member.addressLine}}" ngModel>
+                    <input id="addressLine" type="text" name="addressLine" class="form-control" ngModel="{{member.addressLine}}" >
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-4" for="cityName">City</label>
                 <div class="col-sm-8">
-                    <input id="cityName" type="text" required name="cityName" class="form-control" value="{{member.cityName}}" ngModel>
+                    <input id="cityName" type="text" name="cityName" class="form-control" ngModel="{{member.cityName}}" >
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-4" for="stateName">State</label>
                 <div class="col-sm-8">
-                    <input id="stateName" type="text" required name="stateName" class="form-control" value="{{member.stateName}}" ngModel>
+                    <input id="stateName" type="text" name="stateName" class="form-control" ngModel="{{member.stateName}}" >
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-8">
-                    <button type="submit" class="btn btn-primary" [disabled]="updatemember.valid || isRequesting">Update Member</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="isRequesting">Update Member</button>
                     <app-spinner [isRunning]="isRequesting"></app-spinner>
                 </div>
             </div>
@@ -229,4 +256,6 @@
             </div>
         </form>
     </div>
-</app-modal>
+    <div class="modal-footer">
+    </div>
+</ng-template>

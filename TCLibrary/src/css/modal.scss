@@ -1,65 +1,7 @@
-﻿.modal-overlay {
-  background-color: rgba(0, 0, 0, .4);
-  bottom: 0;
-  left: 0px;
-  position: fixed;
-  right: 0;
-  top: 0;
+﻿.fade {
+   opacity:1;
 }
-
-.closed {
-  .modal{
-      display:none
-  }
-  .modal-overlay{
-    display: none;
-  }
-}
-
-.form-group{
-    padding:10px;
-}
-
-.modal {
-  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .22), 0 17px 20px 0 rgba(0, 0, 0, .12);
-  display:block;
-  background-color: white;
-  left: calc(50% - 300px);
-  max-height: calc(100%);
-  overflow-y: auto;
-  position: fixed;
-  //top: 5em;
-  width: 600px;
-  z-index: 1100;
-  transition: all .5s ease;
-  
-  .div {
-      padding-left:25px;
-  }
-
-  .title {
-    background-color:cadetblue;
-    text-align: center;
-    color: white;
-    line-height: 60px;
-    .right-align {
-      position: absolute;
-      right: 5px;
-      &, i{
-        line-height: 40px;
-      }
-
-      &:hover{
-        cursor: pointer;
-        transform: scale(1.1);
-      }
-    }
-  }
-
-  .body{
-    padding: 1.2em;
-  }
-}
-.table tr{
-    cursor: pointer;
+.modal.fade .modal-dialog{
+    transform:translate(0,5%);
+    font-size:14px;
 }

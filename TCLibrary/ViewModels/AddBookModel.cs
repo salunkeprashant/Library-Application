@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TCLibrary.Model;
 
 namespace TCLibrary.ViewModels
 {
@@ -17,5 +18,6 @@ namespace TCLibrary.ViewModels
         public string YearOfPublish { get; set; }
         public int? AuthorId { get; set; }
         public string CategoryName { get; set; }
+        public List<Authors> authors { get; set; } 
     }
 }

@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { SharedModule } from '../shared/modules/shared.module';
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { NgbModule, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { DataTablesModule } from 'angular-datatables';
 
 import { routing } from './dashboard.routing';
 import { RootComponent } from './root/root.component';
@@ -28,6 +29,7 @@ import { AuthGuard } from '../auth.guard';
         CommonModule,
         FormsModule,
         routing,
+        DataTablesModule,
         SharedModule],
     declarations: [
         RootComponent,

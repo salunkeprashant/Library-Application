@@ -34,7 +34,7 @@
                         <ng-template #other_content><div style="color:red">Not Available</div></ng-template>
                     </td>
                     <td >
-                       <span class="glyphicon glyphicon-check" (click)='openmodal(issuecontent,a)'></span>&nbsp;&nbsp;&nbsp;-->
+                       <span class="glyphicon glyphicon-check" title="Issue Book" (click)='openmodal(issuecontent,a)'></span>
                     </td>
                 </tr>
             </table>
@@ -56,7 +56,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="isbn">ISBN</label>
                 <div class="col-sm-8">
-                    <input id="isbn" type="text" required name="isbn" class="form-control" ngModel="{{row.isbn}}" disabled>
+                    <input id="isbn" type="text" required name="isbn" class="form-control" ngModel="{{row.isbn}}">
                 </div>
             </div>
             <div class="form-group">
@@ -75,7 +75,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="issueDate">Issue Date :</label>
                 <div class="col-sm-8">
-                    <input id="issueDate" required name="issueDate" type="text" class="form-control" [(ngModel)]="today" disabled>
+                    <input id="issueDate" type="text" required name="issueDate" class="form-control" [(ngModel)]="today">
                 </div>
             </div>
 

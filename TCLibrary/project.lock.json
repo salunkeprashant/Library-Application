@@ -2954,13 +2954,13 @@
       ]
     },
     "Libuv/1.9.1": {
-      "sha512": "j6e7SqxL9K8c66wCZnVMwm/NOczi/0rsuJfzkHJP43wzxQCz169oOTjlLmUeeHLL/04ynPaRZLKG1oPVDjTVKg==",
+      "sha512": "uqX2Frwf9PW8MaY7PRNY6HM5BpW1D8oj1EdqzrmbEFD5nH63Yat3aEjN/tws6Tw6Fk7LwmLBvtUh32tTeTaHiA==",
       "type": "package",
       "path": "Libuv/1.9.1",
       "files": [
+        "Libuv.1.9.1.nupkg.sha512",
+        "Libuv.nuspec",
         "License.txt",
-        "libuv.1.9.1.nupkg.sha512",
-        "libuv.nuspec",
         "runtimes/debian-x64/native/libuv.so",
         "runtimes/fedora-x64/native/libuv.so",
         "runtimes/opensuse-x64/native/libuv.so",
@@ -3645,26 +3645,28 @@
       ]
     },
     "Microsoft.CodeAnalysis.CSharp.Workspaces/1.3.0": {
-      "sha512": "xcKxAcMR+AmYWfiiOvB93rcDiyOJ6LohnLN01iUierPy3AuQrh7V1I5dLXs0WhTJvr5BCml+IyHZxyCdeKI2Mg==",
+      "sha512": "wYqbzi7CEhj669g/QmBGKQdzqMDViz/7MeNAQwlbRZf8zhSQ8oYGDUXO0QaPfbpyarhVB1QOBnVdGr3c/mtibQ==",
       "type": "package",
       "path": "Microsoft.CodeAnalysis.CSharp.Workspaces/1.3.0",
       "files": [
+        "Microsoft.CodeAnalysis.CSharp.Workspaces.1.3.0.nupkg.sha512",
+        "Microsoft.CodeAnalysis.CSharp.Workspaces.nuspec",
         "ThirdPartyNotices.rtf",
         "lib/net45/Microsoft.CodeAnalysis.CSharp.Workspaces.dll",
         "lib/net45/Microsoft.CodeAnalysis.CSharp.Workspaces.xml",
         "lib/netstandard1.3/Microsoft.CodeAnalysis.CSharp.Workspaces.dll",
         "lib/netstandard1.3/Microsoft.CodeAnalysis.CSharp.Workspaces.xml",
         "lib/portable-net45+win8/Microsoft.CodeAnalysis.CSharp.Workspaces.dll",
-        "lib/portable-net45+win8/Microsoft.CodeAnalysis.CSharp.Workspaces.xml",
-        "microsoft.codeanalysis.csharp.workspaces.1.3.0.nupkg.sha512",
-        "microsoft.codeanalysis.csharp.workspaces.nuspec"
+        "lib/portable-net45+win8/Microsoft.CodeAnalysis.CSharp.Workspaces.xml"
       ]
     },
     "Microsoft.CodeAnalysis.Workspaces.Common/1.3.0": {
-      "sha512": "QpiPKRwRMkEQUKAipRiBJlvkgIzdI2+d9i8wzjqkAsni628kRdHTON0EHAcpkT7Ax5MqD+81nFrUkt5xlY5QTg==",
+      "sha512": "dfH9HlSgfjGMkHaaKRkO28ycwtruLpZfqHTb+LPqhQlsqaHUNG5x7ezzEMENKMepeqZq6KCFSGtFR5JgLXXoqA==",
       "type": "package",
       "path": "Microsoft.CodeAnalysis.Workspaces.Common/1.3.0",
       "files": [
+        "Microsoft.CodeAnalysis.Workspaces.Common.1.3.0.nupkg.sha512",
+        "Microsoft.CodeAnalysis.Workspaces.Common.nuspec",
         "ThirdPartyNotices.rtf",
         "lib/net45/Microsoft.CodeAnalysis.Workspaces.Desktop.dll",
         "lib/net45/Microsoft.CodeAnalysis.Workspaces.Desktop.xml",
@@ -3673,17 +3675,17 @@
         "lib/netstandard1.3/Microsoft.CodeAnalysis.Workspaces.dll",
         "lib/netstandard1.3/Microsoft.CodeAnalysis.Workspaces.xml",
         "lib/portable-net45+win8/Microsoft.CodeAnalysis.Workspaces.dll",
-        "lib/portable-net45+win8/Microsoft.CodeAnalysis.Workspaces.xml",
-        "microsoft.codeanalysis.workspaces.common.1.3.0.nupkg.sha512",
-        "microsoft.codeanalysis.workspaces.common.nuspec"
+        "lib/portable-net45+win8/Microsoft.CodeAnalysis.Workspaces.xml"
       ]
     },
     "Microsoft.Composition/1.0.27": {
-      "sha512": "K8IBp4DRvAaFuZ1/zLZn6ajxRRxyOpzdaUpReO1rZkiNV2v7p69/nKlNLeITmX5nrUP9JWOP9ecPx/RYUbzZHQ==",
+      "sha512": "pwu80Ohe7SBzZ6i69LVdzowp6V+LaVRzd5F7A6QlD42vQkX0oT7KXKWWPlM/S00w1gnMQMRnEdbtOV12z6rXdQ==",
       "type": "package",
       "path": "Microsoft.Composition/1.0.27",
       "files": [
         "License-Stable.rtf",
+        "Microsoft.Composition.1.0.27.nupkg.sha512",
+        "Microsoft.Composition.nuspec",
         "lib/portable-net45+win8+wp8+wpa81/System.Composition.AttributedModel.XML",
         "lib/portable-net45+win8+wp8+wpa81/System.Composition.AttributedModel.dll",
         "lib/portable-net45+win8+wp8+wpa81/System.Composition.Convention.dll",
@@ -3693,16 +3695,16 @@
         "lib/portable-net45+win8+wp8+wpa81/System.Composition.Runtime.XML",
         "lib/portable-net45+win8+wp8+wpa81/System.Composition.Runtime.dll",
         "lib/portable-net45+win8+wp8+wpa81/System.Composition.TypedParts.XML",
-        "lib/portable-net45+win8+wp8+wpa81/System.Composition.TypedParts.dll",
-        "microsoft.composition.1.0.27.nupkg.sha512",
-        "microsoft.composition.nuspec"
+        "lib/portable-net45+win8+wp8+wpa81/System.Composition.TypedParts.dll"
       ]
     },
     "Microsoft.CSharp/4.3.0": {
-      "sha512": "+Vj2ASIfKeR+p0Heq3AGNV/z0lQ8NpFOKtmHMsKbCZ1yvMugvVtueTe41KC+77i6ceCZOHTyQ49oQthfipRiiw==",
+      "sha512": "P+MBhIM0YX+JqROuf7i306ZLJEjQYA9uUyRDE+OqwUI5sh41e2ZbPQV3LfAPh+29cmceE1pUffXsGfR4eMY3KA==",
       "type": "package",
       "path": "Microsoft.CSharp/4.3.0",
       "files": [
+        "Microsoft.CSharp.4.3.0.nupkg.sha512",
+        "Microsoft.CSharp.nuspec",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -3718,8 +3720,6 @@
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
         "lib/xamarinwatchos10/_._",
-        "microsoft.csharp.4.3.0.nupkg.sha512",
-        "microsoft.csharp.nuspec",
         "ref/MonoAndroid10/_._",
         "ref/MonoTouch10/_._",
         "ref/net45/_._",
@@ -4239,16 +4239,16 @@
       ]
     },
     "Microsoft.Extensions.PlatformAbstractions/1.1.0": {
-      "sha512": "9PV9f7ClbZEfVy1X9sMNn2GRBKiQ9F+foZHlecBieYFSANG6uTrNTbW4Pgo7FdgHjVELUJwIdHDj5jzF/thNGw==",
+      "sha512": "H6ZsQzxYw/6k2DfEQRXdC+vQ6obd6Uba3uGJrnJ2vG4PRXjQZ7seB13JdCfE72abp8E6Fk3gGgDzfJiLZi5ZpQ==",
       "type": "package",
       "path": "Microsoft.Extensions.PlatformAbstractions/1.1.0",
       "files": [
+        "Microsoft.Extensions.PlatformAbstractions.1.1.0.nupkg.sha512",
+        "Microsoft.Extensions.PlatformAbstractions.nuspec",
         "lib/net451/Microsoft.Extensions.PlatformAbstractions.dll",
         "lib/net451/Microsoft.Extensions.PlatformAbstractions.xml",
         "lib/netstandard1.3/Microsoft.Extensions.PlatformAbstractions.dll",
-        "lib/netstandard1.3/Microsoft.Extensions.PlatformAbstractions.xml",
-        "microsoft.extensions.platformabstractions.1.1.0.nupkg.sha512",
-        "microsoft.extensions.platformabstractions.nuspec"
+        "lib/netstandard1.3/Microsoft.Extensions.PlatformAbstractions.xml"
       ]
     },
     "Microsoft.Extensions.Primitives/1.1.0": {
@@ -4838,16 +4838,16 @@
       ]
     },
     "System.Buffers/4.3.0": {
-      "sha512": "A1SZjYGybz4R5lt0HfCum3SbxbZuG1SWuExO4CEGhEpK6gX6zOD69RmPKoQYpaAtkrwQ99Xve8MD93pe8Jr2Nw==",
+      "sha512": "ratu44uTIHgeBeI0dE8DWvmXVBSo4u7ozRZZHOMmK/JPpYyo0dAfgSiHlpiObMQ5lEtEyIXA40sKRYg5J6A8uQ==",
       "type": "package",
       "path": "System.Buffers/4.3.0",
       "files": [
+        "System.Buffers.4.3.0.nupkg.sha512",
+        "System.Buffers.nuspec",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.1/.xml",
-        "lib/netstandard1.1/System.Buffers.dll",
-        "system.buffers.4.3.0.nupkg.sha512",
-        "system.buffers.nuspec"
+        "lib/netstandard1.1/System.Buffers.dll"
       ]
     },
     "System.Collections/4.3.0": {
@@ -5179,10 +5179,12 @@
       ]
     },
     "System.Diagnostics.Contracts/4.3.0": {
-      "sha512": "/5oTdsR0ASsbtOMQZQhieYjQKg1gyn13Kk+5uZxhewl8Z6K5a5wGo/4qWZOo23tWnp1L3NRtw79KDcrWPbmfjA==",
+      "sha512": "eelRRbnm+OloiQvp9CXS0ixjNQldjjkHO4iIkR5XH2VIP8sUB/SIpa1TdUW6/+HDcQ+MlhP3pNa1u5SbzYuWGA==",
       "type": "package",
       "path": "System.Diagnostics.Contracts/4.3.0",
       "files": [
+        "System.Diagnostics.Contracts.4.3.0.nupkg.sha512",
+        "System.Diagnostics.Contracts.nuspec",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -5231,9 +5233,7 @@
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._",
-        "runtimes/aot/lib/netcore50/System.Diagnostics.Contracts.dll",
-        "system.diagnostics.contracts.4.3.0.nupkg.sha512",
-        "system.diagnostics.contracts.nuspec"
+        "runtimes/aot/lib/netcore50/System.Diagnostics.Contracts.dll"
       ]
     },
     "System.Diagnostics.Debug/4.3.0": {
@@ -5727,7 +5727,7 @@
       ]
     },
     "System.Interactive.Async/3.0.0": {
-      "sha512": "iyrgkZz9Dzm0fiPouQszFC3SO/46k6AYd/jG9bu+/o0AoDMaRXtlo3TIuWVNtOuJFd1noL963QouroJ0T3rImw==",
+      "sha512": "UEM+WmG1Oq0bNbPx/E1jaIQ83QOrPfVDUyuYBtG6D6DpB77ytv9flPterMujumpHuoRjSc0ilSB8w41fQc05dw==",
       "type": "package",
       "path": "System.Interactive.Async/3.0.0",
       "files": [
@@ -6400,10 +6400,12 @@
       ]
     },
     "System.Numerics.Vectors/4.3.0": {
-      "sha512": "KCUSxeUI1qNedRfJpSx0TDW/BZyC2O8oAALyXCW25Scl/jxX8/9SoBG4AM7Xob8Go7UJi5yzV//7QM4nOWJSSg==",
+      "sha512": "uAIqmwiQPPXdCz59MQcyHwsH2MzIv24VGCS54kP/1GzTRTuU3hazmiPnGUTlKFia4B1DnbLWjTHoGyTI5BMCTQ==",
       "type": "package",
       "path": "System.Numerics.Vectors/4.3.0",
       "files": [
+        "System.Numerics.Vectors.4.3.0.nupkg.sha512",
+        "System.Numerics.Vectors.nuspec",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -6427,9 +6429,7 @@
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
-        "ref/xamarinwatchos10/_._",
-        "system.numerics.vectors.4.3.0.nupkg.sha512",
-        "system.numerics.vectors.nuspec"
+        "ref/xamarinwatchos10/_._"
       ]
     },
     "System.ObjectModel/4.3.0": {
@@ -6635,18 +6635,18 @@
       ]
     },
     "System.Reflection.Metadata/1.4.1": {
-      "sha512": "Ec75DeR7ZRhOzxIUQLG71pWKofZ4ZMij9MuGhGhSyC6t1jGTt5OacYYYeqTMQ4sc8zQxt9akO/fGT9Xpm3h+TQ==",
+      "sha512": "tc2ZyJgweHCLci5oQGuhQn9TD0Ii9DReXkHtZm3aAGp8xe40rpRjiTbMXOtZU+fr0BOQ46goE9+qIqRGjR9wGg==",
       "type": "package",
       "path": "System.Reflection.Metadata/1.4.1",
       "files": [
+        "System.Reflection.Metadata.1.4.1.nupkg.sha512",
+        "System.Reflection.Metadata.nuspec",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.1/System.Reflection.Metadata.dll",
         "lib/netstandard1.1/System.Reflection.Metadata.xml",
         "lib/portable-net45+win8/System.Reflection.Metadata.dll",
-        "lib/portable-net45+win8/System.Reflection.Metadata.xml",
-        "system.reflection.metadata.1.4.1.nupkg.sha512",
-        "system.reflection.metadata.nuspec"
+        "lib/portable-net45+win8/System.Reflection.Metadata.xml"
       ]
     },
     "System.Reflection.Primitives/4.3.0": {

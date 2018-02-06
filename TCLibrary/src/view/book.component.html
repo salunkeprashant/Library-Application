@@ -7,8 +7,7 @@
             </div>
             <br />
             <br />
-            <div class="allow-horizontal scrolling">
-                <table class="table table-hover table-striped dataTable no-footer">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                     <thead>
                         <tr>
                             <th>ISBN</th>
@@ -22,45 +21,46 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index">
-                        <td>
-                            {{a.isbn}}
-                        </td>
-                        <td>
-                            {{a.title}}
-                        </td>
-                        <td>
-                            {{a.ratings}}
-                        </td>
-                        <td>
-                            <div *ngFor="let item of a.author">
-                                {{item}}
-                            </div>
-                        </td>
-                        <td>
-                            {{a.categoryName}}
-                        </td>
-                        <td>
-                            {{a.pages}}
-                        </td>
-                        <td>
-                            {{a.yearOfPublish}}
-                        </td>
-                        <td>
-                            {{a.quantity}}
-                        </td>
-                        <td>
-                            <div class="actions">
-                                <span class="glyphicon glyphicon-edit" (click)='openmodal(updatecontent,a)'></span>&nbsp;&nbsp;&nbsp;
-                                <span class="glyphicon glyphicon-floppy-remove" (click)='openmodal(deletecontent,a)'></span> &nbsp;&nbsp;&nbsp;
-                            </div>
-                        </td>
-                    </tr>
+                    <tbody>
+                        <tr *ngFor="let a of books">
+                            <td>
+                                {{a.isbn}}
+                            </td>
+                            <td>
+                                {{a.title}}
+                            </td>
+                            <td>
+                                {{a.ratings}}
+                            </td>
+                            <td>
+                                <div *ngFor="let item of a.author">
+                                    {{item}}
+                                </div>
+                            </td>
+                            <td>
+                                {{a.categoryName}}
+                            </td>
+                            <td>
+                                {{a.pages}}
+                            </td>
+                            <td>
+                                {{a.yearOfPublish}}
+                            </td>
+                            <td>
+                                {{a.quantity}}
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <span class="glyphicon glyphicon-edit" (click)='openmodal(updatecontent,a)'></span>&nbsp;&nbsp;&nbsp;
+                                    <span class="glyphicon glyphicon-floppy-remove" (click)='openmodal(deletecontent,a)'></span> &nbsp;&nbsp;&nbsp;
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
-</div>
 
 <ng-template #deletecontent let-c="close" let-d="dismiss">
     <div class="modal-header">

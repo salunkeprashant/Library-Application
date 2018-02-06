@@ -5,6 +5,7 @@ import { DashboardService } from '../services/dashboard.service';
 import { UserService } from '../../shared/services/user.service';
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { CommonModule, DatePipe } from '@angular/common';
+import { Subject } from 'rxjs/Subject';
 
 import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
@@ -16,6 +17,9 @@ import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-boo
     providers: [DashboardService]
 })
 export class BookComponent implements OnInit {
+    dtOptions: DataTables.Settings = {};
+    dtTrigger: Subject<any> = new Subject();
+
     books: any;
     isbn: any;
     book: any = '';
@@ -31,19 +35,20 @@ export class BookComponent implements OnInit {
     errors: string;
     isRequesting: boolean;
     submitted: boolean = false;
-
     saveSuccess: boolean = false;
 
     private years: number[] = [];
     private yy: number;
 
+    closeResult: string;
+    private modalRef: NgbModalRef;
+
     constructor(private dashboardService: DashboardService,
         private userService: UserService,
         public modalService: NgbModal) {
+
     }
-    closeResult: string;
-    private modalRef: NgbModalRef;
-  
+
     private getDismissReason(reason: any): string {
         if (reason === ModalDismissReasons.ESC) {
             return 'by pressing ESC';
@@ -53,88 +58,99 @@ export class BookComponent implements OnInit {
             return `with: ${reason}`;
         }
     }
+
     ngOnInit() {
-        this.getYear();
-        this.getBooks();
-        this.getCategoryList();
-        this.getAuthors();
-    }
-
-    openmodal(content, book?): void {
-        this.book = book;
-        this.isbn = book.isbn;
-        this.modalRef = this.modalService.open(content);
-    }
-
-    getBooks(): void {
-        this.dashboardService.getBookDetails()
-            .subscribe(
-            result => this.books = result,
-            error => console.log("Error :: " + error)
-            )
-    }
-
-    getCategoryList(): void {
-        this.dashboardService.getBookCatgory()
-            .subscribe(
-            result => this.categoryList = result,
-            error => console.log("Error :: " + error)
-            )
-    }
-
-    getAuthors(): void {
-        this.dashboardService.getAuthors()
-            .subscribe(
-            result => this.authorList = result,
-            error => console.log("Error :: " + error)
-            )
-    }
-
-    categoryName: any;
-    author: any;
-    addBook({ value, valid }: { value: any, valid: boolean }) {
-        if (typeof value.categoryId === "string") {
-            this.categoryName = value.categoryId;
-            value.categoryId = (this.categoryList).length + 1
+        this.dtOptions = {
+            pagingType: 'full_numbers',
+            order: [1, "asc"],
+            pageLength: 10
+        };
+            this.getYear();
+            this.getBooks();
+            this.getCategoryList();
+            this.getAuthors();
         }
-        if (typeof value.authorId === "string") {
-            this.author = value.authorId;
-            value.authorId = (this.authorList).length + 1
-        }
-        this.submitted = true;
-        this.isRequesting = true;
-        this.errors = '';
-        let localmodalRef = this.modalRef;
 
-        console.log(value);
-        if (valid) {
-            this.dashboardService.AddBook(value.isbn, value.title, value.authors, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity, )
-                .finally(() => this.isRequesting = false)
+        openmodal(content, book ?): void {
+            this.book = book;
+            this.isbn = book.isbn;
+            this.modalRef = this.modalService.open(content);
+        }
+
+        getBooks(): void {
+            this.dashboardService.getBookDetails()
                 .subscribe(
                 result => {
-                    if (result) {
-                        this.saveSuccess = true;
-                        localmodalRef.close();
-                        this.getBooks();
-                    }
+                    this.books = result,
+                        this.dtTrigger.next();
                 },
-                errors => this.errors = errors);
+                error => console.log("Error :: " + error)
+                )
         }
-    }
 
-    updateBook({ value }: { value: any,}) {
-        if (typeof value.categoryId === "string") {
-            this.categoryName = value.categoryId;
-            value.categoryId = (this.categoryList).length + 1
+        getCategoryList(): void {
+            this.dashboardService.getBookCatgory()
+                .subscribe(
+                result => this.categoryList = result,
+                error => console.log("Error :: " + error)
+                )
         }
-        if (typeof value.authorId === "string") {
-            this.author = value.authorId;
-            value.authorId = (this.authorList).length + 1
+
+        getAuthors(): void {
+            this.dashboardService.getAuthors()
+                .subscribe(
+                result => this.authorList = result,
+                error => console.log("Error :: " + error)
+                )
         }
-        console.log(value);
-        this.submitted = true;
-        this.isRequesting = true;
-        this.errors = '';
+
+
+
+        categoryName: any;
+        author: any;
+        addBook({ value, valid }: { value: any, valid: boolean }) {
+            if (typeof value.categoryId === "string") {
+                this.categoryName = value.categoryId;
+                value.categoryId = (this.categoryList).length + 1
+            }
+            if (typeof value.authorId === "string") {
+                this.author = value.authorId;
+                value.authorId = (this.authorList).length + 1
+            }
+            this.submitted = true;
+            this.isRequesting = true;
+            this.errors = '';
+            let localmodalRef = this.modalRef;
+
+            console.log(value);
+            if (valid) {
+                this.dashboardService.AddBook(value.isbn, value.title, value.authors, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity, )
+                    .finally(() => this.isRequesting = false)
+                    .subscribe(
+                    result => {
+                        if (result) {
+                            this.saveSuccess = true;
+                            localmodalRef.close();
+                            this.getBooks();
+                        }
+                    },
+                    errors => this.errors = errors);
+            }
+        }
+
+        updateBook({ value }: { value: any }) {
+            if (typeof value.categoryId === "string") {
+                this.categoryName = value.categoryId;
+                value.categoryId = (this.categoryList).length + 1
+            }
+            if (typeof value.authorId === "string") {
+                this.author = value.authorId;
+                value.authorId = (this.authorList).length + 1
+            }
+            console.log(value);
+            this.submitted = true;
+            this.isRequesting = true;
+            this.errors = '';
             this.dashboardService.UpdateBook(value.isbn, value.title, value.authorId, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity, )
                 .finally(() => this.isRequesting = false)
                 .subscribe(
@@ -143,29 +159,29 @@ export class BookComponent implements OnInit {
                         this.saveSuccess = true;
                     }
                 },
-            errors => this.errors = errors);
-    }
+                errors => this.errors = errors);
+        }
 
-    deleteBook({ value }: { value: null }) {
-        this.submitted = true;
-        this.isRequesting = true;
-        this.errors = '';
-        this.dashboardService.deleteBook(this.isbn)
-            .finally(() => this.isRequesting = false)
-            .subscribe(
-            result => {
-                if (result) {
-                    this.saveSuccess = true;
-                }
-            },
-            errors => this.errors = errors);
-    }
+        deleteBook({ value }: { value: any }) {
+            this.submitted = true;
+            this.isRequesting = true;
+            this.errors = '';
+            this.dashboardService.deleteBook(this.isbn)
+                .finally(() => this.isRequesting = false)
+                .subscribe(
+                result => {
+                    if (result) {
+                        this.saveSuccess = true;
+                    }
+                },
+                errors => this.errors = errors);
+        }
 
-    getYear() {
-        var today = new Date();
-        this.yy = today.getFullYear();
-        for (var i = (this.yy - 400); i <= this.yy; i++) {
-            this.years.push(i);
+        getYear() {
+            var today = new Date();
+            this.yy = today.getFullYear();
+            for (var i = (this.yy - 400); i <= this.yy; i++) {
+                this.years.push(i);
+            }
         }
     }
-}

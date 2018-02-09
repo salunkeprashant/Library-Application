@@ -3,18 +3,6 @@
     <a class="navbar-brand" href="#">Touchcore Library</a>
     <div class="collapse navbar-collapse" id="navbarCollapse">
 
-        <ul *ngIf="status" class="nav navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" routerLinkActive="active" routerLink="/dashboard">Dashboard</a>
-            </li>
-        </ul>
-
-        <ul *ngIf="status" class="nav navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" routerLinkActive="active" routerLink="/members">Member</a>
-            </li>
-        </ul>
-
         <ul *ngIf="status" class="nav navbar-nav navbar-right">
             <li class="nav-item">
                 <a class="nav-link" (click)="logout()" href="#">Logout</a>

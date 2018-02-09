@@ -23,16 +23,8 @@ export const routing: ModuleWithProviders = RouterModule.forChild([
             { path: 'transaction', component: TransactionComponent },
             { path: 'return', component: ReturnComponent },
             { path: 'book', component: BookComponent },
+            { path: 'members', component: MemberComponent },
         ]
     },
-
-    {
-        path: 'members',
-        component: MemberRootComponent, canActivate: [AuthGuard],
-        children: [
-            { path: '', component: MemberComponent },
-        ]
-    }
-
 ]);
 

@@ -11,6 +11,7 @@ import { NgbModule, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { FooterComponent } from './footer/footer.component';
 
 /* Account Imports */
 import { AccountModule } from './account/account.module';
@@ -25,6 +26,7 @@ import { ConfigService } from './shared/utils/config.service';
   declarations: [
     AppComponent,
     HeaderComponent,
+    FooterComponent,
     HomeComponent,
   ],
     imports: [

@@ -11,7 +11,7 @@ namespace TCLibrary.ViewModels
         public DateTime? JoiningDate { get; set; }
         public string LastName { get; set; }
         public int MemberId { get; set; }
-        public long? MobileNo { get; set; }
+        public long MobileNo { get; set; }
         public string StateName { get; set; }
     }
 }

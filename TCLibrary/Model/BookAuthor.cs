@@ -6,8 +6,8 @@ namespace TCLibrary.Model
     {
         [Key]
         public int id { get; set; }
-        public int? ISBN { get; set; }
-        public int? AuthorId { get; set; }
+        public int ISBN { get; set; }
+        public int AuthorId { get; set; }
         public Book Books { get; set; }
         public Authors Authors { get; set; }
     }

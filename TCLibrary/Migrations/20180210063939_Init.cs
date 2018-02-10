@@ -298,7 +298,7 @@ namespace TCLibrary.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     EmailAddress = table.Column<string>(nullable: true),
                     MemberId = table.Column<int>(nullable: false),
-                    MobileNo = table.Column<long>(nullable: true)
+                    MobileNo = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -317,8 +317,8 @@ namespace TCLibrary.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    AuthorId = table.Column<int>(nullable: true),
-                    ISBN = table.Column<int>(nullable: true)
+                    AuthorId = table.Column<int>(nullable: false),
+                    ISBN = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -328,13 +328,13 @@ namespace TCLibrary.Migrations
                         column: x => x.AuthorId,
                         principalTable: "Authors",
                         principalColumn: "AuthorId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BookAuthors_Books_ISBN",
                         column: x => x.ISBN,
                         principalTable: "Books",
                         principalColumn: "ISBN",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

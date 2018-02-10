@@ -11,7 +11,7 @@ namespace TCLibrary.Model
         public int Id { get; set; }
         public int MemberId { get; set; }
         public string EmailAddress { get; set; }
-        public long? MobileNo { get; set; }
+        public long MobileNo { get; set; }
 
         public Member Members { get; set; }
     }

@@ -71,9 +71,11 @@ export class BookComponent implements OnInit {
             this.getAuthors();
         }
 
-        openmodal(content, book ?): void {
+    openmodal(content, book?): void {
+        if (book !== undefined) {
             this.book = book;
             this.isbn = book.isbn;
+        }
             this.modalRef = this.modalService.open(content);
         }
 
@@ -113,10 +115,6 @@ export class BookComponent implements OnInit {
                 this.categoryName = value.categoryId;
                 value.categoryId = (this.categoryList).length + 1
             }
-            if (typeof value.authorId === "string") {
-                this.author = value.authorId;
-                value.authorId = (this.authorList).length + 1
-            }
             this.submitted = true;
             this.isRequesting = true;
             this.errors = '';
@@ -124,14 +122,14 @@ export class BookComponent implements OnInit {
 
             console.log(value);
             if (valid) {
-                this.dashboardService.AddBook(value.isbn, value.title, value.authors, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity, )
+                this.dashboardService.AddBook(value.isbn, value.title, value.authors, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity, )
                     .finally(() => this.isRequesting = false)
                     .subscribe(
                     result => {
                         if (result) {
                             this.saveSuccess = true;
                             localmodalRef.close();
-                            this.getBooks();
+                            //this.getBooks();
                         }
                     },
                     errors => this.errors = errors);
@@ -162,7 +160,7 @@ export class BookComponent implements OnInit {
                 errors => this.errors = errors);
         }
 
-        deleteBook({ value }: { value: any }) {
+        deleteBook({ value }: { value: null }) {
             this.submitted = true;
             this.isRequesting = true;
             this.errors = '';

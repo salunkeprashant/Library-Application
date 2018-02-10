@@ -8,7 +8,7 @@ using TCLibrary.Data;
 namespace TCLibrary.Migrations
 {
     [DbContext(typeof(LibraryDataContext))]
-    [Migration("20171214133214_Init")]
+    [Migration("20180210063939_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,9 +254,9 @@ namespace TCLibrary.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AuthorId");
+                    b.Property<int>("AuthorId");
 
-                    b.Property<int?>("ISBN");
+                    b.Property<int>("ISBN");
 
                     b.HasKey("id");
 
@@ -336,7 +336,7 @@ namespace TCLibrary.Migrations
 
                     b.Property<int>("MemberId");
 
-                    b.Property<long?>("MobileNo");
+                    b.Property<long>("MobileNo");
 
                     b.HasKey("Id");
 
@@ -506,11 +506,13 @@ namespace TCLibrary.Migrations
                 {
                     b.HasOne("TCLibrary.Model.Authors", "Authors")
                         .WithMany("BookAuthors")
-                        .HasForeignKey("AuthorId");
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TCLibrary.Model.Book", "Books")
                         .WithMany("BookAuthors")
-                        .HasForeignKey("ISBN");
+                        .HasForeignKey("ISBN")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TCLibrary.Model.BookMetadata", b =>

@@ -1,7 +1,7 @@
 ﻿<div class="card">
     <div class="row">
         <div class="col-md-9 col-md-offset-1">
-            <button class="btn btn-primary" (click)='modalService.open(addcontent)' style="float: right">Add New Book</button>
+            <button class="btn btn-primary" (click)='openmodal(addcontent)' style="float: right">Add New Book</button>
             <div style="overflow: hidden; padding-right: .5em;">
                 <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
             </div>
@@ -22,7 +22,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let a of books">
+                        <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index">
                             <td>
                                 {{a.isbn}}
                             </td>
@@ -72,7 +72,7 @@
         </div>
     </div>
     <div class="modal-body">
-        <form #deletebook="ngForm" class="form-inline" (ngSubmit)="deletebook(deletebook)">
+        <form #deletebook="ngForm" class="form-inline" (ngSubmit)="deleteBook(deletebook)">
             <h3>Do You Wants to Delete {{book.title}}  ? </h3>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" [disabled]="isRequesting">Delete</button>

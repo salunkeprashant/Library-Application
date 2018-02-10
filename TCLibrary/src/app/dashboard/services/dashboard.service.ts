@@ -142,8 +142,8 @@ export class DashboardService extends BaseService {
     }
 
 
-    AddBook(isbn: number, title: string, authors: any,author: string, categoryId: number, categoryName: string, ratings: number, yearofpublish: string, pages: number, quantity: number): Observable<IBookDetails[]> {
-        let body = JSON.stringify({ isbn, title, authors,author,categoryId,categoryName, pages, quantity, ratings, yearofpublish });
+    AddBook(isbn: number, title: string, authors: any, categoryId: number, categoryName: string, ratings: number, yearofpublish: string, pages: number, quantity: number): Observable<IBookDetails[]> {
+        let body = JSON.stringify({ isbn, title, authors,categoryId,categoryName, pages, quantity, ratings, yearofpublish });
         console.log(authors);
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -209,7 +209,7 @@ export class DashboardService extends BaseService {
 
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(this.baseUrl + "/dashboard/book" + "/" + isbn, options)
+        return this.http.delete(this.baseUrl + "/dashboard" + "/" + isbn, options)
             .map(res => true)
             .catch(this.handleError);
     }

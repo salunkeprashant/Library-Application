@@ -43,7 +43,7 @@ namespace TCLibrary.Controllers
                               books.ISBN,
                               books.Title,
                               books.BookCategory.CategoryName,
-                              Author = appDbContext.BookAuthors.Where(x=>x.ISBN == books.ISBN).Select(x => x.Authors.Author),
+                              Author = appDbContext.BookAuthors.Where(x => x.ISBN == books.ISBN).Select(x => x.Authors.Author),
                               books.Ratings,
                               books.Pages,
                               books.YearOfPublish,
@@ -84,11 +84,12 @@ namespace TCLibrary.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             foreach (var author in book.authors)
             {
-                if (!appDbContext.Authors.Any(x => x.Author == author.Author)) {
-                   await appDbContext.Authors.AddAsync(new Authors { Author = author.Author });
+                if (!appDbContext.Authors.Any(x => x.Author == author.Author))
+                {
+                    await appDbContext.Authors.AddAsync(new Authors { Author = author.Author });
                 }
             }
 
@@ -102,7 +103,11 @@ namespace TCLibrary.Controllers
             for (int i = 1; i <= book.Quantity; i++)
                 await appDbContext.BookMetadatas.AddAsync(new BookMetadata { ISBN = book.ISBN, Status = true });
 
-            await appDbContext.BookAuthors.AddAsync(new BookAuthor { ISBN = book.ISBN, AuthorId = book.AuthorId });
+            foreach (var author in book.authors)
+            {
+                await appDbContext.BookAuthors.AddAsync(new BookAuthor { ISBN = book.ISBN, AuthorId = author.AuthorId });
+            }
+
 
             await appDbContext.SaveChangesAsync();
 
@@ -117,16 +122,18 @@ namespace TCLibrary.Controllers
                 return BadRequest(ModelState);
             }
 
-            bool isAuthorExist = appDbContext.Authors.Any(x => x.Author == book.Author);
-            bool isCaregoryExist = appDbContext.BookCategories.Any(x => x.CategoryName == book.CategoryName);
+            foreach (var author in book.authors)
+            {
+                if (!appDbContext.Authors.Any(x => x.Author == author.Author))
+                {
+                    await appDbContext.Authors.AddAsync(new Authors { Author = author.Author });
+                }
+            }
 
-            if (!isAuthorExist) await appDbContext.Authors.AddAsync(new Authors { Author = book.Author });
+            bool isCaregoryExist = appDbContext.BookCategories.Any(x => x.CategoryName == book.CategoryName);
             if (!isCaregoryExist) await appDbContext.BookCategories.AddAsync(new BookCategory { CategoryName = book.CategoryName });
 
             appDbContext.SaveChanges();
-
-            await appDbContext.Books.AddAsync(
-                new Book { Title = book.Title, ISBN = book.ISBN, CategoryId = book.CategoryId, Pages = book.Pages, Quantity = book.Quantity, Ratings = book.Ratings, YearOfPublish = book.YearOfPublish });
 
             var BookToUpdate = await appDbContext.Books.SingleOrDefaultAsync(s => s.ISBN == book.ISBN);
             if (BookToUpdate != null)
@@ -156,7 +163,7 @@ namespace TCLibrary.Controllers
                 new BookTransaction { AdminId = model.AdminId, ISBN = model.ISBN, BookId = model.BookId, IssueDate = model.IssueDate, MemberId = model.MemberId });
 
             var mdToUpdate = await appDbContext.BookMetadatas.SingleOrDefaultAsync(s => s.BookId == model.BookId);
-            if (mdToUpdate !=null)
+            if (mdToUpdate != null)
             {
                 mdToUpdate.Status = false;
             }
@@ -176,7 +183,7 @@ namespace TCLibrary.Controllers
 
             var BT_ToUpdate = await appDbContext.BookTransactions.SingleOrDefaultAsync(s => s.TransactionId == model.TransactionId);
             var BM_ToUpdate = await appDbContext.BookMetadatas.SingleOrDefaultAsync(s => s.BookId == model.BookId);
-            if (BM_ToUpdate != null &&  BT_ToUpdate !=null)
+            if (BM_ToUpdate != null && BT_ToUpdate != null)
             {
                 BM_ToUpdate.Status = true;
                 BT_ToUpdate.ReturnDate = model.ReturnDate;

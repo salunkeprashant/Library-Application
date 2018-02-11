@@ -129,6 +129,7 @@ export class BookComponent implements OnInit {
                         if (result) {
                             this.saveSuccess = true;
                             localmodalRef.close();
+                            window.location.reload();
                             //this.getBooks();
                         }
                     },

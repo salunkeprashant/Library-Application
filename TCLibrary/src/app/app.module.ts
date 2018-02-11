@@ -6,11 +6,13 @@ import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 import { routing } from './app.routing';
 import { CommonModule } from '@angular/common';
 import { NgbModule, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { DataTablesModule } from 'angular-datatables';
 
 /* App Root */
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { AvailableBookComponent } from './public/availableBook.component';
 import { FooterComponent } from './footer/footer.component';
 
 /* Account Imports */
@@ -28,6 +30,7 @@ import { ConfigService } from './shared/utils/config.service';
         HeaderComponent,
         FooterComponent,
         HomeComponent,
+        AvailableBookComponent
     ],
     imports: [
         NgbModule.forRoot(),
@@ -41,7 +44,8 @@ import { ConfigService } from './shared/utils/config.service';
         CommonModule,
         FormsModule,
         routing,
-        SharedModule
+        SharedModule,
+        DataTablesModule
     ],
     providers: [ConfigService, {
         provide: XHRBackend,

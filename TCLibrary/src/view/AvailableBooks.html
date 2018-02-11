@@ -1,0 +1,47 @@
+﻿<div class="card">
+    <div class="row">
+        <div class="col-md-9 col-md-offset-1">
+            <div class="table-condensed">
+                <div class="col-md-9 col-md-offset-1">
+                    <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
+                    <br />
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                        <thead>
+                            <tr>
+                                <th>ISBN</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Author</th>
+                                <th>Pages</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index">
+                            <td>
+                                {{a.isbn}}
+                            </td>
+                            <td>
+                                {{a.title}}
+                            </td>
+                            <td>
+                                {{a.categoryName}}
+                            </td>
+                            <td>
+                                {{a.author}}
+                            </td>
+                            <td>
+                                {{a.pages}}
+                            </td>
+                            <td>
+                                <div *ngIf="a.count>0;else other_content" style="color:green">
+                                    Available ({{a.count}})
+                                </div>
+                                <ng-template #other_content><div style="color:red">Not Available</div></ng-template>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,7 +8,6 @@ import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-boo
 
 @Component({
     selector: 'app-home',
-   // styleUrls: ['../../../css/txnmodal.scss'],
     styleUrls: ['../../../css/modal.scss'],
     templateUrl: '../../../view/transaction.component.html',
     encapsulation: ViewEncapsulation.None,

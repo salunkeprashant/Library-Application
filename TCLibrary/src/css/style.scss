@@ -1,5 +1,5 @@
 ﻿footer {
-        position: absolute;
+        position: relative;
         bottom: 0;
         height: auto;
         width: 100%;
@@ -16,4 +16,7 @@
 }
 #email, #password{
     width:50%;
+}
+.navbar {
+    margin-bottom:0px;
 }

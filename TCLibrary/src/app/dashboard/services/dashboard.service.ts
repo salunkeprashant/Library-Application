@@ -172,6 +172,21 @@ export class DashboardService extends BaseService {
             .catch(this.handleError);
     }
 
+    UpdateMember(memberId:number, addressLine: string, cityName: string, emailAddress: string, firstName: string, lastName: string, mobileNo: string, joiningDate: string, stateName: string ) {
+        let body = JSON.stringify({ memberId, addressLine, cityName, emailAddress, firstName, lastName, mobileNo, joiningDate, stateName});
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let authToken = localStorage.getItem('auth_token');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(this.baseUrl + "/member/updatemember", body, options)
+            .map(res => true)
+            .catch(this.handleError);
+    }
+
 
     AddMember(memberId: number, joiningDate: string, firstName: string, lastName: string, mobileNo: number, emailAddress: string, addressLine: string, cityName: string, stateName: string): Observable<IMemberDetails[]> {
         let body = JSON.stringify({ memberId, joiningDate, firstName, lastName, emailAddress, mobileNo, addressLine, cityName, stateName });

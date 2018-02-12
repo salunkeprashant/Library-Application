@@ -15,7 +15,6 @@ import { DatePipe } from '@angular/common';
 })
 export class MemberComponent implements OnInit {
     members: any;
-
     public title: IMemberDetails;
     public searchString: string;
     private modalRef: NgbModalRef;
@@ -58,11 +57,12 @@ export class MemberComponent implements OnInit {
 
     NewmemberId: any;
     addMember({ value, valid }: { value: IMemberDetails, valid: boolean }) {
-        this.NewmemberId = (this.members).length +1;
+        this.NewmemberId = (this.members).length + 1;
         console.log(this.NewmemberId);
         this.submitted = true;
         this.isRequesting = true;
         this.errors = '';
+
         if (valid) {
             this.dashboardService.AddMember(this.NewmemberId, value.joiningDate, value.firstName, value.lastName, value.mobileNo, value.emailAddress, value.addressLine, value.cityName, value.stateName)
                 .finally(() => this.isRequesting = false)
@@ -70,6 +70,8 @@ export class MemberComponent implements OnInit {
                 result => {
                     if (result) {
                         this.saveSuccess = true;
+                        this.modalRef.dismiss();
+                        window.location.reload();
                     }
                 },
                 errors => this.errors = errors);
@@ -86,6 +88,26 @@ export class MemberComponent implements OnInit {
             result => {
                 if (result) {
                     this.saveSuccess = true;
+                    this.modalRef.dismiss();
+                    window.location.reload();
+                }
+            },
+            errors => this.errors = errors);
+    }
+
+    updateMember({ value }: { value: any }) {
+        console.log(value, this.memberId);
+        this.submitted = true;
+        this.isRequesting = true;
+        this.errors = '';
+        this.dashboardService.UpdateMember(this.memberId, value.addressLine, value.cityName, value.emailAddress, value.firstName, value.lastName, value.mobileNo, value.joiningDate, value.stateName)
+            .finally(() => this.isRequesting = false)
+            .subscribe(
+            result => {
+                if (result) {
+                    this.saveSuccess = true;
+                    this.modalRef.dismiss();
+                    window.location.reload();
                 }
             },
             errors => this.errors = errors);

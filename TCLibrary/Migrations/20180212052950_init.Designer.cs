@@ -8,8 +8,8 @@ using TCLibrary.Data;
 namespace TCLibrary.Migrations
 {
     [DbContext(typeof(LibraryDataContext))]
-    [Migration("20180210063939_Init")]
-    partial class Init
+    [Migration("20180212052950_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

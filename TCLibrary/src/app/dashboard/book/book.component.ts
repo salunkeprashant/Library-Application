@@ -76,7 +76,7 @@ export class BookComponent implements OnInit {
             this.book = book;
             this.isbn = book.isbn;
         }
-            this.modalRef = this.modalService.open(content);
+        this.modalRef = this.modalService.open(content);
         }
 
         getBooks(): void {
@@ -118,7 +118,7 @@ export class BookComponent implements OnInit {
             this.submitted = true;
             this.isRequesting = true;
             this.errors = '';
-            let localmodalRef = this.modalRef;
+            
 
             console.log(value);
             if (valid) {
@@ -128,9 +128,8 @@ export class BookComponent implements OnInit {
                     result => {
                         if (result) {
                             this.saveSuccess = true;
-                            localmodalRef.close();
+                            this.modalRef.dismiss();
                             window.location.reload();
-                            //this.getBooks();
                         }
                     },
                     errors => this.errors = errors);
@@ -150,12 +149,14 @@ export class BookComponent implements OnInit {
             this.submitted = true;
             this.isRequesting = true;
             this.errors = '';
-            this.dashboardService.UpdateBook(value.isbn, value.title, value.authorId, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity, )
+            this.dashboardService.UpdateBook(value.isbn, value.title, value.authorId, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
                 .finally(() => this.isRequesting = false)
                 .subscribe(
                 result => {
                     if (result) {
                         this.saveSuccess = true;
+                        this.modalRef.dismiss();
+                        window.location.reload();
                     }
                 },
                 errors => this.errors = errors);
@@ -171,6 +172,8 @@ export class BookComponent implements OnInit {
                 result => {
                     if (result) {
                         this.saveSuccess = true;
+                        this.modalRef.dismiss();
+                        window.location.reload();
                     }
                 },
                 errors => this.errors = errors);

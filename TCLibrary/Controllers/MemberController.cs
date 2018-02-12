@@ -78,12 +78,38 @@ namespace TCLibrary.Controllers
         }
 
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPost("updatemember")]
+        public async Task<IActionResult> UpdateMember([FromBody]AddMemberModel member)
         {
-        }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var MemberUpdate = await appDbContext.Members.SingleOrDefaultAsync(s => s.MemberId == member.MemberId);
+            if (MemberUpdate != null)
+            {
+                MemberUpdate.FirstName = member.FirstName;
+                MemberUpdate.LastName = member.LastName;
+                MemberUpdate.JoiningDate = member.JoiningDate;
 
+                var ContactUpdate = await appDbContext.ContactDetails.SingleOrDefaultAsync(s => s.MemberId == member.MemberId);
+                if (ContactUpdate != null)
+                {
+                    ContactUpdate.EmailAddress = member.EmailAddress;
+                    ContactUpdate.MobileNo = member.MobileNo;
+                }
+
+                var AddressUpdate = await appDbContext.Addresses.SingleOrDefaultAsync(s => s.MemberId == member.MemberId);
+                if (AddressUpdate != null)
+                {
+                    AddressUpdate.AddressLine = member.AddressLine;
+                    AddressUpdate.CityName = member.CityName;
+                    AddressUpdate.StateName = member.StateName;
+                }
+            }
+            await appDbContext.SaveChangesAsync();
+            return new OkObjectResult("Done");
+        }
         // DELETE api/member/delete
         //[Route("api/member/delete")]
         [HttpDelete("{id}")]

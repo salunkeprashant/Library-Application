@@ -49,6 +49,13 @@ namespace TCLibrary
             var jwtIssuer = Configuration.GetSection("JwtIssuerOptions").GetSection("Issuer").Value;
             var jwtAudience = Configuration.GetSection("JwtIssuerOptions").GetSection("Audience").Value;
 
+
+            // Configure IIS
+            //services.Configure<IISOptions>(options =>
+            //{
+            //    options. = true;
+            //});
+
             // Configure JwtIssuerOptions
             services.Configure<JwtIssuerOptions>(options =>
             {

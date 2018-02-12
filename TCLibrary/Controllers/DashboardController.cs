@@ -42,8 +42,10 @@ namespace TCLibrary.Controllers
                           {
                               books.ISBN,
                               books.Title,
-                              books.BookCategory.CategoryName,
+                              CategoryName = books.BookCategory.CategoryName,
+                              CategoryId = books.BookCategory.CategoryId,
                               Author = appDbContext.BookAuthors.Where(x => x.ISBN == books.ISBN).Select(x => x.Authors.Author),
+                              AuthorId = appDbContext.BookAuthors.Where(x => x.ISBN == books.ISBN).Select(x => x.Authors.AuthorId),
                               books.Ratings,
                               books.Pages,
                               books.YearOfPublish,

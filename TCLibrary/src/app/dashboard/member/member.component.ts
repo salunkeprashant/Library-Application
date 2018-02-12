@@ -40,9 +40,11 @@ export class MemberComponent implements OnInit {
         this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
     }
 
-    openmodal(content, member?, memberId?): void {
-        this.member = member;
-        this.memberId = member.memberId;
+    openmodal(content, member?): void {
+        if (member !== undefined) {
+            this.member = member;
+            this.memberId = member.memberId;
+        }
         this.modalRef = this.modalService.open(content);
     }
 

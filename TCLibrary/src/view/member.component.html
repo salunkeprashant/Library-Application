@@ -1,7 +1,7 @@
 ﻿<div class="card">
     <div class="row">
         <div class="col-md-9 col-md-offset-1">
-            <button class="btn btn-primary" (click)='modalService.open(addcontent)' style="float: right">Add New Member</button>
+            <button class="btn btn-primary" (click)='openmodal(addcontent)' style="float: right">Add New Member</button>
             <div style="overflow: hidden; padding-right: .5em;">
                 <input type="text" placeholder="Find Member here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
             </div>

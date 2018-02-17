@@ -51,10 +51,11 @@ namespace TCLibrary
 
 
             // Configure IIS
-            //services.Configure<IISOptions>(options =>
-            //{
-            //    options. = true;
-            //});
+            services.Configure<IISOptions>(options =>
+            {
+                options.AutomaticAuthentication = true;
+                options.ForwardClientCertificate = false;
+            });
 
             // Configure JwtIssuerOptions
             services.Configure<JwtIssuerOptions>(options =>

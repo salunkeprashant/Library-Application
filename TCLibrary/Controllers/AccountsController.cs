@@ -21,8 +21,6 @@ namespace TCLibrary.Controllers
     {
         private readonly LibraryDataContext appDbContext;
         private readonly UserManager<AppUser> userManager;
-        private readonly SignInManager<AppUser> signInManager;
-        private readonly ILogger logger;
         private readonly JsonSerializerSettings serializerSettings;
         private readonly IJwtFactory jwtFactory;
         private readonly JwtIssuerOptions jwtOptions;

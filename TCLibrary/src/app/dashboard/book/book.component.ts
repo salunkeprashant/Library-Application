@@ -6,6 +6,7 @@ import { UserService } from '../../shared/services/user.service';
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Subject } from 'rxjs/Subject';
+import { ApiService } from '../../shared/utils/api.service';
 
 import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
@@ -45,6 +46,7 @@ export class BookComponent implements OnInit {
 
     constructor(private dashboardService: DashboardService,
         private userService: UserService,
+        private apiService: ApiService,
         public modalService: NgbModal) {
 
     }
@@ -80,21 +82,17 @@ export class BookComponent implements OnInit {
     }
 
     getBooks(): void {
-        this.dashboardService.getBookDetails()
-            .subscribe(
+        this.apiService.get(`/dashboard/book`).subscribe(
             result => {
                 this.books = result,
                     this.dtTrigger.next();
-            },
-            error => console.log("Error :: " + error)
-            )
+            });
     }
 
     getCategoryList(): void {
         this.dashboardService.getBookCatgory()
             .subscribe(
             result => this.categoryList = result,
-            error => console.log("Error :: " + error)
             )
     }
 
@@ -102,7 +100,6 @@ export class BookComponent implements OnInit {
         this.dashboardService.getAuthors()
             .subscribe(
             result => this.authorList = result,
-            error => console.log("Error :: " + error)
             )
     }
 

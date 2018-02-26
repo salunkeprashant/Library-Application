@@ -40,7 +40,7 @@ export class TransactionComponent implements OnInit {
         private userService: UserService,
         public modalService: NgbModal,
         public datePipe: DatePipe) {
-        
+
     }
 
     ngOnInit() {
@@ -58,22 +58,19 @@ export class TransactionComponent implements OnInit {
     getBooks(): void {
         this.dashboardService.getBookDetails()
             .subscribe(
-            result => this.books = result,
-            error => console.log("Error :: " + error)
-            )
+            result =>this.books = result
+        )
     }
     getAdmins(): void {
         this.dashboardService.getAdmins()
             .subscribe(
             result => this.adminList = result,
-            error => console.log("Error :: " + error)
             )
     }
     getMemberList(): void {
         this.dashboardService.getMemberDetails()
             .subscribe(
             result => this.memberList = result,
-            error => console.log("Error :: " + error)
             )
     }
 

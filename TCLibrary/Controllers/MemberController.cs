@@ -74,7 +74,7 @@ namespace TCLibrary.Controllers
             appDbContext.SaveChanges();
 
 
-            return new OkObjectResult("Done");
+            return new OkObjectResult("{}");
         }
 
 
@@ -108,7 +108,7 @@ namespace TCLibrary.Controllers
                 }
             }
             await appDbContext.SaveChangesAsync();
-            return new OkObjectResult("Done");
+            return new OkObjectResult("{}");
         }
         // DELETE api/member/delete
         //[Route("api/member/delete")]
@@ -119,7 +119,7 @@ namespace TCLibrary.Controllers
             appDbContext.Members.Remove(result);
             appDbContext.SaveChanges();
 
-            return new OkObjectResult("Done");
+            return new OkObjectResult("{}");
         }
     }
 }

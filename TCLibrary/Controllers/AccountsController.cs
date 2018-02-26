@@ -68,7 +68,7 @@ namespace TCLibrary.Controllers
                 new Admin { IdentityId = user.Id, FirstName = model.FirstName, LastName = model.LastName });
             await appDbContext.SaveChangesAsync();
 
-            return new OkObjectResult("Done");
+            return new OkObjectResult("{}");
         }
 
         // POST: api/account/login

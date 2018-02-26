@@ -113,7 +113,7 @@ namespace TCLibrary.Controllers
 
             await appDbContext.SaveChangesAsync();
 
-            return new OkObjectResult("Done");
+            return new OkObjectResult("{}");
         }
 
         [HttpPost("updatebook")]
@@ -150,7 +150,7 @@ namespace TCLibrary.Controllers
             await appDbContext.SaveChangesAsync();
 
 
-            return new OkObjectResult("Done");
+            return new OkObjectResult("{}");
         }
 
         [HttpPost("issuebook")]
@@ -172,7 +172,7 @@ namespace TCLibrary.Controllers
 
             await appDbContext.SaveChangesAsync();
 
-            return new OkObjectResult("Done");
+            return new OkObjectResult("{}");
         }
 
         [HttpPost("returnbook")]
@@ -193,7 +193,7 @@ namespace TCLibrary.Controllers
 
             await appDbContext.SaveChangesAsync();
 
-            return new OkObjectResult("Done");
+            return new OkObjectResult("{}");
         }
 
         [HttpGet("category")]
@@ -217,7 +217,7 @@ namespace TCLibrary.Controllers
             appDbContext.Books.Remove(result);
             appDbContext.SaveChanges();
 
-            return new OkObjectResult("Done");
+            return new OkObjectResult("{}");
         }
 
     }

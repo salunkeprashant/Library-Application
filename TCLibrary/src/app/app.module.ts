@@ -1,12 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule, XHRBackend } from '@angular/http';
-import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
+import { HttpClientModule } from '@angular/common/http';
 import { routing } from './app.routing';
 import { CommonModule } from '@angular/common';
 import { NgbModule, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 /* App Root */
 import { AppComponent } from './app.component';
@@ -21,7 +21,8 @@ import { AccountModule } from './account/account.module';
 /* Dashboard Imports */
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SharedModule } from './shared/modules/shared.module';
-import { ConfigService } from './shared/utils/config.service';
+import { ApiService } from './shared/utils/api.service';
+import { HttpTokenInterceptor } from './shared/utils/http.token.interceptor';
 
 
 @NgModule({
@@ -39,17 +40,17 @@ import { ConfigService } from './shared/utils/config.service';
         DashboardModule,
         BrowserModule,
         FormsModule,
-        HttpModule,
+        HttpClientModule,
         routing,
         CommonModule,
         FormsModule,
-        routing,
         SharedModule,
         DataTablesModule
     ],
-    providers: [ConfigService, {
-        provide: XHRBackend,
-        useClass: AuthenticateXHRBackend
+    providers: [ApiService, {
+        provide: HTTP_INTERCEPTORS,
+        useClass: HttpTokenInterceptor,
+        multi: true
     }],
     bootstrap: [AppComponent]
 })

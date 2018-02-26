@@ -7,7 +7,7 @@
             </div>
             <br />
             <br />
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                <table id="dt_book" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                     <thead>
                         <tr>
                             <th>ISBN</th>
@@ -281,3 +281,7 @@
     <div class="modal-footer">
     </div>
 </ng-template>
+
+<script>
+    $('.dt_book').DataTable().ajax.reload();
+</script>

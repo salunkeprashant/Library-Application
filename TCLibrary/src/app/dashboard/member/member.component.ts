@@ -73,7 +73,6 @@ export class MemberComponent implements OnInit {
                     if (result) {
                         this.saveSuccess = true;
                         this.modalRef.dismiss();
-                        window.location.reload();
                     }
                 },
                 errors => this.errors = errors);
@@ -91,7 +90,6 @@ export class MemberComponent implements OnInit {
                 if (result) {
                     this.saveSuccess = true;
                     this.modalRef.dismiss();
-                    window.location.reload();
                 }
             },
             errors => this.errors = errors);
@@ -109,7 +107,6 @@ export class MemberComponent implements OnInit {
                 if (result) {
                     this.saveSuccess = true;
                     this.modalRef.dismiss();
-                    window.location.reload();
                 }
             },
             errors => this.errors = errors);

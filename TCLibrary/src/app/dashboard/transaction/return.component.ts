@@ -78,6 +78,7 @@ export class ReturnComponent implements OnInit {
             result => {
                 if (result) {
                     this.saveSuccess = true;
+                    this.modalRef.dismiss();
                 }
             },
             errors => this.errors = errors);

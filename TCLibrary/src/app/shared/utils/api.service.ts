@@ -10,11 +10,11 @@ import { catchError } from 'rxjs/operators/catchError';
 export class ApiService {
     constructor(private http: HttpClient) { }
 
-    get<T>(url: string): Observable<T> {
-        return this.http.get<T>(environment.api_url + url);
+    get<T>(url: string, dataTableParameter?:any): Observable<any> {
+        return this.http.get<T>(environment.api_url + url, dataTableParameter);
     }
 
-    post(url: string, body: string): Observable<any>{
+    post<T>(url: string, body: any, dataTableParameter?: any): Observable<any>{
         return this.http.post(environment.api_url + url, body);
     }
 

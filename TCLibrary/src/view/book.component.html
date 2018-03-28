@@ -7,7 +7,7 @@
             </div>
             <br />
             <br />
-                <table id="dt_book" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                <table datatable [dtOptions]="dtOptions" class="row-border hover">
                     <thead>
                         <tr>
                             <th>ISBN</th>
@@ -18,36 +18,36 @@
                             <th>Pages</th>
                             <th>Published Year</th>
                             <th>Quantity</th>
-                            <th>Actions</th>
+                            <!--<th>Actions</th>-->
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index">
+                        <tr *ngFor="let book of books | filter : 'title' : searchString; let i = index">
                             <td>
-                                {{a.isbn}}
+                                {{book.ISBN}}
                             </td>
                             <td>
-                                {{a.title}}
+                                {{book.Title}}
                             </td>
                             <td>
-                                {{a.ratings}}
+                                {{book.Ratings}}
                             </td>
                             <td>
-                                <div *ngFor="let item of a.author">
+                                <div *ngFor="let item of book.Author">
                                     {{item}}
                                 </div>
                             </td>
                             <td>
-                                {{a.categoryName}}
+                                {{book.CategoryName}}
                             </td>
                             <td>
-                                {{a.pages}}
+                                {{book.Pages}}
                             </td>
                             <td>
-                                {{a.yearOfPublish}}
+                                {{book.YearOfPublish}}
                             </td>
                             <td>
-                                {{a.quantity}}
+                                {{book.Quantity}}
                             </td>
                             <td>
                                 <div class="actions">
@@ -281,7 +281,3 @@
     <div class="modal-footer">
     </div>
 </ng-template>
-
-<script>
-    $('.dt_book').DataTable().ajax.reload();
-</script>

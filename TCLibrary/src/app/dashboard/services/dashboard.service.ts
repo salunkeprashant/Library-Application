@@ -34,7 +34,7 @@ export class DashboardService {
         return this.ApiService.get(`/dashboard/home`)
     }
 
-    getBookDetails(): Observable<IBookDetails[]> {
+    getBookDetails() {
 
         return this.ApiService.get(`/dashboard/book`)
     }

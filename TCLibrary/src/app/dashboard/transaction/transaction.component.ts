@@ -58,15 +58,17 @@ export class TransactionComponent implements OnInit {
     getBooks(): void {
         this.dashboardService.getBookDetails()
             .subscribe(
-            result =>this.books = result
+            result => this.books = result.data,
         )
     }
+
     getAdmins(): void {
         this.dashboardService.getAdmins()
             .subscribe(
             result => this.adminList = result,
             )
     }
+
     getMemberList(): void {
         this.dashboardService.getMemberDetails()
             .subscribe(
@@ -88,6 +90,7 @@ export class TransactionComponent implements OnInit {
                 result => {
                     if (result) {
                         this.saveSuccess = true;
+                        this.modalRef.dismiss();
                     }
                 },
                 errors => this.errors = errors);

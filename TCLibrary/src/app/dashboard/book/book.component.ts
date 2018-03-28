@@ -10,6 +10,13 @@ import { ApiService } from '../../shared/utils/api.service';
 
 import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
+export class DataTablesResponse {
+    data: any[];
+    draw: number;
+    recordsFiltered: number;
+    recordsTotal: number;
+}
+
 @Component({
     selector: 'app-home',
     styleUrls: ['../../../css/modal.scss'],
@@ -19,9 +26,8 @@ import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-boo
 })
 export class BookComponent implements OnInit {
     dtOptions: DataTables.Settings = {};
-    dtTrigger: Subject<any> = new Subject();
 
-    books: any;
+    books: IBookDetails[];
     isbn: any;
     book: any = '';
 
@@ -62,13 +68,32 @@ export class BookComponent implements OnInit {
     }
 
     ngOnInit() {
+        const that = this;
         this.dtOptions = {
             pagingType: 'full_numbers',
-            order: [1, "asc"],
-            pageLength: 10
+            pageLength: 10,
+            serverSide: true,
+            processing: true,
+            ajax: (dataTablesParameters: any, callback) => {
+                that.apiService
+                    .post<DataTablesResponse>(
+                    '/dashboard/book', {},
+                    dataTablesParameters,
+                    ).subscribe(resp => {
+                        that.books = resp.data;
+                        console.log(this.books);
+
+                        callback({
+                            recordsTotal: resp.data.length,
+                            recordsFiltered: resp.data.length,
+                            data:[]
+                        });
+                    });
+            },
+            columns: [{ data: 'ISBN' }, { data: 'Title' }, { data: 'Ratings' }, { data: 'CategoryName' }, { data: 'Pages' }, { data: 'YearOfPublish' }, { data: 'Quantity' }]
         };
         this.getYear();
-        this.getBooks();
+        //this.getBooks();
         this.getCategoryList();
         this.getAuthors();
     }
@@ -81,13 +106,12 @@ export class BookComponent implements OnInit {
         this.modalRef = this.modalService.open(content);
     }
 
-    getBooks(): void {
-        this.apiService.get(`/dashboard/book`).subscribe(
-            result => {
-                this.books = result,
-                    this.dtTrigger.next();
-            });
-    }
+    //getBooks(): void {
+    //    this.apiService.get(`/dashboard/book`).subscribe(
+    //        result => {
+    //            this.books = result
+    //        });
+    //}
 
     getCategoryList(): void {
         this.dashboardService.getBookCatgory()
@@ -126,7 +150,6 @@ export class BookComponent implements OnInit {
                     if (result) {
                         this.saveSuccess = true;
                         this.modalRef.dismiss();
-                        window.location.reload();
                     }
                 },
                 errors => this.errors = errors);

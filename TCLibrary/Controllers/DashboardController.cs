@@ -10,6 +10,7 @@ using TCLibrary.Model;
 using TCLibrary.Helpers;
 using TCLibrary.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,10 +21,16 @@ namespace TCLibrary.Controllers
     public class DashboardController : Controller
     {
         private readonly LibraryDataContext appDbContext;
+        private readonly JsonSerializerSettings serializerSettings;
 
         public DashboardController(LibraryDataContext context)
         {
             appDbContext = context;
+
+            serializerSettings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented
+            };
         }
 
         // GET api/dashboard/home
@@ -34,7 +41,7 @@ namespace TCLibrary.Controllers
         }
 
         [HttpGet("book")]
-        public IQueryable Book()
+        public IActionResult Book()
         {
             var result = (from books in appDbContext.Books
 
@@ -60,7 +67,11 @@ namespace TCLibrary.Controllers
 
                           });
 
-            return result;
+            var obj = new { data = result };
+
+            var json = JsonConvert.SerializeObject(obj, serializerSettings);
+
+            return new OkObjectResult(json);
         }
 
         [HttpGet("issuedetails")]

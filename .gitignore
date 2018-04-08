@@ -39,4 +39,5 @@ dlldata.c
 
 # FrontEnd Build Artifacts
 [Ww]wwroot
-/TCLibrary/Touchcore/
+[Dd]ist
+/TCLibrary/TC.sqlite

@@ -1,0 +1,13 @@
+import { ModuleWithProviders } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { HomeComponent } from './home/home.component';
+import { AvailableBookComponent } from './public/availableBook.component';
+
+const appRoutes: Routes = [
+    { path: '', component: HomeComponent },
+    { path: 'book', component: AvailableBookComponent },
+    { path: 'account', loadChildren: 'app/account/account.module#AccountModule' }
+];
+
+export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

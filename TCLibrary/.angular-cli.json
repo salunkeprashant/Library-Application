@@ -1,15 +1,18 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "touchcore"
+    "name": "Touchcore Library"
   },
   "apps": [
     {
       "root": "src",
-      "outDir": "./wwwroot",
+      "outDir": "wwwroot",
       "assets": [
-        "assets",
-        "library.png"
+        "resources/library.png",
+        "resources/BgLibrary.png",
+        "resources/Touchcore.png",
+        "css/modal.scss",
+        "css/mystyle.scss"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -19,9 +22,12 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "../node_modules/datatables.net-dt/css/jquery.dataTables.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.js",
+        "../node_modules/datatables.net/js/jquery.dataTables.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
@@ -54,7 +60,14 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
     "component": {}
-  }
+  },
+  "styles": [
+    "styles.css",
+    "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+  ],
+  "scripts": [
+    "../node_modules/jquery/dist/jquery.min.js",
+    "../node_modules/bootstrap/dist/js/bootstrap.min.js"
+  ]
 }

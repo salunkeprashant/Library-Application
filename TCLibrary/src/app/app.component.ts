@@ -1,16 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http'
+import { Component, ViewEncapsulation } from '@angular/core';
+
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+  selector: 'app-root',
+    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['../css/style.scss'],
+    templateUrl: '../view/app.component.html',
 })
-export class AppComponent implements OnInit {
-    constructor(private _httpService: Http) { }
-    apiValues: string[] = [];
-    ngOnInit() {
-        this._httpService.get('/api/values').subscribe(values => {
-            this.apiValues = values.json() as string[];
-        });
-    }
+export class AppComponent {
+    title = 'app works!';
+   
 }

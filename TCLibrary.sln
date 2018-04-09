@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TCLibrary", "TCLibrary\TCLibrary.xproj", "{FF262D2D-21B4-4C9D-A2B4-79DC0D7FBCA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TCLibrary", "TCLibrary\TCLibrary.csproj", "{FF262D2D-21B4-4C9D-A2B4-79DC0D7FBCA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9120353F-B814-47E1-B6C8-D983A23A8DFB}
 	EndGlobalSection
 EndGlobal

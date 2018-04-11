@@ -9,6 +9,7 @@
     <UserSecretsId>aspnet-Whatever-b31516e0-09e6-44c9-ac25-098d793d2a3b</UserSecretsId>
     <TypeScriptToolsVersion>2.6</TypeScriptToolsVersion>
 	<IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
+	<ProjectTypeGuids>{349C5851-65DF-11DA-9384-00065B846F21}</ProjectTypeGuids>
   </PropertyGroup>
 
   <ItemGroup>

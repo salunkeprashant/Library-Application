@@ -5,5 +5,5 @@
 
 export const environment = {
     production: false,
-  api_url: 'http://tc-library.azurewebsites.net/api'
+  api_url: 'https://tc-library.azurewebsites.net/api'
 };

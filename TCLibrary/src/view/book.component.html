@@ -1,4 +1,4 @@
-﻿<div class="card">
+<div class="card">
     <div class="row">
         <div class="col-md-9 col-md-offset-1">
             <button class="btn btn-primary" (click)='openmodal(addcontent)' style="float: right">Add New Book</button>
@@ -18,7 +18,7 @@
                             <th>Pages</th>
                             <th>Published Year</th>
                             <th>Quantity</th>
-                            <!--<th>Actions</th>-->
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,8 +51,8 @@
                             </td>
                             <td>
                                 <div class="actions">
-                                    <span class="glyphicon glyphicon-edit" (click)='openmodal(updatecontent,a)'></span>&nbsp;&nbsp;&nbsp;
-                                    <span class="glyphicon glyphicon-floppy-remove" (click)='openmodal(deletecontent,a)'></span> &nbsp;&nbsp;&nbsp;
+                                    <span class="glyphicon glyphicon-edit" (click)='openmodal(updatecontent,book)'></span>&nbsp;&nbsp;&nbsp;
+                                    <span class="glyphicon glyphicon-floppy-remove" (click)='openmodal(deletecontent,book)'></span> &nbsp;&nbsp;&nbsp;
                                 </div>
                             </td>
                         </tr>
@@ -198,14 +198,14 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="isbn">ISBN Number</label>
                 <div class="col-sm-8">
-                    <input id="isbn" type="text" required name="isbn" class="form-control" ngModel="{{book.isbn}}" tmFocus>
+                    <input id="isbn" type="text" required name="isbn" class="form-control" ngModel="{{book.ISBN}}" tmFocus>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-4" for="title">Book Title</label>
                 <div class="col-sm-8">
-                    <input id="title" type="text" required name="title" class="form-control" ngModel="{{book.title}}">
+                    <input id="title" type="text" required name="title" class="form-control" ngModel="{{book.Title}}">
                 </div>
             </div>
 
@@ -228,7 +228,7 @@
                                [addTag]="enterCategory"
                                [multiple]="false"
                                [(ngModel)]="book.categoryId"
-                               placeholder="{{book.categoryName}}"
+                               placeholder="{{book.CategoryName}}"
                                name="categoryId" ngModel>
                     </ng-select>
                 </div>
@@ -237,21 +237,21 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="ratings">Ratings</label>
                 <div class="col-sm-8">
-                    <input id="ratings" type="text" required name="ratings" class="form-control" ngModel="{{book.ratings}}">
+                    <input id="ratings" type="text" required name="ratings" class="form-control" ngModel="{{book.Ratings}}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-4" for="pages">Pages</label>
                 <div class="col-sm-8">
-                    <input id="pages" type="text" required name="pages" class="form-control" ngModel="{{book.pages}}">
+                    <input id="pages" type="text" required name="pages" class="form-control" ngModel="{{book.Pages}}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-4" for="quantity">Quantity</label>
                 <div class="col-sm-8">
-                    <input id="quantity" type="text" required name="quantity" class="form-control" ngModel="{{book.quantity}}">
+                    <input id="quantity" type="text" required name="quantity" class="form-control" ngModel="{{book.Quantity}}">
                 </div>
             </div>
 

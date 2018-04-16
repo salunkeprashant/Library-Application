@@ -68,19 +68,18 @@ export class BookComponent implements OnInit {
     }
 
     ngOnInit() {
-        const that = this;
         this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 10,
             serverSide: true,
             processing: true,
             ajax: (dataTablesParameters: any, callback) => {
-                that.apiService
+              this.apiService
                     .post<DataTablesResponse>(
                     '/dashboard/book', {},
                     dataTablesParameters,
                     ).subscribe(resp => {
-                        that.books = resp.data;
+                      this.books = resp.data;
                         console.log(this.books);
 
                         callback({

@@ -48,16 +48,15 @@ var BookComponent = /** @class */ (function () {
     };
     BookComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var that = this;
         this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 10,
             serverSide: true,
             processing: true,
             ajax: function (dataTablesParameters, callback) {
-                that.apiService
+                _this.apiService
                     .post('/dashboard/book', {}, dataTablesParameters).subscribe(function (resp) {
-                    that.books = resp.data;
+                    _this.books = resp.data;
                     console.log(_this.books);
                     callback({
                         recordsTotal: resp.data.length,

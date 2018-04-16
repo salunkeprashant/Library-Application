@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,7 +40,7 @@ namespace TCLibrary.Controllers
             return new OkObjectResult(new { Message = "Prashant - You are Authorise " });
         }
 
-        [HttpGet("book")]
+        [HttpPost("book")]
         public IActionResult Book()
         {
             var result = (from books in appDbContext.Books
@@ -73,8 +73,37 @@ namespace TCLibrary.Controllers
 
             return new OkObjectResult(json);
         }
+    [HttpGet("book")]
+    public IQueryable Books()
+    {
+      var result = (from books in appDbContext.Books
 
-        [HttpGet("issuedetails")]
+                    select new
+                    {
+                      books.ISBN,
+                      books.Title,
+                      CategoryName = books.BookCategory.CategoryName,
+                      CategoryId = books.BookCategory.CategoryId,
+                      Author = appDbContext.BookAuthors.Where(x => x.ISBN == books.ISBN).Select(x => x.Authors.Author),
+                      AuthorId = appDbContext.BookAuthors.Where(x => x.ISBN == books.ISBN).Select(x => x.Authors.AuthorId),
+                      books.Ratings,
+                      books.Pages,
+                      books.YearOfPublish,
+                      books.Quantity,
+                      bookId = appDbContext.BookMetadatas
+                              .Where(x => x.ISBN == books.ISBN && x.Status == true)
+                              .Select(x => x.BookId)
+                              .FirstOrDefault(),
+                      Count = appDbContext.BookMetadatas
+                              .Where(x => x.Status == true && x.ISBN == books.ISBN)
+                              .Count()
+
+                    });
+
+
+      return result;
+    }
+    [HttpGet("issuedetails")]
         public IQueryable IssueDetails()
         {
             var result = appDbContext.BookTransactions.Select(x => new

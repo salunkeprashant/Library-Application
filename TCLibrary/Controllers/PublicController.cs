@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +19,7 @@ namespace TCLibrary.Controllers
             appDbContext = context;
         }
         [HttpGet("availablebooks")]
-        public IQueryable IssueDetails()
+        public IQueryable bookDetails()
         {
             var result = (from books in appDbContext.Books
 

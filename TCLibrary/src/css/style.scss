@@ -12,11 +12,16 @@ footer {
 
         }
 #login{
-    margin-left:300px;
+    margin-top:150px;
 }
-#email, #password{
+/*#email, #password{
     width:50%;
-}
+}*/
 .navbar {
     margin-bottom:0px;
+}
+.available-link {
+  cursor: pointer;
+  color: aliceblue;
+  display:none;
 }

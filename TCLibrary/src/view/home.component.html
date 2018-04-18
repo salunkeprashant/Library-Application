@@ -2,37 +2,39 @@
   <div class="container text-center">
     <h1 class="jumbotron-heading">Touchcore Library</h1>
     <p class="lead text-muted">Books aren't just made of words...they're also filled with places to visit and people to meet</p>
-    <u style="cursor:pointer; color:aliceblue" routerLink="/book">Check out the available books</u>
-  </div>
-  <div id="login" class="row">
-    <div class="col-md-4 center-div">
-      <div class="card">
-        <div class="card-block">
-          <div *ngIf="brandNew" class="alert alert-success" role="alert">
-            <strong>All set!</strong> Please login with your account
-          </div>
+    <p><u class="available-link" routerLink="/book">Check out the available books</u></p>
 
-          <form #f="ngForm" novalidate (ngSubmit)="login(f)">
-            <div class="form-group">
-              <label for="email" style="color:azure">Username</label>
-              <input id="email" type="text" required name="email" [ngModel]="credentials.email" #email="ngModel" tmFocus validateEmail class="form-control"
-                     placeholder="Email">
-              <small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">
-                Please enter a valid email
-              </small>
+    <div id="login" class="row">
+      <div class="col-md-4 col-md-offset-4 text-center">
+        <div class="card text-center">
+          <div class="card-block">
+            <div *ngIf="brandNew" class="alert alert-success" role="alert">
+              <strong>All set!</strong> Please login with your account
             </div>
-            <div class="form-group">
-              <label for="password" style="color:azure">Password</label>
-              <input id="password" type="password" required name="password" class="form-control" placeholder="Password" ngModel>
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Login</button>
-              <app-spinner [isRunning]="isRequesting"></app-spinner>
-            </div>
-            <div *ngIf="errors" class="alert alert-danger" role="alert">
-              <strong>Oops!</strong> {{errors}}
-            </div>
-          </form>
+
+            <h4 style="color:azure">Login</h4>
+            <form #f="ngForm" novalidate (ngSubmit)="login(f)">
+              <div class="form-group">
+                <!--<label for="email" style="color:azure">Username</label>-->
+                <input id="email" type="text" required name="email" [ngModel]="credentials.email" #email="ngModel" tmFocus validateEmail class="form-control"
+                       placeholder="Email">
+                <small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">
+                  Please enter a valid email
+                </small>
+              </div>
+              <div class="form-group">
+                <!--<label for="password" style="color:azure">Password</label>-->
+                <input id="password" type="password" required name="password" class="form-control" placeholder="Password" ngModel>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Login</button>
+                <app-spinner [isRunning]="isRequesting"></app-spinner>
+              </div>
+              <div *ngIf="errors" class="alert alert-danger" role="alert">
+                <strong>Oops!</strong> {{errors}}
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-﻿import { Component, Input, OnInit, HostListener, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, HostListener, ViewEncapsulation } from '@angular/core';
 import { DashboardService } from '../dashboard/services/dashboard.service';
 import { UserService } from '../shared/services/user.service';
 import { DatePipe } from '@angular/common';
@@ -46,8 +46,7 @@ export class AvailableBookComponent implements OnInit {
     getAvailableBooks(): any {
         this.apiService.get(`/public/availablebooks`).subscribe(
             result => {
-                this.books = result,
-                    this.dtTrigger.next();
+                this.books = result
             });
     }
 }

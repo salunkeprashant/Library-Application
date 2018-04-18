@@ -38,7 +38,10 @@ var TransactionComponent = /** @class */ (function () {
     TransactionComponent.prototype.getBooks = function () {
         var _this = this;
         this.dashboardService.getBookDetails()
-            .subscribe(function (result) { return _this.books = result.data; });
+            .subscribe(function (result) {
+            _this.books = result,
+                console.log(_this.books);
+        });
     };
     TransactionComponent.prototype.getAdmins = function () {
         var _this = this;

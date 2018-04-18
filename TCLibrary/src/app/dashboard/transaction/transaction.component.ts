@@ -1,4 +1,4 @@
-﻿import { Component, Input, OnInit, HostListener, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, HostListener, ViewEncapsulation } from '@angular/core';
 import { IBookDetails } from '../models/book.details.interface';
 import { IBookCategoryDetails } from '../models/bookcategory.details.inteface';
 import { DashboardService } from '../services/dashboard.service';
@@ -56,10 +56,12 @@ export class TransactionComponent implements OnInit {
         this.modalRef = this.modalService.open(content);
     }
     getBooks(): void {
-        this.dashboardService.getBookDetails()
-            .subscribe(
-            result => this.books = result.data,
-        )
+      this.dashboardService.getBookDetails()
+        .subscribe(
+        result => {
+        this.books = result,
+          console.log(this.books);
+        })
     }
 
     getAdmins(): void {

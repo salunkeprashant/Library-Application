@@ -6,6 +6,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.environment = {
     production: false,
-    api_url: 'https://tc-library.azurewebsites.net/api'
+    api_url: 'http://localhost:5000/api'
 };
 //# sourceMappingURL=environment.js.map

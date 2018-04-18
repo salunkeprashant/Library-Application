@@ -34,8 +34,7 @@ var AvailableBookComponent = /** @class */ (function () {
     AvailableBookComponent.prototype.getAvailableBooks = function () {
         var _this = this;
         this.apiService.get("/public/availablebooks").subscribe(function (result) {
-            _this.books = result,
-                _this.dtTrigger.next();
+            _this.books = result;
         });
     };
     AvailableBookComponent = __decorate([

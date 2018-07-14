@@ -24,30 +24,30 @@
                     <tbody>
                         <tr *ngFor="let book of books | filter : 'title' : searchString; let i = index">
                             <td>
-                                {{book.ISBN}}
+                                {{book.isbn}}
                             </td>
                             <td>
-                                {{book.Title}}
+                                {{book.title}}
                             </td>
                             <td>
-                                {{book.Ratings}}
+                                {{book.ratings}}
                             </td>
                             <td>
-                                <div *ngFor="let item of book.Author">
+                                <div *ngFor="let item of book.author">
                                     {{item}}
                                 </div>
                             </td>
                             <td>
-                                {{book.CategoryName}}
+                                {{book.categoryName}}
                             </td>
                             <td>
-                                {{book.Pages}}
+                                {{book.pages}}
                             </td>
                             <td>
-                                {{book.YearOfPublish}}
+                                {{book.yearOfPublish}}
                             </td>
                             <td>
-                                {{book.Quantity}}
+                                {{book.quantity}}
                             </td>
                             <td>
                                 <div class="actions">

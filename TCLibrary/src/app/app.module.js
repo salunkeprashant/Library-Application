@@ -15,6 +15,8 @@ var common_1 = require("@angular/common");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var angular_datatables_1 = require("angular-datatables");
 var http_2 = require("@angular/common/http");
+var animations_1 = require("@angular/platform-browser/animations");
+var ng_busy_1 = require("ng-busy");
 /* App Root */
 var app_component_1 = require("./app.component");
 var header_component_1 = require("./header/header.component");
@@ -53,7 +55,9 @@ var AppModule = /** @class */ (function () {
                 common_1.CommonModule,
                 forms_1.FormsModule,
                 shared_module_1.SharedModule,
-                angular_datatables_1.DataTablesModule
+                angular_datatables_1.DataTablesModule,
+                animations_1.BrowserAnimationsModule,
+                ng_busy_1.NgBusyModule
             ],
             providers: [api_service_1.ApiService, {
                     provide: http_2.HTTP_INTERCEPTORS,

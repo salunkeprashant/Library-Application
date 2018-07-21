@@ -12,7 +12,8 @@
         "resources/BgLibrary.png",
         "resources/Touchcore.png",
         "css/modal.scss",
-        "css/mystyle.scss"
+        "css/mystyle.scss",
+        "css/busy.css"
       ],
       "index": "index.html",
       "main": "main.ts",

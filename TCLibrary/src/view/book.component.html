@@ -100,7 +100,7 @@
             <h4 class="modal-title">Add New Book</h4>
         </div>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" [ngBusy]="{busy:busyPromise}">
         <form #addbook="ngForm" class="form-horizontal" novalidate (ngSubmit)="addBook(addbook)">
             <div class="form-group">
                 <label class="control-label col-sm-4" for="isbn">ISBN Number</label>
@@ -169,7 +169,6 @@
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-8">
                     <button type="submit" data-dismiss="modal" class="btn btn-primary" [disabled]="addbook.invalid || isRequesting">Submit</button>
-                    <app-spinner [isRunning]="isRequesting"></app-spinner>
                 </div>
             </div>
             <div *ngIf="errors" class="alert alert-danger" role="alert">

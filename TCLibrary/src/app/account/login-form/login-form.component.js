@@ -39,12 +39,13 @@ var LoginFormComponent = /** @class */ (function () {
         this.isRequesting = true;
         this.errors = '';
         if (valid) {
-            this.userService.login(value.email, value.password)
-                .finally(function () { return _this.isRequesting = false; })
-                .subscribe(function (result) {
-                if (result) {
-                    _this.router.navigate(['/dashboard']);
-                }
+            this.busyPromise = this.userService.login(value.email, value.password)
+                .toPromise().then(function (_) {
+                return function (result) {
+                    if (result) {
+                        _this.router.navigate(['/dashboard']);
+                    }
+                };
             }, function (error) { return _this.errors = error; });
         }
     };

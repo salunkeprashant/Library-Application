@@ -12,14 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var dashboard_service_1 = require("../services/dashboard.service");
 var user_service_1 = require("../../shared/services/user.service");
+var Subject_1 = require("rxjs/Subject");
 var api_service_1 = require("../../shared/utils/api.service");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
-var DataTablesResponse = /** @class */ (function () {
-    function DataTablesResponse() {
-    }
-    return DataTablesResponse;
-}());
-exports.DataTablesResponse = DataTablesResponse;
 var BookComponent = /** @class */ (function () {
     function BookComponent(dashboardService, userService, apiService, modalService) {
         var _this = this;
@@ -34,6 +29,7 @@ var BookComponent = /** @class */ (function () {
         this.submitted = false;
         this.saveSuccess = false;
         this.years = [];
+        this.dtTrigger = new Subject_1.Subject();
     }
     BookComponent.prototype.getDismissReason = function (reason) {
         if (reason === ng_bootstrap_1.ModalDismissReasons.ESC) {
@@ -47,28 +43,12 @@ var BookComponent = /** @class */ (function () {
         }
     };
     BookComponent.prototype.ngOnInit = function () {
-        var _this = this;
         this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 10,
-            serverSide: true,
-            processing: true,
-            ajax: function (dataTablesParameters, callback) {
-                _this.apiService
-                    .post('/dashboard/book', {}, dataTablesParameters).subscribe(function (resp) {
-                    _this.books = resp.data;
-                    console.log(_this.books);
-                    callback({
-                        recordsTotal: resp.data.length,
-                        recordsFiltered: resp.data.length,
-                        data: []
-                    });
-                });
-            },
-            columns: [{ data: 'ISBN' }, { data: 'Title' }, { data: 'Ratings' }, { data: 'CategoryName' }, { data: 'Pages' }, { data: 'YearOfPublish' }, { data: 'Quantity' }]
-        };
-        this.getYear();
-        //this.getBooks();
+        },
+            this.getYear();
+        this.getBooks();
         this.getCategoryList();
         this.getAuthors();
     };
@@ -79,12 +59,14 @@ var BookComponent = /** @class */ (function () {
         }
         this.modalRef = this.modalService.open(content);
     };
-    //getBooks(): void {
-    //    this.apiService.get(`/dashboard/book`).subscribe(
-    //        result => {
-    //            this.books = result
-    //        });
-    //}
+    BookComponent.prototype.getBooks = function () {
+        var _this = this;
+        this.apiService.get("/dashboard/book").subscribe(function (result) {
+            _this.books = result;
+            // Calling the DT trigger to manually render the table
+            _this.dtTrigger.next();
+        });
+    };
     BookComponent.prototype.getCategoryList = function () {
         var _this = this;
         this.dashboardService.getBookCatgory()

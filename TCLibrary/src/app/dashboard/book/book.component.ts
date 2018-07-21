@@ -43,6 +43,7 @@ export class BookComponent implements OnInit {
   closeResult: string;
   private modalRef: NgbModalRef;
   dtTrigger: Subject<any> = new Subject<any>();
+  busyPromise: Promise<any>;
 
   constructor(private dashboardService: DashboardService,
     private userService: UserService,
@@ -113,16 +114,13 @@ export class BookComponent implements OnInit {
       value.categoryId = (this.categoryList).length + 1
     }
     this.submitted = true;
-    this.isRequesting = true;
     this.errors = '';
-
-
     console.log(value);
+
     if (valid) {
-      this.dashboardService.AddBook(value.isbn, value.title, value.authors, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity, )
-        .finally(() => this.isRequesting = false)
-        .subscribe(
-        result => {
+     this.busyPromise = this.dashboardService.AddBook(value.isbn, value.title, value.authors, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
+       .toPromise()
+       .then(result => {
           if (result) {
             this.saveSuccess = true;
             this.modalRef.dismiss();

@@ -39,9 +39,8 @@ var HomeComponent = /** @class */ (function () {
         this.isRequesting = true;
         this.errors = '';
         if (valid) {
-            this.userService.login(value.email, value.password)
-                .finally(function () { return _this.isRequesting = false; })
-                .subscribe(function (result) {
+            this.busyPromise = this.userService.login(value.email, value.password)
+                .then(function (result) {
                 if (result) {
                     _this.router.navigate(['/dashboard/book']);
                 }

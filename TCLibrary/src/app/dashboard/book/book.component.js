@@ -15,8 +15,9 @@ var user_service_1 = require("../../shared/services/user.service");
 var Subject_1 = require("rxjs/Subject");
 var api_service_1 = require("../../shared/utils/api.service");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
+var angular5_toaster_1 = require("angular5-toaster");
 var BookComponent = /** @class */ (function () {
-    function BookComponent(dashboardService, userService, apiService, modalService) {
+    function BookComponent(dashboardService, userService, apiService, modalService, toasterService) {
         var _this = this;
         this.dashboardService = dashboardService;
         this.userService = userService;
@@ -30,6 +31,7 @@ var BookComponent = /** @class */ (function () {
         this.saveSuccess = false;
         this.years = [];
         this.dtTrigger = new Subject_1.Subject();
+        this.toasterService = toasterService;
     }
     BookComponent.prototype.getDismissReason = function (reason) {
         if (reason === ng_bootstrap_1.ModalDismissReasons.ESC) {
@@ -85,15 +87,15 @@ var BookComponent = /** @class */ (function () {
             value.categoryId = (this.categoryList).length + 1;
         }
         this.submitted = true;
-        this.isRequesting = true;
         this.errors = '';
         console.log(value);
         if (valid) {
-            this.dashboardService.AddBook(value.isbn, value.title, value.authors, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
-                .finally(function () { return _this.isRequesting = false; })
-                .subscribe(function (result) {
+            this.busyPromise = this.dashboardService.AddBook(value.isbn, value.title, value.authors, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
+                .toPromise()
+                .then(function (result) {
                 if (result) {
                     _this.saveSuccess = true;
+                    _this.toasterService.pop('success', 'Args Title', 'Args Body');
                     _this.modalRef.dismiss();
                 }
             }, function (errors) { return _this.errors = errors; });
@@ -120,7 +122,7 @@ var BookComponent = /** @class */ (function () {
             if (result) {
                 _this.saveSuccess = true;
                 _this.modalRef.dismiss();
-                window.location.reload();
+                // window.location.reload();
             }
         }, function (errors) { return _this.errors = errors; });
     };
@@ -158,9 +160,10 @@ var BookComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [dashboard_service_1.DashboardService,
             user_service_1.UserService,
             api_service_1.ApiService,
-            ng_bootstrap_1.NgbModal])
+            ng_bootstrap_1.NgbModal, typeof (_a = typeof angular5_toaster_1.ToasterService !== "undefined" && angular5_toaster_1.ToasterService) === "function" && _a || Object])
     ], BookComponent);
     return BookComponent;
+    var _a;
 }());
 exports.BookComponent = BookComponent;
 //# sourceMappingURL=book.component.js.map

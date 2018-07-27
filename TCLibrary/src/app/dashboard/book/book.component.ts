@@ -9,6 +9,7 @@ import { Subject } from 'rxjs/Subject';
 import { ApiService } from '../../shared/utils/api.service';
 
 import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ToasterContainerComponent, ToasterService, ToasterConfig } from 'angular5-toaster';
 
 @Component({
   selector: 'app-home',
@@ -44,12 +45,14 @@ export class BookComponent implements OnInit {
   private modalRef: NgbModalRef;
   dtTrigger: Subject<any> = new Subject<any>();
   busyPromise: Promise<any>;
+  private toasterService: ToasterService;
 
   constructor(private dashboardService: DashboardService,
     private userService: UserService,
     private apiService: ApiService,
-    public modalService: NgbModal) {
-
+    public modalService: NgbModal,
+    toasterService: ToasterService) {
+    this.toasterService = toasterService;
   }
 
   private getDismissReason(reason: any): string {
@@ -118,11 +121,12 @@ export class BookComponent implements OnInit {
     console.log(value);
 
     if (valid) {
-     this.busyPromise = this.dashboardService.AddBook(value.isbn, value.title, value.authors, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
-       .toPromise()
-       .then(result => {
+      this.busyPromise = this.dashboardService.AddBook(value.isbn, value.title, value.authors, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
+        .toPromise()
+        .then(result => {
           if (result) {
             this.saveSuccess = true;
+            this.toasterService.pop('success', 'Book Succefully Added', `${value.title}`);
             this.modalRef.dismiss();
           }
         },
@@ -150,7 +154,7 @@ export class BookComponent implements OnInit {
         if (result) {
           this.saveSuccess = true;
           this.modalRef.dismiss();
-          window.location.reload();
+          // window.location.reload();
         }
       },
       errors => this.errors = errors);

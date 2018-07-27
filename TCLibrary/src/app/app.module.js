@@ -17,6 +17,7 @@ var angular_datatables_1 = require("angular-datatables");
 var http_2 = require("@angular/common/http");
 var animations_1 = require("@angular/platform-browser/animations");
 var ng_busy_1 = require("ng-busy");
+var angular5_toaster_1 = require("angular5-toaster");
 /* App Root */
 var app_component_1 = require("./app.component");
 var header_component_1 = require("./header/header.component");
@@ -59,11 +60,14 @@ var AppModule = /** @class */ (function () {
                 animations_1.BrowserAnimationsModule,
                 ng_busy_1.NgBusyModule
             ],
-            providers: [api_service_1.ApiService, {
+            providers: [
+                api_service_1.ApiService, {
                     provide: http_2.HTTP_INTERCEPTORS,
                     useClass: http_token_interceptor_1.HttpTokenInterceptor,
                     multi: true
-                }],
+                },
+                angular5_toaster_1.ToasterService
+            ],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);

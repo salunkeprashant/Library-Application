@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var api_service_1 = require("../../shared/utils/api.service");
 var Rx_1 = require("rxjs/Rx");
-var Rx_2 = require("rxjs/Rx");
 //import * as _ from 'lodash';
 // Add the RxJS Observable operators we need in this app.
 require("../../rxjs-operators");
@@ -60,12 +59,7 @@ var DashboardService = /** @class */ (function () {
     DashboardService.prototype.AddBook = function (isbn, title, authors, categoryId, categoryName, ratings, yearofpublish, pages, quantity) {
         var body = JSON.stringify({ isbn: isbn, title: title, authors: authors, categoryId: categoryId, categoryName: categoryName, pages: pages, quantity: quantity, ratings: ratings, yearofpublish: yearofpublish });
         console.log(authors);
-        return this.ApiService.post("/dashboard/addbook", body)
-            .map(function (res) { return true; })
-            .catch(function (err) {
-            console.log('Caught error', err);
-            return Rx_2.Observable.throw(err);
-        });
+        return this.ApiService.post("/dashboard/addbook", body);
     };
     DashboardService.prototype.UpdateBook = function (isbn, title, authorId, author, categoryId, categoryName, ratings, yearofpublish, pages, quantity) {
         var body = JSON.stringify({ isbn: isbn, title: title, authorId: authorId, author: author, categoryId: categoryId, categoryName: categoryName, pages: pages, quantity: quantity, ratings: ratings, yearofpublish: yearofpublish });

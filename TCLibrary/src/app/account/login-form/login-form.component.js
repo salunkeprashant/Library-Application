@@ -40,7 +40,7 @@ var LoginFormComponent = /** @class */ (function () {
         this.errors = '';
         if (valid) {
             this.busyPromise = this.userService.login(value.email, value.password)
-                .toPromise().then(function (_) {
+                .then(function (_) {
                 return function (result) {
                     if (result) {
                         _this.router.navigate(['/dashboard']);

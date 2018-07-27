@@ -26,6 +26,8 @@ var email_validator_directive_1 = require("../directives/email.validator.directi
 var filterPipe_1 = require("../dashboard/services/filterPipe");
 var dashboard_service_1 = require("./services/dashboard.service");
 var auth_guard_1 = require("../auth.guard");
+var animations_1 = require("@angular/platform-browser/animations");
+var ng_busy_1 = require("ng-busy");
 var DashboardModule = /** @class */ (function () {
     function DashboardModule() {
     }
@@ -39,7 +41,9 @@ var DashboardModule = /** @class */ (function () {
                 forms_1.FormsModule,
                 dashboard_routing_1.routing,
                 angular_datatables_1.DataTablesModule,
-                shared_module_1.SharedModule
+                shared_module_1.SharedModule,
+                animations_1.BrowserAnimationsModule,
+                ng_busy_1.NgBusyModule
             ],
             declarations: [
                 root_component_1.RootComponent,

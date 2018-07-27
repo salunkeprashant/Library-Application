@@ -9,6 +9,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgBusyModule } from 'ng-busy';
+import { ToasterContainerComponent, ToasterModule, ToasterService, ToasterConfig } from 'angular5-toaster';
 
 /* App Root */
 import { AppComponent } from './app.component';
@@ -36,7 +37,7 @@ import { BusyConfig } from 'ng-busy';
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    AvailableBookComponent
+    AvailableBookComponent  
   ],
   imports: [
     NgbModule.forRoot(),
@@ -52,13 +53,17 @@ import { BusyConfig } from 'ng-busy';
     SharedModule,
     DataTablesModule,
     BrowserAnimationsModule,
-    NgBusyModule
+    NgBusyModule,
+    ToasterModule
   ],
-  providers: [ApiService, {
+  providers: [
+    ApiService, {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpTokenInterceptor,
-    multi: true
-  }],
+      multi: true
+    },
+    ToasterService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

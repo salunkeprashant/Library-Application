@@ -36,7 +36,8 @@ var UserService = /** @class */ (function () {
     UserService.prototype.login = function (userName, password) {
         var _this = this;
         return this.apiService.post("/auth/login", JSON.stringify({ userName: userName, password: password }))
-            .map(function (data) {
+            .toPromise()
+            .then(function (data) {
             localStorage.setItem('auth_token', data.auth_token);
             _this.loggedIn = true;
             _this._authNavStatusSource.next(true);

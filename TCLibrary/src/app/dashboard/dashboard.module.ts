@@ -17,31 +17,35 @@ import { TransactionComponent } from './transaction/transaction.component'
 import { ReturnComponent } from './transaction/return.component'
 
 import { EmailValidator } from '../directives/email.validator.directive';
-import { FilterPipe} from '../dashboard/services/filterPipe'
+import { FilterPipe } from '../dashboard/services/filterPipe'
 import { DashboardService } from './services/dashboard.service';
 import { AuthGuard } from '../auth.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgBusyModule } from 'ng-busy';
 
 @NgModule({
-    imports: [
-        NgbModule.forRoot(),
-        NgSelectModule,
-        BrowserModule,
-        CommonModule,
-        FormsModule,
-        routing,
-        DataTablesModule,
-        SharedModule],
-    declarations: [
-        RootComponent,
-        HomeComponent,
-        BookComponent,
-        TransactionComponent,
-        ReturnComponent,
-        MemberRootComponent,
-        MemberComponent,
-        FilterPipe
-    ],
-    exports: [FilterPipe],
-    providers: [AuthGuard, DashboardService, EmailValidator]
+  imports: [
+    NgbModule.forRoot(),
+    NgSelectModule,
+    BrowserModule,
+    CommonModule,
+    FormsModule,
+    routing,
+    DataTablesModule,
+    SharedModule,
+    BrowserAnimationsModule,
+    NgBusyModule],
+  declarations: [
+    RootComponent,
+    HomeComponent,
+    BookComponent,
+    TransactionComponent,
+    ReturnComponent,
+    MemberRootComponent,
+    MemberComponent,
+    FilterPipe
+  ],
+  exports: [FilterPipe],
+  providers: [AuthGuard, DashboardService, EmailValidator]
 })
 export class DashboardModule { }

@@ -72,16 +72,11 @@ export class DashboardService {
     }
 
 
-    AddBook(isbn: number, title: string, authors: any, categoryId: number, categoryName: string, ratings: number, yearofpublish: string, pages: number, quantity: number): Observable<IBookDetails[]> {
+    AddBook(isbn: number, title: string, authors: any, categoryId: number, categoryName: string, ratings: number, yearofpublish: string, pages: number, quantity: number){
         let body = JSON.stringify({ isbn, title, authors,categoryId,categoryName, pages, quantity, ratings, yearofpublish });
         console.log(authors);
 
-        return this.ApiService.post("/dashboard/addbook", body)
-            .map(res => true)
-            .catch(err => {
-            console.log('Caught error', err);
-            return Observable.throw(err);
-        });
+        return this.ApiService.post("/dashboard/addbook", body);
     }
 
     UpdateBook(isbn: number, title: string, authorId: number, author: string, categoryId: number, categoryName: string, ratings: number, yearofpublish: string, pages: number, quantity: number): Observable<IBookDetails[]> {

@@ -1,6 +1,7 @@
 import { Subscription } from 'rxjs';
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NgBusyModule } from 'ng-busy';
 
 import { ICredentials } from '../../shared/models/credentials.interface';
 import { UserService } from '../../shared/services/user.service';
@@ -18,6 +19,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   isRequesting: boolean;
   submitted: boolean = false;
   credentials: ICredentials = { email: '', password: '' };
+  busyPromise: Promise<any>;
 
   constructor(private userService: UserService, private router: Router,private activatedRoute: ActivatedRoute) { }
 
@@ -41,9 +43,8 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this.isRequesting = true;
     this.errors='';
     if (valid) {
-      this.userService.login(value.email, value.password)
-        .finally(() => this.isRequesting = false)
-        .subscribe(
+      this.busyPromise = this.userService.login(value.email, value.password)
+        .then(_ =>
         result => {         
           if (result) {
              this.router.navigate(['/dashboard']);             

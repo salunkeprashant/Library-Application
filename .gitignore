@@ -41,3 +41,4 @@ dlldata.c
 [Ww]wwroot
 [Dd]ist
 /TCLibrary/TC.sqlite
+*.js.map

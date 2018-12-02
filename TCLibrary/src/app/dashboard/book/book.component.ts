@@ -9,201 +9,179 @@ import { Subject } from 'rxjs/Subject';
 import { ApiService } from '../../shared/utils/api.service';
 
 import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-
-export class DataTablesResponse {
-    data: any[];
-    draw: number;
-    recordsFiltered: number;
-    recordsTotal: number;
-}
+import { ToasterContainerComponent, ToasterService, ToasterConfig } from 'angular5-toaster';
 
 @Component({
-    selector: 'app-home',
-    styleUrls: ['../../../css/modal.scss'],
-    templateUrl: '../../../view/book.component.html',
-    encapsulation: ViewEncapsulation.None,
-    providers: [DashboardService]
+  selector: 'app-home',
+  styleUrls: ['../../../css/modal.scss'],
+  templateUrl: '../../../view/book.component.html',
+  encapsulation: ViewEncapsulation.None,
+  providers: [DashboardService]
 })
 export class BookComponent implements OnInit {
-    dtOptions: DataTables.Settings = {};
+  dtOptions: DataTables.Settings = {};
 
-    books: IBookDetails[];
-    isbn: any;
-    book: any = '';
+  books: IBookDetails[];
+  isbn: any;
+  book: any = '';
 
-    public title: IBookDetails;
-    public searchString: string;
-    categoryList: any;
-    authorList: any;
+  public title: IBookDetails;
+  public searchString: string;
+  categoryList: any;
+  authorList: any;
 
-    enterCategory = (term) => ({ categoryId: term, categoryName: term });
-    enterAuthor = (term) => ({ authorId: (this.authorList).length + 1, author: term });
+  enterCategory = (term) => ({ categoryId: term, categoryName: term });
+  enterAuthor = (term) => ({ authorId: (this.authorList).length + 1, author: term });
 
-    errors: string;
-    isRequesting: boolean;
-    submitted: boolean = false;
-    saveSuccess: boolean = false;
+  errors: string;
+  isRequesting: boolean;
+  submitted: boolean = false;
+  saveSuccess: boolean = false;
 
-    private years: number[] = [];
-    private yy: number;
+  private years: number[] = [];
+  private yy: number;
 
-    closeResult: string;
-    private modalRef: NgbModalRef;
+  closeResult: string;
+  private modalRef: NgbModalRef;
+  dtTrigger: Subject<any> = new Subject<any>();
+  busyPromise: Promise<any>;
+  private toasterService: ToasterService;
 
-    constructor(private dashboardService: DashboardService,
-        private userService: UserService,
-        private apiService: ApiService,
-        public modalService: NgbModal) {
+  constructor(private dashboardService: DashboardService,
+    private userService: UserService,
+    private apiService: ApiService,
+    public modalService: NgbModal,
+    toasterService: ToasterService) {
+    this.toasterService = toasterService;
+  }
 
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
     }
+  }
 
-    private getDismissReason(reason: any): string {
-        if (reason === ModalDismissReasons.ESC) {
-            return 'by pressing ESC';
-        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-            return 'by clicking on a backdrop';
-        } else {
-            return `with: ${reason}`;
+  ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+    },
+      this.getYear();
+    this.getBooks();
+    this.getCategoryList();
+    this.getAuthors();
+  }
+
+  openmodal(content, book?): void {
+    if (book !== undefined) {
+      this.book = book;
+      this.isbn = book.isbn;
+    }
+    this.modalRef = this.modalService.open(content);
+  }
+
+  getBooks(): void {
+    this.apiService.get(`/dashboard/book`).subscribe(
+      result => {
+        this.books = result;
+        // Calling the DT trigger to manually render the table
+        this.dtTrigger.next();
+      });
+  }
+
+  getCategoryList(): void {
+    this.dashboardService.getBookCatgory()
+      .subscribe(
+      result => this.categoryList = result,
+    )
+  }
+
+  getAuthors(): void {
+    this.dashboardService.getAuthors()
+      .subscribe(
+      result => this.authorList = result,
+    )
+  }
+
+
+
+  categoryName: any;
+  author: any;
+  addBook({ value, valid }: { value: any, valid: boolean }) {
+    if (typeof value.categoryId === "string") {
+      this.categoryName = value.categoryId;
+      value.categoryId = (this.categoryList).length + 1
+    }
+    this.submitted = true;
+    this.errors = '';
+    console.log(value);
+
+    if (valid) {
+      this.busyPromise = this.dashboardService.AddBook(value.isbn, value.title, value.authors, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
+        .toPromise()
+        .then(result => {
+          if (result) {
+            this.saveSuccess = true;
+            this.toasterService.pop('success', 'Book Succefully Added', `${value.title}`);
+            this.modalRef.dismiss();
+          }
+        },
+        errors => this.errors = errors);
+    }
+  }
+
+  updateBook({ value }: { value: any }) {
+    if (typeof value.categoryId === "string") {
+      this.categoryName = value.categoryId;
+      value.categoryId = (this.categoryList).length + 1
+    }
+    if (typeof value.authorId === "string") {
+      this.author = value.authorId;
+      value.authorId = (this.authorList).length + 1
+    }
+    console.log(value);
+    this.submitted = true;
+    this.isRequesting = true;
+    this.errors = '';
+    this.dashboardService.UpdateBook(value.isbn, value.title, value.authorId, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
+      .finally(() => this.isRequesting = false)
+      .subscribe(
+      result => {
+        if (result) {
+          this.saveSuccess = true;
+          this.modalRef.dismiss();
+          // window.location.reload();
         }
-    }
+      },
+      errors => this.errors = errors);
+  }
 
-    ngOnInit() {
-        const that = this;
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            serverSide: true,
-            processing: true,
-            ajax: (dataTablesParameters: any, callback) => {
-                that.apiService
-                    .post<DataTablesResponse>(
-                    '/dashboard/book', {},
-                    dataTablesParameters,
-                    ).subscribe(resp => {
-                        that.books = resp.data;
-                        console.log(this.books);
-
-                        callback({
-                            recordsTotal: resp.data.length,
-                            recordsFiltered: resp.data.length,
-                            data:[]
-                        });
-                    });
-            },
-            columns: [{ data: 'ISBN' }, { data: 'Title' }, { data: 'Ratings' }, { data: 'CategoryName' }, { data: 'Pages' }, { data: 'YearOfPublish' }, { data: 'Quantity' }]
-        };
-        this.getYear();
-        //this.getBooks();
-        this.getCategoryList();
-        this.getAuthors();
-    }
-
-    openmodal(content, book?): void {
-        if (book !== undefined) {
-            this.book = book;
-            this.isbn = book.isbn;
+  deleteBook({ value }: { value: null }) {
+    this.submitted = true;
+    this.isRequesting = true;
+    this.errors = '';
+    this.dashboardService.deleteBook(this.isbn)
+      .finally(() => this.isRequesting = false)
+      .subscribe(
+      result => {
+        if (result) {
+          this.saveSuccess = true;
+          this.modalRef.dismiss();
+          window.location.reload();
         }
-        this.modalRef = this.modalService.open(content);
+      },
+      errors => this.errors = errors);
+  }
+
+  getYear() {
+    var today = new Date();
+    this.yy = today.getFullYear();
+    for (var i = (this.yy - 400); i <= this.yy; i++) {
+      this.years.push(i);
     }
-
-    //getBooks(): void {
-    //    this.apiService.get(`/dashboard/book`).subscribe(
-    //        result => {
-    //            this.books = result
-    //        });
-    //}
-
-    getCategoryList(): void {
-        this.dashboardService.getBookCatgory()
-            .subscribe(
-            result => this.categoryList = result,
-            )
-    }
-
-    getAuthors(): void {
-        this.dashboardService.getAuthors()
-            .subscribe(
-            result => this.authorList = result,
-            )
-    }
-
-
-
-    categoryName: any;
-    author: any;
-    addBook({ value, valid }: { value: any, valid: boolean }) {
-        if (typeof value.categoryId === "string") {
-            this.categoryName = value.categoryId;
-            value.categoryId = (this.categoryList).length + 1
-        }
-        this.submitted = true;
-        this.isRequesting = true;
-        this.errors = '';
-
-
-        console.log(value);
-        if (valid) {
-            this.dashboardService.AddBook(value.isbn, value.title, value.authors, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity, )
-                .finally(() => this.isRequesting = false)
-                .subscribe(
-                result => {
-                    if (result) {
-                        this.saveSuccess = true;
-                        this.modalRef.dismiss();
-                    }
-                },
-                errors => this.errors = errors);
-        }
-    }
-
-    updateBook({ value }: { value: any }) {
-        if (typeof value.categoryId === "string") {
-            this.categoryName = value.categoryId;
-            value.categoryId = (this.categoryList).length + 1
-        }
-        if (typeof value.authorId === "string") {
-            this.author = value.authorId;
-            value.authorId = (this.authorList).length + 1
-        }
-        console.log(value);
-        this.submitted = true;
-        this.isRequesting = true;
-        this.errors = '';
-        this.dashboardService.UpdateBook(value.isbn, value.title, value.authorId, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
-            .finally(() => this.isRequesting = false)
-            .subscribe(
-            result => {
-                if (result) {
-                    this.saveSuccess = true;
-                    this.modalRef.dismiss();
-                    window.location.reload();
-                }
-            },
-            errors => this.errors = errors);
-    }
-
-    deleteBook({ value }: { value: null }) {
-        this.submitted = true;
-        this.isRequesting = true;
-        this.errors = '';
-        this.dashboardService.deleteBook(this.isbn)
-            .finally(() => this.isRequesting = false)
-            .subscribe(
-            result => {
-                if (result) {
-                    this.saveSuccess = true;
-                    this.modalRef.dismiss();
-                    window.location.reload();
-                }
-            },
-            errors => this.errors = errors);
-    }
-
-    getYear() {
-        var today = new Date();
-        this.yy = today.getFullYear();
-        for (var i = (this.yy - 400); i <= this.yy; i++) {
-            this.years.push(i);
-        }
-    }
+  }
 }

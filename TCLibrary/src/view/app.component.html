@@ -1,9 +1,11 @@
 <!-- app.component.html -->
 <app-header></app-header>
 
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+
 <div>
-    <!-- Begin page content -->
-    <router-outlet></router-outlet>
+  <!-- Begin page content -->
+  <router-outlet></router-outlet>
 </div>
 
 <!-- /page footer -->

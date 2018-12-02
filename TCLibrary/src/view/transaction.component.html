@@ -1,4 +1,4 @@
-﻿<div class="card">
+<div class="card">
     <div class="table-condensed">
         <div class="col-md-9 col-md-offset-1">
             <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
@@ -88,7 +88,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-8">
-                    <button type="submit" class="btn btn-primary" [disabled]="issuebook.invalid || isRequesting">Issue</button>
+                    <button id="issue-btn" type="submit" class="btn btn-primary" [disabled]="issuebook.invalid || isRequesting">Issue</button>
                     <app-spinner [isRunning]="isRequesting"></app-spinner>
                 </div>
             </div>

@@ -58,7 +58,8 @@ var AppModule = /** @class */ (function () {
                 shared_module_1.SharedModule,
                 angular_datatables_1.DataTablesModule,
                 animations_1.BrowserAnimationsModule,
-                ng_busy_1.NgBusyModule
+                ng_busy_1.NgBusyModule,
+                angular5_toaster_1.ToasterModule
             ],
             providers: [
                 api_service_1.ApiService, {

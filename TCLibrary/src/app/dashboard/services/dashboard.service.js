@@ -61,8 +61,8 @@ var DashboardService = /** @class */ (function () {
         console.log(authors);
         return this.ApiService.post("/dashboard/addbook", body);
     };
-    DashboardService.prototype.UpdateBook = function (isbn, title, authorId, author, categoryId, categoryName, ratings, yearofpublish, pages, quantity) {
-        var body = JSON.stringify({ isbn: isbn, title: title, authorId: authorId, author: author, categoryId: categoryId, categoryName: categoryName, pages: pages, quantity: quantity, ratings: ratings, yearofpublish: yearofpublish });
+    DashboardService.prototype.UpdateBook = function (isbn, title, authors, categoryId, categoryName, ratings, yearofpublish, pages, quantity) {
+        var body = JSON.stringify({ isbn: isbn, title: title, authors: authors, categoryId: categoryId, categoryName: categoryName, pages: pages, quantity: quantity, ratings: ratings, yearofpublish: yearofpublish });
         return this.ApiService.post(this.baseUrl + "/dashboard/Updatebook", body);
     };
     DashboardService.prototype.UpdateMember = function (memberId, addressLine, cityName, emailAddress, firstName, lastName, mobileNo, joiningDate, stateName) {

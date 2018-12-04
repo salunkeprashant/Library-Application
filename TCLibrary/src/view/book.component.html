@@ -1,19 +1,19 @@
 <div class="card">
     <div class="row">
-        <div class="col-md-9 col-md-offset-1">
-            <button class="btn btn-primary" (click)='openmodal(addcontent)' style="float: right">Add New Book</button>
-            <div style="overflow: hidden; padding-right: .5em;">
+        <div class="col-md-9 col-md-offset-1 dashboard-view">
+            <button class="btn btn-primary add-btn" (click)='openmodal(addcontent)'>Add New Book</button>
+            <div class="input-area">
                 <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
             </div>
             <br />
             <br />
-                <table datatable [dtOptions]="dtOptions" class="row-border hover">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                     <thead>
                         <tr>
                             <th>ISBN</th>
                             <th>Title</th>
                             <th>Rating</th>
-                            <th>Author</th>
+                            <th>Authors</th>
                             <th>Category</th>
                             <th>Pages</th>
                             <th>Published Year</th>
@@ -33,9 +33,9 @@
                                 {{book.ratings}}
                             </td>
                             <td>
-                                <div *ngFor="let item of book.author">
-                                    {{item}}
-                                </div>
+                              <div *ngFor="let author of book.authors">
+                                {{author.author}}
+                              </div>
                             </td>
                             <td>
                                 {{book.categoryName}}
@@ -62,7 +62,7 @@
         </div>
     </div>
 
-<ng-template #deletecontent let-c="close" let-d="dismiss">
+<ng-template #deletecontent let-c="close" let-d="dismiss" >
     <div class="modal-header">
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
@@ -71,19 +71,15 @@
             <h4 class="modal-title">Delete Book</h4>
         </div>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" [ngBusy]="{busy:deleteBusyPromise}">
         <form #deletebook="ngForm" class="form-inline" (ngSubmit)="deleteBook(deletebook)">
             <h3>Do You Wants to Delete {{book.title}}  ? </h3>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary" [disabled]="isRequesting">Delete</button>
-                <app-spinner [isRunning]="isRequesting"></app-spinner>
+                <button type="submit" class="btn btn-primary">Delete</button>
             </div>
             <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
             <div *ngIf="errors" class="alert alert-danger" role="alert">
                 <strong>Oops!</strong> {{errors}}
-            </div>
-            <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
-                <strong>Book deleted...</strong>
             </div>
         </form>
     </div>
@@ -119,7 +115,10 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="Author">Author</label>
                 <div class="col-sm-8">
-                    <ng-select [items]="authorList" bindLabel="author" [addTag]="enterAuthor" [multiple]="true"
+                    <ng-select [items]="authorList"
+                               bindLabel="author"
+                               [addTag]="enterAuthor"
+                               [multiple]="true"
                                placeholder="Select Author or enter"
                                name="authors" ngModel>
                     </ng-select>
@@ -174,9 +173,6 @@
             <div *ngIf="errors" class="alert alert-danger" role="alert">
                 <strong>Oops!</strong> {{errors}}
             </div>
-            <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
-                <strong>Book Succesfullly saved...</strong>
-            </div>
         </form>
     </div>
     <div class="modal-footer">
@@ -197,23 +193,26 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="isbn">ISBN Number</label>
                 <div class="col-sm-8">
-                    <input id="isbn" type="text" required name="isbn" class="form-control" ngModel="{{book.ISBN}}" tmFocus>
+                    <input id="isbn" type="text" required name="isbn" class="form-control" ngModel="{{book.isbn}}" ng-disabled>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-4" for="title">Book Title</label>
                 <div class="col-sm-8">
-                    <input id="title" type="text" required name="title" class="form-control" ngModel="{{book.Title}}">
+                    <input id="title" type="text" required name="title" class="form-control" ngModel="{{book.title}}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-4" for="Author">Author</label>
                 <div class="col-sm-8">
-                    <ng-select [items]="authorList" bindLabel="author" [addTag]="enterAuthor" [multiple]="false"
-                               [(ngModel)]="book.author"
-                               name="authorId" ngModel>
+                    <ng-select [items]="authorList"
+                               bindLabel="author"
+                               [addTag]="enterAuthor"
+                               [multiple]="true"
+                               [(ngModel)]="book.authors"
+                               name="authors" ngModel>
                     </ng-select>
                 </div>
             </div>
@@ -227,7 +226,6 @@
                                [addTag]="enterCategory"
                                [multiple]="false"
                                [(ngModel)]="book.categoryId"
-                               placeholder="{{book.CategoryName}}"
                                name="categoryId" ngModel>
                     </ng-select>
                 </div>
@@ -236,21 +234,21 @@
             <div class="form-group">
                 <label class="control-label col-sm-4" for="ratings">Ratings</label>
                 <div class="col-sm-8">
-                    <input id="ratings" type="text" required name="ratings" class="form-control" ngModel="{{book.Ratings}}">
+                    <input id="ratings" type="text" required name="ratings" class="form-control" ngModel="{{book.ratings}}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-4" for="pages">Pages</label>
                 <div class="col-sm-8">
-                    <input id="pages" type="text" required name="pages" class="form-control" ngModel="{{book.Pages}}">
+                    <input id="pages" type="text" required name="pages" class="form-control" ngModel="{{book.pages}}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-4" for="quantity">Quantity</label>
                 <div class="col-sm-8">
-                    <input id="quantity" type="text" required name="quantity" class="form-control" ngModel="{{book.Quantity}}">
+                    <input id="quantity" type="text" required name="quantity" class="form-control" ngModel="{{book.quantity}}">
                 </div>
             </div>
 

@@ -39,3 +39,52 @@ ul.footer li a {
   cursor: pointer;
   color: white;
 }
+
+.add-btn {
+  float: right;
+  height: 55px
+}
+
+.dashboard-view {
+  padding-top: 30px;
+}
+.input-area {
+  overflow: hidden;
+  padding-right: .5em;
+}
+
+.allow-horizontal-scrolling {
+  overflow-x: auto;
+}
+table.dataTable tbody tr td.details-row {
+  overflow: hidden;
+}
+table.dataTable thead th {
+  white-space: nowrap;
+}
+.row.table-control-row {
+  margin-top: 20px;
+}
+.row.table-control-row > div[class^="col-sm-"] {
+  height: 34px;
+}
+.row.table-control-row > div[class^="col-sm-"]:last-of-type > *:first-child {
+  margin-right: 16px;
+}
+.row.table-control-row > div[class^="col-sm-"] div.dataTables_info {
+  padding-top: 0;
+  line-height: 34px;
+}
+.row.table-control-row > div[class^="col-sm-"] ul.pagination {
+  height: 34px;
+}
+.row.table-control-row > div[class^="col-sm-"] .dataTables_length label {
+  line-height: 34px;
+  font-weight: normal;
+  white-space: nowrap;
+}
+.row.table-control-row > div[class^="col-sm-"] .dataTables_length select {
+  height: 34px;
+  vertical-align: top;
+  width: 100%;
+}

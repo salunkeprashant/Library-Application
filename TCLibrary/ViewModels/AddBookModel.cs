@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +16,7 @@ namespace TCLibrary.ViewModels
         public decimal? Ratings { get; set; }
         public string YearOfPublish { get; set; }
         public string CategoryName { get; set; }
-        public List<Authors> authors { get; set; } 
+        public List<Authors> Authors { get; set; } 
+        public List<int> AuthorIds { get; set; } 
     }
 }

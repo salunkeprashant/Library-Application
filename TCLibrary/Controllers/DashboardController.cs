@@ -82,10 +82,9 @@ namespace TCLibrary.Controllers
                     {
                       books.ISBN,
                       books.Title,
-                      CategoryName = books.BookCategory.CategoryName,
-                      CategoryId = books.BookCategory.CategoryId,
-                      Author = appDbContext.BookAuthors.Where(x => x.ISBN == books.ISBN).Select(x => x.Authors.Author),
-                      AuthorId = appDbContext.BookAuthors.Where(x => x.ISBN == books.ISBN).Select(x => x.Authors.AuthorId),
+                      books.BookCategory.CategoryName,
+                      books.BookCategory.CategoryId,
+                      Authors = appDbContext.BookAuthors.Where(x => x.ISBN == books.ISBN).Select(x => x.Authors),
                       books.Ratings,
                       books.Pages,
                       books.YearOfPublish,
@@ -127,7 +126,7 @@ namespace TCLibrary.Controllers
         return BadRequest(ModelState);
       }
 
-      foreach (var author in book.authors)
+      foreach (var author in book.Authors)
       {
         if (!appDbContext.Authors.Any(x => x.Author == author.Author))
         {
@@ -145,7 +144,7 @@ namespace TCLibrary.Controllers
       for (int i = 1; i <= book.Quantity; i++)
         await appDbContext.BookMetadatas.AddAsync(new BookMetadata { ISBN = book.ISBN, Status = true });
 
-      foreach (var author in book.authors)
+      foreach (var author in book.Authors)
       {
         await appDbContext.BookAuthors.AddAsync(new BookAuthor { ISBN = book.ISBN, AuthorId = author.AuthorId });
       }
@@ -164,7 +163,7 @@ namespace TCLibrary.Controllers
         return BadRequest(ModelState);
       }
 
-      foreach (var author in book.authors)
+      foreach (var author in book.Authors)
       {
         if (!appDbContext.Authors.Any(x => x.Author == author.Author))
         {
@@ -250,10 +249,10 @@ namespace TCLibrary.Controllers
 
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    [HttpDelete("{isbn}")]
+    public IActionResult Delete(int isbn)
     {
-      var result = appDbContext.Books.Where(x => x.ISBN == id).FirstOrDefault();
+      var result = appDbContext.Books.Where(x => x.ISBN == isbn).FirstOrDefault();
       appDbContext.Books.Remove(result);
       appDbContext.SaveChanges();
 

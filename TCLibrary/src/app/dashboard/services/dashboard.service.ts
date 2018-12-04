@@ -79,8 +79,8 @@ export class DashboardService {
         return this.ApiService.post("/dashboard/addbook", body);
     }
 
-    UpdateBook(isbn: number, title: string, authorId: number, author: string, categoryId: number, categoryName: string, ratings: number, yearofpublish: string, pages: number, quantity: number): Observable<IBookDetails[]> {
-        let body = JSON.stringify({ isbn, title, authorId, author, categoryId, categoryName, pages, quantity, ratings, yearofpublish });
+    UpdateBook(isbn: number, title: string, authors: any, categoryId: number, categoryName: string, ratings: number, yearofpublish: string, pages: number, quantity: number): Observable<IBookDetails[]> {
+        let body = JSON.stringify({ isbn, title, authors, categoryId, categoryName, pages, quantity, ratings, yearofpublish });
 
         return this.ApiService.post(this.baseUrl + "/dashboard/Updatebook", body);
     }

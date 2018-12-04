@@ -17,13 +17,11 @@ var AppComponent = /** @class */ (function () {
         this.toasterconfig = new angular5_toaster_1.ToasterConfig({
             showCloseButton: true,
             tapToDismiss: false,
-            timeout: 0
+            timeout: 10000,
+            progressBar: true
         });
         this.toasterService = toasterService;
     }
-    AppComponent.prototype.popToast = function () {
-        this.toasterService.pop('success', 'Args Title', 'Args Body');
-    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app-root',

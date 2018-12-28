@@ -22,7 +22,7 @@ namespace TCLibraryAutomation
         [Test]
         public void LoginTest()
         {
-            m_driver.Url = "https://tc-library.azurewebsites.net/";            
+            m_driver.Url = "https://tclibrary.azurewebsites.net/";            
 
             IWebElement usernameField = ElementHelper.WaitUntilElementIsVisible(m_driver, By.Id("email"));
             IWebElement passwordField = m_driver.FindElement(By.Id("password"));

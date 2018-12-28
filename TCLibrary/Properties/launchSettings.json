@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://tc-library.azurewebsites.net/",
+      "applicationUrl": "http://tclibrary.azurewebsites.net/",
       "sslPort": 0
     }
   },
@@ -18,7 +18,7 @@
     "TCLibrary": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://tc-library.azurewebsites.net",
+      "launchUrl": "http://tclibrary.azurewebsites.net",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

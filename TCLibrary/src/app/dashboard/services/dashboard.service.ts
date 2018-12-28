@@ -39,7 +39,7 @@ export class DashboardService {
         return this.ApiService.get(`/dashboard/book`)
     }
 
-    getDetails() {
+    getIssuedBookDetails() {
         return this.ApiService.get(`/dashboard/issuedetails`)
     }
 

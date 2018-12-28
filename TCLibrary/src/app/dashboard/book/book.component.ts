@@ -106,7 +106,7 @@ export class BookComponent implements OnInit {
   }
 
   getBooks(): void {
-    this.apiService.get(`/dashboard/book`).subscribe(
+    this.dashboardService.getBookDetails().subscribe(
       result => {
         this.books = result;
         // Calling the DT trigger to manually render the table

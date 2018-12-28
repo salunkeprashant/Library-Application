@@ -1,41 +1,41 @@
-﻿<div class="card">
+<div class="card">
     <div class="row">
         <div class="col-md-9 col-md-offset-1">
             <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
             <br />
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Issued Item</th>
-                        <th>Member Name </th>
-                        <th>Issue Date</th>
-                        <th>Issued By</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tr *ngFor="let a of details | filter : 'title' : searchString; let i = index" (click)='openmodal(returncontent,a)'>
-                    <td>
-                        {{a.transactionId}}
-                    </td>
-                    <td>
-                        {{a.title}}
-                    </td>
-                    <td>
-                        {{a.memberName}}
-                    </td>
-                    <td>
-                        {{a.issueDate}}
-                    </td>
-                    <td>
-                        {{a.adminName}}
-                    </td>
-                    <td>
-                        <div class="actions">
-                            <label class="actions" (click)='openmodal(returncontent,a)' style="color: blue;">Return</label>&nbsp;&nbsp;&nbsp;
-                        </div>
-                    </td>
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Issued Item</th>
+                  <th>Member Name </th>
+                  <th>Issue Date</th>
+                  <th>Issued By</th>
+                  <th>Action</th>
                 </tr>
+              </thead>
+              <tr *ngFor="let detail of details | filter : 'title' : searchString; let i = index">
+                <td>
+                  {{detail.transactionId}}
+                </td>
+                <td>
+                  {{detail.title}}
+                </td>
+                <td>
+                  {{detail.memberName}}
+                </td>
+                <td>
+                  {{detail.issueDate}}
+                </td>
+                <td>
+                  {{detail.adminName}}
+                </td>
+                <td>
+                  <div class="actions">
+                    <label class="actions" (click)='openmodal(returncontent,detail)' style="color: blue;">Return</label>&nbsp;&nbsp;&nbsp;
+                  </div>
+                </td>
+              </tr>
             </table>
         </div>
     </div>

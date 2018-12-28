@@ -17,6 +17,7 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { AvailableBookComponent } from './public/availableBook.component';
 import { FooterComponent } from './footer/footer.component';
+import { LoginFormComponent } from './account/login-form/login-form.component';
 
 /* Account Imports */
 import { AccountModule } from './account/account.module';
@@ -31,13 +32,15 @@ import { HttpTokenInterceptor } from './shared/utils/http.token.interceptor';
 import { BusyConfig } from 'ng-busy';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    AvailableBookComponent  
+    AvailableBookComponent,
+    LoginFormComponent
   ],
   imports: [
     NgbModule.forRoot(),

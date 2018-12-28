@@ -19,7 +19,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
       BrowserAnimationsModule,
       NgBusyModule
     ],
-    declarations: [RegistrationFormComponent, EmailValidator, LoginFormComponent],
+    declarations: [RegistrationFormComponent, EmailValidator],
     providers: [UserService]
 })
 export class AccountModule { }

@@ -24,6 +24,7 @@ var header_component_1 = require("./header/header.component");
 var home_component_1 = require("./home/home.component");
 var availableBook_component_1 = require("./public/availableBook.component");
 var footer_component_1 = require("./footer/footer.component");
+var login_form_component_1 = require("./account/login-form/login-form.component");
 /* Account Imports */
 var account_module_1 = require("./account/account.module");
 /* Dashboard Imports */
@@ -42,7 +43,8 @@ var AppModule = /** @class */ (function () {
                 header_component_1.HeaderComponent,
                 footer_component_1.FooterComponent,
                 home_component_1.HomeComponent,
-                availableBook_component_1.AvailableBookComponent
+                availableBook_component_1.AvailableBookComponent,
+                login_form_component_1.LoginFormComponent
             ],
             imports: [
                 ng_bootstrap_1.NgbModule.forRoot(),

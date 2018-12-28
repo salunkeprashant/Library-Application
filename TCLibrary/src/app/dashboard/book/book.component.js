@@ -82,7 +82,7 @@ var BookComponent = /** @class */ (function () {
     };
     BookComponent.prototype.getBooks = function () {
         var _this = this;
-        this.apiService.get("/dashboard/book").subscribe(function (result) {
+        this.dashboardService.getBookDetails().subscribe(function (result) {
             _this.books = result;
             // Calling the DT trigger to manually render the table
             _this.dtTrigger.next();

@@ -33,7 +33,7 @@ var DashboardService = /** @class */ (function () {
     DashboardService.prototype.getBookDetails = function () {
         return this.ApiService.get("/dashboard/book");
     };
-    DashboardService.prototype.getDetails = function () {
+    DashboardService.prototype.getIssuedBookDetails = function () {
         return this.ApiService.get("/dashboard/issuedetails");
     };
     DashboardService.prototype.getMemberDetails = function () {

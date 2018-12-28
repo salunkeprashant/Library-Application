@@ -35,8 +35,6 @@ var HomeComponent = /** @class */ (function () {
     HomeComponent.prototype.login = function (_a) {
         var _this = this;
         var value = _a.value, valid = _a.valid;
-        this.submitted = true;
-        this.isRequesting = true;
         this.errors = '';
         if (valid) {
             this.busyPromise = this.userService.login(value.email, value.password)

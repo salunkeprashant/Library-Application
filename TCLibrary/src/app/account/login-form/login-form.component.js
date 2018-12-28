@@ -38,12 +38,10 @@ var LoginFormComponent = /** @class */ (function () {
         this.errors = '';
         if (valid) {
             this.busyPromise = this.userService.login(value.email, value.password)
-                .then(function (_) {
-                return function (result) {
-                    if (result) {
-                        _this.router.navigate(['/dashboard']);
-                    }
-                };
+                .then(function (result) {
+                if (result) {
+                    _this.router.navigate(['/dashboard/book']);
+                }
             }, function (error) { return _this.errors = error; });
         }
     };

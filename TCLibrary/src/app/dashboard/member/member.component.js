@@ -60,7 +60,7 @@ var MemberComponent = /** @class */ (function () {
     MemberComponent.prototype.openmodal = function (content, member) {
         if (member !== undefined) {
             this.member = member;
-            this.member.joiningDate = this.datePipe.transform(member.joiningDate);
+            this.member.joiningDate = this.datePipe.transform(member.joiningDate, 'yyyy-MM-dd');
             this.memberId = member.memberId;
         }
         this.modalRef = this.modalService.open(content);
@@ -100,7 +100,7 @@ var MemberComponent = /** @class */ (function () {
             .toPromise()
             .then(function (result) {
             if (result) {
-                _this.toasterService.pop('success', 'Member Delete', _this.member.firstName + " " + _this.member.lastName);
+                _this.toasterService.pop('error', 'Member Delete', _this.member.firstName + " " + _this.member.lastName);
                 _this.modalRef.dismiss();
                 _this.rerender();
             }

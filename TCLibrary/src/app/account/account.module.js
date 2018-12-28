@@ -16,7 +16,6 @@ var user_service_1 = require("../shared/services/user.service");
 var email_validator_directive_1 = require("../directives/email.validator.directive");
 var account_routing_1 = require("./account.routing");
 var registration_form_component_1 = require("./registration-form/registration-form.component");
-var login_form_component_1 = require("./login-form/login-form.component");
 var AccountModule = /** @class */ (function () {
     function AccountModule() {
     }
@@ -27,7 +26,7 @@ var AccountModule = /** @class */ (function () {
                 animations_1.BrowserAnimationsModule,
                 ng_busy_1.NgBusyModule
             ],
-            declarations: [registration_form_component_1.RegistrationFormComponent, email_validator_directive_1.EmailValidator, login_form_component_1.LoginFormComponent],
+            declarations: [registration_form_component_1.RegistrationFormComponent, email_validator_directive_1.EmailValidator],
             providers: [user_service_1.UserService]
         })
     ], AccountModule);

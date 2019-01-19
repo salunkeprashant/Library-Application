@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { Directive, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { routing } from './app.routing';
 import { CommonModule } from '@angular/common';
@@ -49,6 +49,7 @@ import { BusyConfig } from 'ng-busy';
     DashboardModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     routing,
     CommonModule,

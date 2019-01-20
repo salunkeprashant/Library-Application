@@ -23,7 +23,7 @@ export class BookComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   deleteBusyPromise: Promise<any>;
-  dtOptions: DataTables.Settings = {};
+  dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
   books: IBookDetails[];
@@ -89,6 +89,25 @@ export class BookComponent implements OnInit {
       searching: true,
       destroy: true,
       order: [[1, "asc"], [6, "asc"]],
+      // Configure the buttons
+      buttons: [
+        {
+          extend: 'excel',
+          text: '',
+          className: 'fa fa-file-excel-o',
+          init: function (api, node, config) {
+            $(node).removeClass('dt-button')
+          }
+        },
+        {
+          extend: 'print',
+          text: '',
+          className: 'fa fa-print',
+          init: function (api, node, config) {
+            $(node).removeClass('dt-button')
+          }
+        }
+      ]
     },
       this.getYear();
     this.getBooks();
@@ -127,8 +146,6 @@ export class BookComponent implements OnInit {
       result => this.authorList = result,
     )
   }
-
-
 
   categoryName: any;
   author: any;

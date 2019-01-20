@@ -17,13 +17,15 @@ var api_service_1 = require("../../shared/utils/api.service");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var angular5_toaster_1 = require("angular5-toaster");
 var angular_datatables_1 = require("angular-datatables");
+var excel_service_1 = require("../../shared/services/excel.service");
 var BookComponent = /** @class */ (function () {
-    function BookComponent(dashboardService, userService, apiService, modalService, toasterService) {
+    function BookComponent(dashboardService, userService, apiService, modalService, toasterService, excelService) {
         var _this = this;
         this.dashboardService = dashboardService;
         this.userService = userService;
         this.apiService = apiService;
         this.modalService = modalService;
+        this.excelService = excelService;
         this.dtOptions = {};
         this.dtTrigger = new Subject_1.Subject();
         this.book = '';
@@ -79,6 +81,9 @@ var BookComponent = /** @class */ (function () {
         }
         this.errors = '';
         this.modalRef = this.modalService.open(content);
+    };
+    BookComponent.prototype.exportAsXLSX = function () {
+        this.excelService.exportAsExcelFile(this.books, 'sample');
     };
     BookComponent.prototype.getBooks = function () {
         var _this = this;
@@ -184,7 +189,7 @@ var BookComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [dashboard_service_1.DashboardService,
             user_service_1.UserService,
             api_service_1.ApiService,
-            ng_bootstrap_1.NgbModal, typeof (_a = typeof angular5_toaster_1.ToasterService !== "undefined" && angular5_toaster_1.ToasterService) === "function" && _a || Object])
+            ng_bootstrap_1.NgbModal, typeof (_a = typeof angular5_toaster_1.ToasterService !== "undefined" && angular5_toaster_1.ToasterService) === "function" && _a || Object, excel_service_1.ExcelService])
     ], BookComponent);
     return BookComponent;
     var _a;

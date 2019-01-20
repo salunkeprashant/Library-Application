@@ -1,64 +1,64 @@
 <div class="card">
     <div class="row">
-        <div class="col-md-9 col-md-offset-1 dashboard-view">
-            <button class="btn btn-primary add-btn" (click)='openmodal(addcontent)'>Add New Book</button>
-            <div class="input-area">
-                <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
-            </div>
-            <br />
-            <br />
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-                    <thead>
-                        <tr>
-                            <th>ISBN</th>
-                            <th>Title</th>
-                            <th>Rating</th>
-                            <th>Authors</th>
-                            <th>Category</th>
-                            <th>Pages</th>
-                            <th>Published Year</th>
-                            <th>Quantity</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let book of books | filter : 'title' : searchString; let i = index">
-                            <td>
-                                {{book.isbn}}
-                            </td>
-                            <td>
-                                {{book.title}}
-                            </td>
-                            <td>
-                                {{book.ratings}}
-                            </td>
-                            <td>
-                              <div *ngFor="let author of book.authors">
-                                {{author.author}}
-                              </div>
-                            </td>
-                            <td>
-                                {{book.categoryName}}
-                            </td>
-                            <td>
-                                {{book.pages}}
-                            </td>
-                            <td>
-                                {{book.yearOfPublish}}
-                            </td>
-                            <td>
-                                {{book.quantity}}
-                            </td>
-                            <td>
-                                <div class="actions">
-                                    <span class="glyphicon glyphicon-edit" (click)='openmodal(updatecontent,book)'></span>&nbsp;&nbsp;&nbsp;
-                                    <span class="glyphicon glyphicon-floppy-remove" (click)='openmodal(deletecontent,book)'></span> &nbsp;&nbsp;&nbsp;
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+      <div class="col-md-9 col-md-offset-1 dashboard-view">
+        <button class="btn btn-primary add-btn" (click)='openmodal(addcontent)'>Add New Book</button>
+        <div class="input-area">
+          <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
+        </div>
+        <br />
+        <br />
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+          <thead>
+            <tr>
+              <th>ISBN</th>
+              <th>Title</th>
+              <th>Rating</th>
+              <th>Authors</th>
+              <th>Category</th>
+              <th>Pages</th>
+              <th>Published Year</th>
+              <th>Quantity</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let book of books | filter : 'title' : searchString; let i = index">
+              <td>
+                {{book.isbn}}
+              </td>
+              <td>
+                {{book.title}}
+              </td>
+              <td>
+                {{book.ratings}}
+              </td>
+              <td>
+                <div *ngFor="let author of book.authors">
+                  {{author.author}}
+                </div>
+              </td>
+              <td>
+                {{book.categoryName}}
+              </td>
+              <td>
+                {{book.pages}}
+              </td>
+              <td>
+                {{book.yearOfPublish}}
+              </td>
+              <td>
+                {{book.quantity}}
+              </td>
+              <td>
+                <div class="actions">
+                  <span class="glyphicon glyphicon-edit" (click)='openmodal(updatecontent,book)'></span>&nbsp;&nbsp;&nbsp;
+                  <span class="glyphicon glyphicon-floppy-remove" (click)='openmodal(deletecontent,book)'></span> &nbsp;&nbsp;&nbsp;
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
         </div>
     </div>
 

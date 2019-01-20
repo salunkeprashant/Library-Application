@@ -23,12 +23,21 @@
       "prefix": "app",
       "styles": [
         "../node_modules/datatables.net-dt/css/jquery.dataTables.css",
+        "../node_modules/datatables.net-buttons-dt/css/buttons.dataTables.css",
         "css/busy.css",
         "css/toaster.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
-        "../node_modules/datatables.net/js/jquery.dataTables.js"
+        "../node_modules/datatables.net/js/jquery.dataTables.js",
+        "../node_modules/jszip/dist/jszip.js",
+        "../node_modules/datatables.net-buttons/js/dataTables.buttons.js",
+        "../node_modules/datatables.net-buttons/js/buttons.colVis.js",
+        "../node_modules/datatables.net-buttons/js/buttons.flash.js",
+        "../node_modules/datatables.net-buttons/js/buttons.html5.js",
+        "../node_modules/datatables.net-buttons/js/buttons.print.js",
+        "../node_modules/pdfmake/build/pdfmake.min.js",
+        "../node_modules/pdfmake/build/vfs_fonts.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

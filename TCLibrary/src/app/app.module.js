@@ -53,6 +53,7 @@ var AppModule = /** @class */ (function () {
                 dashboard_module_1.DashboardModule,
                 platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
+                forms_1.ReactiveFormsModule,
                 http_1.HttpClientModule,
                 app_routing_1.routing,
                 common_1.CommonModule,

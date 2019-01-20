@@ -3,7 +3,7 @@ import { Directive, NgModule } from '@angular/core';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { routing } from './app.routing';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgbModule, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -30,8 +30,6 @@ import { SharedModule } from './shared/modules/shared.module';
 import { ApiService } from './shared/utils/api.service';
 import { HttpTokenInterceptor } from './shared/utils/http.token.interceptor';
 import { BusyConfig } from 'ng-busy';
-
-
 
 @NgModule({
   declarations: [
@@ -66,6 +64,7 @@ import { BusyConfig } from 'ng-busy';
     useClass: HttpTokenInterceptor,
       multi: true
     },
+    DatePipe,
     ToasterService
   ],
   bootstrap: [AppComponent]

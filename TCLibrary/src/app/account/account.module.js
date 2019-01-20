@@ -24,7 +24,8 @@ var AccountModule = /** @class */ (function () {
             imports: [
                 common_1.CommonModule, forms_1.FormsModule, account_routing_1.routing, shared_module_1.SharedModule,
                 animations_1.BrowserAnimationsModule,
-                ng_busy_1.NgBusyModule
+                ng_busy_1.NgBusyModule,
+                forms_1.ReactiveFormsModule
             ],
             declarations: [registration_form_component_1.RegistrationFormComponent, email_validator_directive_1.EmailValidator],
             providers: [user_service_1.UserService]

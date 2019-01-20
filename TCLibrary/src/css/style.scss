@@ -87,6 +87,8 @@ table.dataTable thead th {
   height: 34px;
   vertical-align: top;
   width: 100%;
+  text-align:center;
+  text-align-last:center
 }
 .login-form {
   text-align: -webkit-auto;
@@ -103,5 +105,12 @@ table.dataTable thead th {
     background: none;
     margin: 0;
     padding: 5px;
+  }
+}
+#DataTables_Table_0_wrapper {
+  .dt-buttons {
+    .fa {
+      font-size: 20px;
+    }
   }
 }

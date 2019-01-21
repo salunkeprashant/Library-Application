@@ -1,47 +1,44 @@
-<div class="card">
-  <div class="table-condensed">
-    <div class="col-md-9 col-md-offset-1">
-      <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
-      <br />
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-        <thead>
-          <tr>
-            <th>ISBN</th>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Author</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tr *ngFor="let book of books | filter : 'title' : searchString; let i = index">
-          <td>
-            {{book.isbn}}
-          </td>
-          <td>
-            {{book.title}}
-          </td>
-          <td>
-            {{book.categoryName}}
-          </td>
-          <td>
-            <div *ngFor="let author of book.authors">
-              {{author.author}}
-            </div>
-          </td>
-          <td>
-            <div *ngIf="book.count>0;else other_content" style="color:green">
-              Available ({{book.count}})
-            </div>
-            <ng-template #other_content><div style="color:red">Not Available</div></ng-template>
-          </td>
-          <td>
-            <span class="glyphicon glyphicon-check" title="Issue Book" (click)='openmodal(issuecontent,book)'></span>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
+<div class="dashboard-view col-md-10 col-md-offset-1">
+  <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
+  <br>
+  <br>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+    <thead>
+      <tr>
+        <th>ISBN</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Author</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tr *ngFor="let book of books | filter : 'title' : searchString; let i = index">
+      <td>
+        {{book.isbn}}
+      </td>
+      <td>
+        {{book.title}}
+      </td>
+      <td>
+        {{book.categoryName}}
+      </td>
+      <td>
+        <div *ngFor="let author of book.authors">
+          {{author.author}}
+        </div>
+      </td>
+      <td>
+        <div *ngIf="book.count>0;else other_content" style="color:green">
+          Available ({{book.count}})
+        </div>
+        <ng-template #other_content><div style="color:red">Not Available</div></ng-template>
+      </td>
+      <td>
+        <span class="glyphicon glyphicon-check" title="Issue Book" (click)='openmodal(issuecontent,book)'></span>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <ng-template #issuecontent let-c="close" let-d="dismiss">

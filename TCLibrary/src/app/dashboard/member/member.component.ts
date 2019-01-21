@@ -19,7 +19,7 @@ import { Subject } from 'rxjs';
 export class MemberComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
+  dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
   members: any;
@@ -62,16 +62,39 @@ export class MemberComponent implements OnInit {
         processing: "",
         zeroRecords: "No data available"
       },
-      dom: "<'row'<'col-sm-3'B>>" + "<'row'<'col-sm-12'<'allow-horizontal-scrolling'tr>>>" +
+      dom: "<'row'<'col-sm-3'B>>" + "<'row'<'col-sm-12'tr>>" +
         "<'row table-control-row'<'col-sm-3'i><'col-sm-3'l><'col-sm-6'p>>",
       lengthMenu: [[10, 20, 30], [10, 20, 30]],
       info: true,
-      scrollY: "500px",
-      scrollCollapse: true,
       paging: true,
       searching: true,
       destroy: true,
       order: [[1, "asc"], [2, "asc"]],
+      // Configure the buttons
+      buttons: [
+        {
+          extend: 'excel',
+          text: '',
+          className: 'fa fa-file-excel-o',
+          init: function (api, node, config) {
+            $(node).removeClass('dt-button')
+          },
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+          }
+        },
+        {
+          extend: 'print',
+          text: '',
+          className: 'fa fa-print',
+          init: function (api, node, config) {
+            $(node).removeClass('dt-button')
+          },
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+          }
+        }
+      ]
     },
       this.getMembers();
     this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd')

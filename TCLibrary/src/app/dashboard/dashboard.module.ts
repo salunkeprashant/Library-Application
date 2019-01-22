@@ -12,7 +12,6 @@ import { RootComponent } from './root/root.component';
 import { HomeComponent } from './home/home.component';
 import { BookComponent } from './book/book.component';
 import { MemberComponent } from './member/member.component';
-import { MemberRootComponent } from './root/member.root.component';
 import { TransactionComponent } from './transaction/transaction.component'
 import { ReturnComponent } from './transaction/return.component'
 
@@ -41,7 +40,6 @@ import { NgBusyModule } from 'ng-busy';
     BookComponent,
     TransactionComponent,
     ReturnComponent,
-    MemberRootComponent,
     MemberComponent,
     FilterPipe
   ],

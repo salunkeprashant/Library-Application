@@ -2,7 +2,6 @@ import { ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { RootComponent } from './root/root.component';
-import { MemberRootComponent } from './root/member.root.component';
 
 import { HomeComponent } from './home/home.component';
 import { BookComponent } from './book/book.component';

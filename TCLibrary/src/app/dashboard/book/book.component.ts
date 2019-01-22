@@ -70,7 +70,7 @@ export class BookComponent implements OnInit {
     this.dtOptions = {
       columnDefs: [
         { defaultContent: "", targets: "_all" },
-        { targets: [1, 3, 4, 6], orderable: true },
+        { targets: [1, 2, 3, 4, 5, 6], orderable: true },
         { targets: "_all", orderable: false }
       ],
       language: {
@@ -108,7 +108,7 @@ export class BookComponent implements OnInit {
             $(node).removeClass('dt-button')
           },
           exportOptions: {
-            columns: [0,1, 2, 3, 4, 5, 6, 7]
+            columns: [0, 1, 2, 3, 4, 5, 6, 7]
           }
         }
       ]

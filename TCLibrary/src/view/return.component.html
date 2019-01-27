@@ -14,25 +14,24 @@
       </tr>
     </thead>
     <tr *ngFor="let detail of details | filter : 'title' : searchString; let i = index">
-      <td>
+      <td class="text-cell">
         {{detail.transactionId}}
       </td>
-      <td>
+      <td class="text-cell">
         {{detail.title}}
       </td>
-      <td>
+      <td class="text-cell">
         {{detail.memberName}}
       </td>
-      <td>
+      <td class="text-cell">
         {{detail.issueDate}}
       </td>
-      <td>
+      <td class="text-cell">
         {{detail.adminName}}
       </td>
-      <td>
-        <div class="actions">
-          <label class="actions" (click)='openmodal(returncontent,detail)' style="color: blue;">Return</label>&nbsp;&nbsp;&nbsp;
-        </div>
+      <td class="actions" (click)='openmodal(returncontent,detail)'>
+        <span>Return</span>
+        <span class="glyphicon glyphicon-check"></span>
       </td>
     </tr>
   </table>

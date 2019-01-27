@@ -1,54 +1,48 @@
-<div class="col-md-10 col-md-offset-1 dashboard-view">
-  <button class="btn btn-primary add-btn" (click)='openmodal(addcontent)'>Add New Member</button>
+<div class="dashboard-view col-md-10 col-md-offset-1">
+  <button class="btn btn-primary add-btn" (click)='openmodal(addcontent)'>Add New Employee</button>
   <div class="input-area">
-    <input type="text" placeholder="Find Member here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
+    <input type="text" placeholder="Find Employee here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
   </div>
   <br />
   <br />
   <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
     <thead>
       <tr>
-        <th>Member ID</th>
-        <th>Member Name </th>
+        <th>Emp ID</th>
+        <th>Name </th>
         <th>Date of joining</th>
         <th>Email</th>
         <th>Mobile</th>
         <th>Addresss</th>
         <th>City</th>
-        <th>State</th>
         <th>Actions</th>
       </tr>
     </thead>
-    <tr *ngFor="let a of members | filter : 'firstName' : searchString; let i = index">
-      <td>
-        {{a.memberId}}
+    <tr *ngFor="let member of members | filter : 'firstName' : searchString; let i = index">
+      <td class="text-cell">
+        {{member.memberId}}
       </td>
-      <td>
-        {{a.firstName}} {{a.lastName}}
+      <td class="text-cell">
+        {{member.firstName}} {{member.lastName}}
       </td>
-      <td>
-        {{a.joiningDate | date: "dd-MMM-yyyy" }}
+      <td class="text-cell">
+        {{member.joiningDate | date: "dd-MMM-yyyy" }}
       </td>
-      <td>
-        {{a.emailAddress}}
+      <td class="text-cell">
+        {{member.emailAddress}}
       </td>
-      <td>
-        {{a.mobileNo}}
+      <td class="text-cell">
+        {{member.mobileNo}}
       </td>
-      <td>
-        {{a.addressLine}}
+      <td class="text-cell">
+        {{member.addressLine}}
       </td>
-      <td>
-        {{a.cityName}}
+      <td class="text-cell">
+        {{member.cityName}}
       </td>
-      <td>
-        {{a.stateName}}
-      </td>
-      <td>
-        <div class="actions">
-          <span class="glyphicon glyphicon-edit" (click)='openmodal(updatecontent,a)'></span>&nbsp;&nbsp;&nbsp;
-          <span class="glyphicon glyphicon-floppy-remove" (click)='openmodal(deletecontent,a)'></span> &nbsp;&nbsp;&nbsp;
-        </div>
+      <td class="action-cell">
+        <span class="glyphicon glyphicon-edit" (click)='openmodal(updatecontent,member)' title="Edit Employee"></span>
+        <span class="glyphicon glyphicon-trash" style="padding-left:1em" (click)='openmodal(deletecontent,member)' title="Delete Employee"></span>
       </td>
     </tr>
   </table>
@@ -61,7 +55,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
     <div style="overflow: hidden; padding-right: .5em;">
-      <h4 class="modal-title">Add New Member</h4>
+      <h4 class="modal-title">Add New Employee</h4>
     </div>
   </div>
   <div class="modal-body">
@@ -79,6 +73,7 @@
           <input id="lastName" type="text" required name="lastName" class="form-control" placeholder="Enter Last Name" ngModel>
         </div>
       </div>
+
       <div class="form-group">
         <label class="control-label col-sm-4" for="joiningDate">Date of Joining</label>
         <div class="col-sm-8">
@@ -86,14 +81,11 @@
         </div>
       </div>
 
-
-
-
       <div class="form-group">
         <label class="control-label col-sm-4" for="emailAddress">Email</label>
         <div class="col-sm-8">
           <input id="emailAddress" type="text" required name="emailAddress" validateEmail class="form-control" placeholder="Email Address" ngModel #emailAddress="ngModel">
-          <small [hidden]="emailAddress.valid || (emailAddress.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
+          <small [hidden]="emailAddress.valid || (emailAddress.pristine && !submitted)" class="text-danger">Please enter member valid email</small>
         </div>
       </div>
 
@@ -127,15 +119,11 @@
 
       <div class="form-group">
         <div class="col-sm-offset-4 col-sm-8">
-          <button type="submit" class="btn btn-primary" [disabled]="addmember.invalid || isRequesting">Submit</button>
-          <app-spinner [isRunning]="isRequesting"></app-spinner>
+          <button type="submit" class="btn btn-primary" [disabled]="addmember.invalid">Submit</button>
         </div>
       </div>
       <div *ngIf="errors" class="alert alert-danger" role="alert">
         <strong>Oops!</strong> {{errors}}
-      </div>
-      <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
-        <strong>Member succesfullly added...</strong>
       </div>
     </form>
   </div>
@@ -149,7 +137,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
     <div style="overflow: hidden; padding-right: .5em;">
-      <h4 class="modal-title">Delete Book</h4>
+      <h4 class="modal-title">Delete Employee</h4>
     </div>
   </div>
   <div class="modal-body">
@@ -163,9 +151,6 @@
       <div *ngIf="errors" class="alert alert-danger" role="alert">
         <strong>Oops!</strong> {{errors}}
       </div>
-      <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
-        <strong>Member deleted...</strong>
-      </div>
     </form>
   </div>
   <div class="modal-footer">
@@ -178,7 +163,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
     <div style="overflow: hidden; padding-right: .5em;">
-      <h4 class="modal-title">Update Book</h4>
+      <h4 class="modal-title">Update Employee</h4>
     </div>
   </div>
   <div class="modal-body">
@@ -208,7 +193,7 @@
         <label class="control-label col-sm-4" for="emailAddress">Email</label>
         <div class="col-sm-8">
           <input id="emailAddress" type="text" name="emailAddress" validateEmail class="form-control" ngModel="{{member.emailAddress}}" #emailAddress="ngModel">
-          <small [hidden]="emailAddress.valid || (emailAddress.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
+          <small [hidden]="emailAddress.valid || (emailAddress.pristine && !submitted)" class="text-danger">Please enter member valid email</small>
         </div>
       </div>
 
@@ -248,9 +233,6 @@
       </div>
       <div *ngIf="errors" class="alert alert-danger" role="alert">
         <strong>Oops!</strong> {{errors}}
-      </div>
-      <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
-        <strong>Member succesfullly updated...</strong>
       </div>
     </form>
   </div>

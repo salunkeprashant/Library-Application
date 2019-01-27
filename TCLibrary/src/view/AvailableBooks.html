@@ -13,22 +13,22 @@
       </tr>
     </thead>
     <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index">
-      <td>
+      <td class="text-cell">
         {{a.isbn}}
       </td>
-      <td>
+      <td class="text-cell">
         {{a.title}}
       </td>
-      <td>
+      <td class="text-cell">
         {{a.categoryName}}
       </td>
-      <td>
+      <td class="text-cell">
         {{a.author}}
       </td>
-      <td>
+      <td class="text-cell">
         {{a.pages}}
       </td>
-      <td>
+      <td class="text-cell">
         <div *ngIf="a.count>0;else other_content" style="color:green">
           Available ({{a.count}})
         </div>

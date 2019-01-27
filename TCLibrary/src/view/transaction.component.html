@@ -14,28 +14,29 @@
       </tr>
     </thead>
     <tr *ngFor="let book of books | filter : 'title' : searchString; let i = index">
-      <td>
+      <td class="text-cell">
         {{book.isbn}}
       </td>
-      <td>
+      <td class="text-cell">
         {{book.title}}
       </td>
-      <td>
+      <td class="text-cell">
         {{book.categoryName}}
       </td>
-      <td>
+      <td class="text-cell">
         <div *ngFor="let author of book.authors">
           {{author.author}}
         </div>
       </td>
-      <td>
+      <td class="text-cell">
         <div *ngIf="book.count>0;else other_content" style="color:green">
           Available ({{book.count}})
         </div>
         <ng-template #other_content><div style="color:red">Not Available</div></ng-template>
       </td>
-      <td>
-        <span class="glyphicon glyphicon-check" title="Issue Book" (click)='openmodal(issuecontent,book)'></span>
+      <td class="action-cell" (click)='openmodal(issuecontent,book)' title="Issue this book">
+        <span>Issue</span>
+        <span class="glyphicon glyphicon-new-window" style="padding-left:0.5em"></span>
       </td>
     </tr>
   </table>

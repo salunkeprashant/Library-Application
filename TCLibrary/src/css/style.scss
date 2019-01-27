@@ -62,6 +62,7 @@ table.dataTable thead th {
 
 .row.table-control-row {
   margin-top: 20px;
+  margin-bottom: 125px;
 }
 
 .row.table-control-row > div[class^="col-sm-"] {
@@ -118,4 +119,24 @@ table.dataTable thead th {
   .fa {
     font-size: 20px;
   }
+}
+
+.action-cell {
+  text-align: center;
+  cursor: pointer;
+}
+
+.text-cell {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body {
+  font-family: "myriad-pro",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+}
+table.dataTable thead th{
+  padding:10px 10px;
+  border-bottom:1px solid #000
 }

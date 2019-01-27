@@ -18,7 +18,7 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tr *ngFor="let member of members | filter : 'firstName' : searchString; let i = index">
+    <tr *ngFor="let member of members | filter : {'firstName' : searchString, 'lastName' : searchString}; let i = index">
       <td class="text-cell">
         {{member.memberId}}
       </td>

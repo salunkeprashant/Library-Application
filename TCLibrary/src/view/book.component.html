@@ -20,7 +20,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let book of books | filter : 'title' : searchString; let i = index">
+      <tr *ngFor="let book of books | filter : {'title' : searchString}; let i = index">
         <td class="text-cell">
           {{book.isbn}}
         </td>

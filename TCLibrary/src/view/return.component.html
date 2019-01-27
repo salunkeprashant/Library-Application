@@ -1,5 +1,5 @@
 <div class="dashboard-view col-md-10 col-md-offset-1">
-  <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
+  <input type="text" placeholder="Search here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
   <br />
   <br />
   <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
@@ -13,7 +13,7 @@
         <th>Action</th>
       </tr>
     </thead>
-    <tr *ngFor="let detail of details | filter : 'title' : searchString; let i = index">
+    <tr *ngFor="let detail of details | filter : {'title' : searchString, 'memberName': searchString}; let i = index">
       <td class="text-cell">
         {{detail.transactionId}}
       </td>
@@ -24,14 +24,14 @@
         {{detail.memberName}}
       </td>
       <td class="text-cell">
-        {{detail.issueDate}}
+        {{detail.issueDate | date: "dd-MMM-yyyy"}}
       </td>
       <td class="text-cell">
         {{detail.adminName}}
       </td>
       <td class="actions" (click)='openmodal(returncontent,detail)'>
         <span>Return</span>
-        <span class="glyphicon glyphicon-check"></span>
+        <span class="glyphicon glyphicon-check" style="padding-left:0.5em"></span>
       </td>
     </tr>
   </table>

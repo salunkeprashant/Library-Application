@@ -12,7 +12,7 @@
         <th>Status</th>
       </tr>
     </thead>
-    <tr *ngFor="let a of books | filter : 'title' : searchString; let i = index">
+    <tr *ngFor="let a of books | filter : {'title' : searchString, 'categoryName' : searchString}; let i = index">
       <td class="text-cell">
         {{a.isbn}}
       </td>

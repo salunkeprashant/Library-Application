@@ -49,8 +49,8 @@ namespace TCLibrary.Controllers
                     {
                       books.ISBN,
                       books.Title,
-                      CategoryName = books.BookCategory.CategoryName,
-                      CategoryId = books.BookCategory.CategoryId,
+                      books.BookCategory.CategoryName,
+                      books.BookCategory.CategoryId,
                       Author = appDbContext.BookAuthors.Where(x => x.ISBN == books.ISBN).Select(x => x.Authors.Author),
                       AuthorId = appDbContext.BookAuthors.Where(x => x.ISBN == books.ISBN).Select(x => x.Authors.AuthorId),
                       books.Ratings,
@@ -171,12 +171,25 @@ namespace TCLibrary.Controllers
         }
       }
 
+      var BookToUpdate = await appDbContext.Books
+        .Include(x=>x.BookCategory)
+        .Include(x=>x.BookAuthors)
+        .SingleOrDefaultAsync(s => s.ISBN == book.ISBN);
+
       bool isCaregoryExist = appDbContext.BookCategories.Any(x => x.CategoryName == book.CategoryName);
       if (!isCaregoryExist) await appDbContext.BookCategories.AddAsync(new BookCategory { CategoryName = book.CategoryName });
 
-      appDbContext.SaveChanges();
+      // remove authors first
+      BookToUpdate.BookAuthors = null;
+      await appDbContext.SaveChangesAsync();
 
-      var BookToUpdate = await appDbContext.Books.SingleOrDefaultAsync(s => s.ISBN == book.ISBN);
+      foreach (var author in book.Authors)
+      {
+        await appDbContext.BookAuthors.AddAsync(new BookAuthor { ISBN = book.ISBN, AuthorId = author.AuthorId });
+      }
+
+      await appDbContext.SaveChangesAsync();
+      
       if (BookToUpdate != null)
       {
         BookToUpdate.Title = book.Title;
@@ -184,6 +197,7 @@ namespace TCLibrary.Controllers
         BookToUpdate.Pages = book.Pages;
         BookToUpdate.Quantity = book.Quantity;
         BookToUpdate.YearOfPublish = book.YearOfPublish;
+        BookToUpdate.CategoryId = book.CategoryId;
       }
 
       await appDbContext.SaveChangesAsync();

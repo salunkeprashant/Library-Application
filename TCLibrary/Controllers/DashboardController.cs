@@ -252,8 +252,15 @@ namespace TCLibrary.Controllers
     [HttpDelete("{isbn}")]
     public IActionResult Delete(int isbn)
     {
-      var result = appDbContext.Books.Where(x => x.ISBN == isbn).FirstOrDefault();
-      appDbContext.Books.Remove(result);
+      var book = appDbContext.Books
+        .Include(x => x.BookTransactions)
+        .Where(x => x.ISBN == isbn).FirstOrDefault();
+
+      if (book.BookTransactions.Count > 0)
+      {
+        return this.BadRequest("Delete Failed! You already have issued this book to someone");
+      }
+      appDbContext.Books.Remove(book);
       appDbContext.SaveChanges();
 
       return new OkObjectResult("{}");

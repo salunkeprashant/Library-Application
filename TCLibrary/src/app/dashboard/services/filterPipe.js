@@ -10,20 +10,35 @@ var core_1 = require("@angular/core");
 var FilterPipe = /** @class */ (function () {
     function FilterPipe() {
     }
-    FilterPipe.prototype.transform = function (items, field, value) {
-        if (!items) {
-            return [];
-        }
-        if (!field || !value) {
+    FilterPipe.prototype.transform = function (items, filter, defaultFilter) {
+        if (!filter) {
             return items;
         }
-        return items.filter(function (singleItem) { return singleItem[field].toLowerCase().includes(value.toLowerCase()); });
+        if (!Array.isArray(items)) {
+            return items;
+        }
+        if (filter && Array.isArray(items)) {
+            var filterKeys_1 = Object.keys(filter);
+            if (defaultFilter) {
+                return items.filter(function (item) {
+                    return filterKeys_1.reduce(function (x, keyName) {
+                        return (x && new RegExp(filter[keyName], 'gi').test(item[keyName])) || filter[keyName] == "";
+                    }, true);
+                });
+            }
+            else {
+                return items.filter(function (item) {
+                    return filterKeys_1.some(function (keyName) {
+                        return new RegExp(filter[keyName], 'gi').test(item[keyName]) || filter[keyName] == "";
+                    });
+                });
+            }
+        }
     };
     FilterPipe = __decorate([
         core_1.Pipe({
             name: 'filter'
-        }),
-        core_1.Injectable()
+        })
     ], FilterPipe);
     return FilterPipe;
 }());

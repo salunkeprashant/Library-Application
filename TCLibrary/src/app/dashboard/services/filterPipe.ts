@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'grdFilter'
+  name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
   transform(items: any, filter: any, defaultFilter: boolean): any {

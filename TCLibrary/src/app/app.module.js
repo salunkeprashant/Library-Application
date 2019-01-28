@@ -24,6 +24,7 @@ var header_component_1 = require("./header/header.component");
 var home_component_1 = require("./home/home.component");
 var availableBook_component_1 = require("./public/availableBook.component");
 var footer_component_1 = require("./footer/footer.component");
+var login_form_component_1 = require("./account/login-form/login-form.component");
 /* Account Imports */
 var account_module_1 = require("./account/account.module");
 /* Dashboard Imports */
@@ -42,7 +43,8 @@ var AppModule = /** @class */ (function () {
                 header_component_1.HeaderComponent,
                 footer_component_1.FooterComponent,
                 home_component_1.HomeComponent,
-                availableBook_component_1.AvailableBookComponent
+                availableBook_component_1.AvailableBookComponent,
+                login_form_component_1.LoginFormComponent
             ],
             imports: [
                 ng_bootstrap_1.NgbModule.forRoot(),
@@ -51,6 +53,7 @@ var AppModule = /** @class */ (function () {
                 dashboard_module_1.DashboardModule,
                 platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
+                forms_1.ReactiveFormsModule,
                 http_1.HttpClientModule,
                 app_routing_1.routing,
                 common_1.CommonModule,
@@ -58,7 +61,8 @@ var AppModule = /** @class */ (function () {
                 shared_module_1.SharedModule,
                 angular_datatables_1.DataTablesModule,
                 animations_1.BrowserAnimationsModule,
-                ng_busy_1.NgBusyModule
+                ng_busy_1.NgBusyModule,
+                angular5_toaster_1.ToasterModule
             ],
             providers: [
                 api_service_1.ApiService, {
@@ -66,6 +70,7 @@ var AppModule = /** @class */ (function () {
                     useClass: http_token_interceptor_1.HttpTokenInterceptor,
                     multi: true
                 },
+                common_1.DatePipe,
                 angular5_toaster_1.ToasterService
             ],
             bootstrap: [app_component_1.AppComponent]

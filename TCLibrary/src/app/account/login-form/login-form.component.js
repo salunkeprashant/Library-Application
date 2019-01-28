@@ -35,17 +35,13 @@ var LoginFormComponent = /** @class */ (function () {
     LoginFormComponent.prototype.login = function (_a) {
         var _this = this;
         var value = _a.value, valid = _a.valid;
-        this.submitted = true;
-        this.isRequesting = true;
         this.errors = '';
         if (valid) {
             this.busyPromise = this.userService.login(value.email, value.password)
-                .then(function (_) {
-                return function (result) {
-                    if (result) {
-                        _this.router.navigate(['/dashboard']);
-                    }
-                };
+                .then(function (result) {
+                if (result) {
+                    _this.router.navigate(['/dashboard/book']);
+                }
             }, function (error) { return _this.errors = error; });
         }
     };

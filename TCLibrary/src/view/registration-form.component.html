@@ -1,45 +1,81 @@
-<div class="row">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header bg-white">
-                <h4 class="card-title">Create your account</h4>
+<div class="row" [ngBusy]="{busy:busyPromise}">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header bg-white">
+        <h4 class="card-title">Create your account</h4>
+      </div>
+      <div class="card-block">
+        <form [formGroup]="registrationForm" (ngSubmit)="registerUser(regForm.value)" novalidate>
+
+          <div class="form-group required">
+            <label for="firstName">First name</label>
+            <input id="firstName" type="text" required
+                   name="firstName" class="form-control"
+                   placeholder="Your first name" formControlName="firstName" tmFocus ngModel>
+            <div *ngIf="regForm.firstName.invalid && !regForm.firstName.pristine" class="invalid-feedback">
+              <small *ngIf="regForm.firstName.invalid" class="text-danger">Please enter a first name</small>
             </div>
-            <div class="card-block">
-                <form #f="ngForm" novalidate (ngSubmit)="registerUser(f)">
-
-                    <div class="form-group">
-                        <label for="first-name">First name</label>
-                        <input id="first-name" type="text" required name="firstName" class="form-control" placeholder="Your first name" tmFocus ngModel>
-                    </div>
-                    <div class="form-group">
-                        <label for="last-name">Last name</label>
-                        <input id="last-name" type="text" required name="lastName" class="form-control" placeholder="Your last name" ngModel>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input id="email" type="text" required name="email" validateEmail class="form-control" placeholder="Email" ngModel #email="ngModel">
-                        <small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input id="password" type="password" required name="password" class="form-control" placeholder="Password" ngModel>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirmpassword">Confirm Password</label>
-                        <input id="confirmpassword" type="password" required name="confirmpassword" class="form-control" placeholder="Confirm Password" ngModel>
-                    </div>
-
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Sign Up</button>
-                        <app-spinner [isRunning]="isRequesting"></app-spinner>
-                    </div>
-                    <div *ngIf="errors" class="alert alert-danger" role="alert">
-                        <strong>Oops!</strong> {{errors}}
-                    </div>
-                </form>
+          </div>
+          <div class="form-group required">
+            <label for="lastName">Last name</label>
+            <input id="lastName" type="text" required
+                   name="lastName" class="form-control"
+                   placeholder="Your last name" formControlName="lastName" ngModel>
+            <div *ngIf="regForm.lastName.invalid && !regForm.lastName.pristine" class="invalid-feedback">
+              <small *ngIf="regForm.lastName.invalid" class="text-danger">Please enter a last name</small>
             </div>
-        </div>
+          </div>
+
+          <div class="form-group required">
+            <label for="email">Email</label>
+            <input id="email" type="text" required
+                   name="email" class="form-control"
+                   placeholder="Email" formControlName="email" ngModel>
+            <div *ngIf="regForm.email.invalid && !regForm.email.pristine" class="invalid-feedback">
+              <small *ngIf="regForm.email.invalid" class="text-danger">Please enter a valid email</small>
+            </div>
+          </div>
+          <div class="form-group required">
+            <label for="password">Password</label>
+            <input id="password" type="password"
+                   name="password"
+                   formControlName="password"
+                   class="form-control"
+                   placeholder="Password">
+            <div *ngIf="regForm.password.invalid && !regForm.password.pristine" class="invalid-feedback">
+              <div *ngIf="regForm.password.errors.required" class="text-danger">Password is required</div>
+              <div *ngIf="regForm.password.errors.minlength" class="text-danger">Password must be at least 8 characters</div>
+              <div *ngIf="!regForm.password.errors.minlength && regForm.password.errors.hasNumber" class="text-danger">Password must have 1 number</div>
+              <div *ngIf="!regForm.password.errors.minlength && regForm.password.errors.hasCapitalCase" class="text-danger">Password must has upper case letter</div>
+              <div *ngIf="!regForm.password.errors.minlength && regForm.password.errors.hasSmallCase" class="text-danger">password must has small case letter</div>
+              <div *ngIf="!regForm.password.errors.minlength && regForm.password.errors.hasSpecialCharacters" class="text-danger">Password must have a Special Characters</div>
+            </div>
+          </div>
+
+          <div class="form-group required">
+            <label for="confirmPassword">Confirm Password</label>
+            <input id="confirmPassword"
+                   type="password"
+                   name="confirmPassword"
+                   formControlName="confirmPassword"
+                   class="form-control"
+                   placeholder="Confirm Password"
+                   ngModel>
+            <div *ngIf="regForm.confirmPassword.invalid && !regForm.confirmPassword.pristine" class="invalid-feedback">
+              <div *ngIf="regForm.confirmPassword.errors.required" class="text-danger">Password is required</div>
+              <div *ngIf="regForm.confirmPassword.errors.minlength" class="text-danger">Password must be at least 8 characters</div>
+              <div *ngIf="regForm.confirmPassword.errors.NoPassswordMatch" class="text-danger"><strong>Oops! Password do not match</strong></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" [disabled]="disableBtn" >Sign Up</button>
+          </div>
+          <div *ngIf="errors" class="alert alert-danger" role="alert">
+            <strong>Oops!</strong> {{errors}}
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>

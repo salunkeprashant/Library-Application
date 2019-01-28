@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, HostListener, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, HostListener, ViewEncapsulation, ViewChild, QueryList } from '@angular/core';
 import { IBookDetails } from '../models/book.details.interface';
 import { IBookCategoryDetails } from '../models/bookcategory.details.inteface';
 import { DashboardService } from '../services/dashboard.service';
@@ -10,6 +10,7 @@ import { ApiService } from '../../shared/utils/api.service';
 
 import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ToasterContainerComponent, ToasterService, ToasterConfig } from 'angular5-toaster';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,11 @@ import { ToasterContainerComponent, ToasterService, ToasterConfig } from 'angula
   providers: [DashboardService]
 })
 export class BookComponent implements OnInit {
-  dtOptions: DataTables.Settings = {};
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  deleteBusyPromise: Promise<any>;
+  dtOptions: any = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
   books: IBookDetails[];
   isbn: any;
@@ -34,16 +39,12 @@ export class BookComponent implements OnInit {
   enterAuthor = (term) => ({ authorId: (this.authorList).length + 1, author: term });
 
   errors: string;
-  isRequesting: boolean;
-  submitted: boolean = false;
-  saveSuccess: boolean = false;
-
   private years: number[] = [];
   private yy: number;
 
   closeResult: string;
   private modalRef: NgbModalRef;
-  dtTrigger: Subject<any> = new Subject<any>();
+
   busyPromise: Promise<any>;
   private toasterService: ToasterService;
 
@@ -67,8 +68,50 @@ export class BookComponent implements OnInit {
 
   ngOnInit() {
     this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
+      columnDefs: [
+        { defaultContent: "", targets: "_all" },
+        { targets: [1, 2, 3, 4, 5, 6], orderable: true },
+        { targets: "_all", orderable: false }
+      ],
+      language: {
+        info: "Items _START_ to _END_ of _TOTAL_",
+        lengthMenu: "Page Size:  _MENU_",
+        processing: "",
+        zeroRecords: "No data available"
+      },
+      dom: "<'row'<'col-sm-3'B>>" + "<'row'<'col-sm-12'tr>>" +
+        "<'row table-control-row'<'col-sm-3'i><'col-sm-3'l><'col-sm-6'p>>",
+      lengthMenu: [[10, 20, 30], [10, 20, 30]],
+      info: true,
+      paging: true,
+      searching: true,
+      destroy: true,
+      order: [[1, "asc"], [6, "asc"]],
+      // Configure the buttons
+      buttons: [
+        {
+          extend: 'excel',
+          text: '',
+          className: 'fa fa-file-excel-o',
+          init: function (api, node, config) {
+            $(node).removeClass('dt-button')
+          },
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+          }
+        },
+        {
+          extend: 'print',
+          text: '',
+          className: 'fa fa-print',
+          init: function (api, node, config) {
+            $(node).removeClass('dt-button')
+          },
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+          }
+        }
+      ]
     },
       this.getYear();
     this.getBooks();
@@ -81,11 +124,12 @@ export class BookComponent implements OnInit {
       this.book = book;
       this.isbn = book.isbn;
     }
+    this.errors = '';
     this.modalRef = this.modalService.open(content);
   }
 
   getBooks(): void {
-    this.apiService.get(`/dashboard/book`).subscribe(
+    this.dashboardService.getBookDetails().subscribe(
       result => {
         this.books = result;
         // Calling the DT trigger to manually render the table
@@ -107,8 +151,6 @@ export class BookComponent implements OnInit {
     )
   }
 
-
-
   categoryName: any;
   author: any;
   addBook({ value, valid }: { value: any, valid: boolean }) {
@@ -116,8 +158,7 @@ export class BookComponent implements OnInit {
       this.categoryName = value.categoryId;
       value.categoryId = (this.categoryList).length + 1
     }
-    this.submitted = true;
-    this.errors = '';
+
     console.log(value);
 
     if (valid) {
@@ -125,12 +166,12 @@ export class BookComponent implements OnInit {
         .toPromise()
         .then(result => {
           if (result) {
-            this.saveSuccess = true;
-            this.toasterService.pop('success', 'Book Succefully Added', `${value.title}`);
+            this.toasterService.pop('success', 'Book Added', `${value.title}`);
             this.modalRef.dismiss();
+            this.rerender();
           }
         },
-        errors => this.errors = errors);
+        errors => this.errors = errors.error);
     }
   }
 
@@ -139,42 +180,30 @@ export class BookComponent implements OnInit {
       this.categoryName = value.categoryId;
       value.categoryId = (this.categoryList).length + 1
     }
-    if (typeof value.authorId === "string") {
-      this.author = value.authorId;
-      value.authorId = (this.authorList).length + 1
-    }
     console.log(value);
-    this.submitted = true;
-    this.isRequesting = true;
     this.errors = '';
-    this.dashboardService.UpdateBook(value.isbn, value.title, value.authorId, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
-      .finally(() => this.isRequesting = false)
-      .subscribe(
-      result => {
+    this.dashboardService.UpdateBook(value.isbn, value.title, value.authors, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
+      .toPromise()
+      .then(result => {
         if (result) {
-          this.saveSuccess = true;
-          this.modalRef.dismiss();
-          // window.location.reload();
+          this.toasterService.pop('success', 'Book Updated', `${this.book.title}`);
+          this.modalRef.dismiss()
         }
       },
-      errors => this.errors = errors);
+      errors => this.errors = errors.error);
   }
 
-  deleteBook({ value }: { value: null }) {
-    this.submitted = true;
-    this.isRequesting = true;
-    this.errors = '';
-    this.dashboardService.deleteBook(this.isbn)
-      .finally(() => this.isRequesting = false)
-      .subscribe(
-      result => {
+  deleteBook({ value }: { value: any }) {
+    this.deleteBusyPromise = this.dashboardService.deleteBook(this.isbn)
+      .toPromise()
+      .then(result => {
         if (result) {
-          this.saveSuccess = true;
+          this.toasterService.pop('error', 'Book Deleted', `${this.book.title}`);
           this.modalRef.dismiss();
-          window.location.reload();
+          this.rerender();
         }
       },
-      errors => this.errors = errors);
+      errors => this.errors = errors.error);
   }
 
   getYear() {
@@ -183,5 +212,19 @@ export class BookComponent implements OnInit {
     for (var i = (this.yy - 400); i <= this.yy; i++) {
       this.years.push(i);
     }
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // get books & Call the dtTrigger to rerender again
+      this.apiService.get(`/dashboard/book`).subscribe(
+        result => {
+          this.books = result;
+          // Calling the DT trigger to manually render the table
+          this.dtTrigger.next();
+        });
+    });
   }
 }

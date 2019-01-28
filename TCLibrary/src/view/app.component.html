@@ -1,12 +1,11 @@
-<!-- app.component.html -->
+ <!--Page Header-->
 <app-header></app-header>
 
-<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+<!-- Begin page content -->
+<router-outlet></router-outlet>
 
-<div>
-  <!-- Begin page content -->
-  <router-outlet></router-outlet>
-</div>
-
-<!-- /page footer -->
+<!-- Page footer -->
 <app-footer #footer></app-footer>
+
+<!-- Inject toaster container throughout application-->
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>

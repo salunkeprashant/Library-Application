@@ -1,25 +1,22 @@
-<div class="row">
+<div class="col-md-2" role="navigation" style="border-right:1px solid #cecece">
+  <ul class="nav nav-pills nav-stacked">
+    <li class="nav-item">
+      <a id="book-list" class="nav-link sidebar-menu-button" routerLinkActive="active-sidebar-link" routerLink='/dashboard/book'>
+        <i class="fa fa-book" aria-hidden="true"></i> Books
+      </a>
+      <a id="issue-book" class="nav-link sidebar-menu-button" routerLinkActive="active-sidebar-link" routerLink='/dashboard/transaction'>
+        <i class="fa fa-home" aria-hidden="true"></i> Issue
+      </a>
+      <a id="return-book" class="nav-link sidebar-menu-button" routerLinkActive="active-sidebar-link" routerLink='/dashboard/return'>
+        <i class="fa fa-home" aria-hidden="true"></i> Return
+      </a>
+      <a id="member-list" class="nav-link sidebar-menu-button" routerLinkActive="active-sidebar-link" routerLink='/dashboard/members'>
+        <i class="fa fa-users" aria-hidden="true"></i> Employees
+      </a>
+    </li>
+  </ul>
+</div>
 
-  <div class="col-md-2" role="navigation" style="border-right:1px solid #cecece">
-      <ul class="nav nav-pills nav-stacked">
-          <li class="nav-item">
-              <a id="book-list" class="nav-link sidebar-menu-button" routerLinkActive="active-sidebar-link" routerLink='/dashboard/book'>
-                  <i class="fa fa-book" aria-hidden="true"></i> Books List
-              </a>
-              <a id="issue-book" class="nav-link sidebar-menu-button" routerLinkActive="active-sidebar-link" routerLink='/dashboard/transaction'>
-                  <i class="fa fa-home" aria-hidden="true"></i> Issue
-              </a>
-              <a id="return-book" class="nav-link sidebar-menu-button" routerLinkActive="active-sidebar-link" routerLink='/dashboard/return'>
-                  <i class="fa fa-home" aria-hidden="true"></i> Return
-              </a>
-              <a id="member-list" class="nav-link sidebar-menu-button" routerLinkActive="active-sidebar-link" routerLink='/dashboard/members'>
-                  <i class="fa fa-address-book-o" aria-hidden="true"></i> Member
-              </a>
-          </li>
-      </ul>
-  </div>
-
-  <div class="col-md-10">
-    <router-outlet></router-outlet>
-  </div>
+<div class="col-md-10">
+  <router-outlet></router-outlet>
 </div>

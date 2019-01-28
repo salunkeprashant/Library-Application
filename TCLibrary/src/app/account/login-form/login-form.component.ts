@@ -39,15 +39,12 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
   login({ value, valid }: { value: ICredentials, valid: boolean }) {
-    this.submitted = true;
-    this.isRequesting = true;
     this.errors='';
     if (valid) {
       this.busyPromise = this.userService.login(value.email, value.password)
-        .then(_ =>
-        result => {         
+        .then(result => {         
           if (result) {
-             this.router.navigate(['/dashboard']);             
+             this.router.navigate(['/dashboard/book']);             
           }
         },
         error => this.errors = error);

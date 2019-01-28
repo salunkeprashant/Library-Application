@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgBusyModule } from 'ng-busy';
 import { SharedModule } from '../shared/modules/shared.module';
@@ -17,9 +17,10 @@ import { LoginFormComponent } from './login-form/login-form.component';
     imports: [
       CommonModule, FormsModule, routing, SharedModule,
       BrowserAnimationsModule,
-      NgBusyModule
+      NgBusyModule,
+      ReactiveFormsModule
     ],
-    declarations: [RegistrationFormComponent, EmailValidator, LoginFormComponent],
+    declarations: [RegistrationFormComponent, EmailValidator],
     providers: [UserService]
 })
 export class AccountModule { }

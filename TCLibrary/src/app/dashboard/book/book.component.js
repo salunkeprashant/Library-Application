@@ -16,6 +16,7 @@ var Subject_1 = require("rxjs/Subject");
 var api_service_1 = require("../../shared/utils/api.service");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var angular5_toaster_1 = require("angular5-toaster");
+var angular_datatables_1 = require("angular-datatables");
 var BookComponent = /** @class */ (function () {
     function BookComponent(dashboardService, userService, apiService, modalService, toasterService) {
         var _this = this;
@@ -24,13 +25,11 @@ var BookComponent = /** @class */ (function () {
         this.apiService = apiService;
         this.modalService = modalService;
         this.dtOptions = {};
+        this.dtTrigger = new Subject_1.Subject();
         this.book = '';
         this.enterCategory = function (term) { return ({ categoryId: term, categoryName: term }); };
         this.enterAuthor = function (term) { return ({ authorId: (_this.authorList).length + 1, author: term }); };
-        this.submitted = false;
-        this.saveSuccess = false;
         this.years = [];
-        this.dtTrigger = new Subject_1.Subject();
         this.toasterService = toasterService;
     }
     BookComponent.prototype.getDismissReason = function (reason) {
@@ -46,8 +45,50 @@ var BookComponent = /** @class */ (function () {
     };
     BookComponent.prototype.ngOnInit = function () {
         this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
+            columnDefs: [
+                { defaultContent: "", targets: "_all" },
+                { targets: [1, 2, 3, 4, 5, 6], orderable: true },
+                { targets: "_all", orderable: false }
+            ],
+            language: {
+                info: "Items _START_ to _END_ of _TOTAL_",
+                lengthMenu: "Page Size:  _MENU_",
+                processing: "",
+                zeroRecords: "No data available"
+            },
+            dom: "<'row'<'col-sm-3'B>>" + "<'row'<'col-sm-12'tr>>" +
+                "<'row table-control-row'<'col-sm-3'i><'col-sm-3'l><'col-sm-6'p>>",
+            lengthMenu: [[10, 20, 30], [10, 20, 30]],
+            info: true,
+            paging: true,
+            searching: true,
+            destroy: true,
+            order: [[1, "asc"], [6, "asc"]],
+            // Configure the buttons
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: '',
+                    className: 'fa fa-file-excel-o',
+                    init: function (api, node, config) {
+                        $(node).removeClass('dt-button');
+                    },
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: '',
+                    className: 'fa fa-print',
+                    init: function (api, node, config) {
+                        $(node).removeClass('dt-button');
+                    },
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                    }
+                }
+            ]
         },
             this.getYear();
         this.getBooks();
@@ -59,11 +100,12 @@ var BookComponent = /** @class */ (function () {
             this.book = book;
             this.isbn = book.isbn;
         }
+        this.errors = '';
         this.modalRef = this.modalService.open(content);
     };
     BookComponent.prototype.getBooks = function () {
         var _this = this;
-        this.apiService.get("/dashboard/book").subscribe(function (result) {
+        this.dashboardService.getBookDetails().subscribe(function (result) {
             _this.books = result;
             // Calling the DT trigger to manually render the table
             _this.dtTrigger.next();
@@ -86,19 +128,17 @@ var BookComponent = /** @class */ (function () {
             this.categoryName = value.categoryId;
             value.categoryId = (this.categoryList).length + 1;
         }
-        this.submitted = true;
-        this.errors = '';
         console.log(value);
         if (valid) {
             this.busyPromise = this.dashboardService.AddBook(value.isbn, value.title, value.authors, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
                 .toPromise()
                 .then(function (result) {
                 if (result) {
-                    _this.saveSuccess = true;
-                    _this.toasterService.pop('success', 'Args Title', 'Args Body');
+                    _this.toasterService.pop('success', 'Book Added', "" + value.title);
                     _this.modalRef.dismiss();
+                    _this.rerender();
                 }
-            }, function (errors) { return _this.errors = errors; });
+            }, function (errors) { return _this.errors = errors.error; });
         }
     };
     BookComponent.prototype.updateBook = function (_a) {
@@ -108,39 +148,29 @@ var BookComponent = /** @class */ (function () {
             this.categoryName = value.categoryId;
             value.categoryId = (this.categoryList).length + 1;
         }
-        if (typeof value.authorId === "string") {
-            this.author = value.authorId;
-            value.authorId = (this.authorList).length + 1;
-        }
         console.log(value);
-        this.submitted = true;
-        this.isRequesting = true;
         this.errors = '';
-        this.dashboardService.UpdateBook(value.isbn, value.title, value.authorId, this.author, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
-            .finally(function () { return _this.isRequesting = false; })
-            .subscribe(function (result) {
+        this.dashboardService.UpdateBook(value.isbn, value.title, value.authors, value.categoryId, this.categoryName, value.ratings, value.yearofpublish, value.pages, value.quantity)
+            .toPromise()
+            .then(function (result) {
             if (result) {
-                _this.saveSuccess = true;
+                _this.toasterService.pop('success', 'Book Updated', "" + _this.book.title);
                 _this.modalRef.dismiss();
-                // window.location.reload();
             }
-        }, function (errors) { return _this.errors = errors; });
+        }, function (errors) { return _this.errors = errors.error; });
     };
     BookComponent.prototype.deleteBook = function (_a) {
         var _this = this;
         var value = _a.value;
-        this.submitted = true;
-        this.isRequesting = true;
-        this.errors = '';
-        this.dashboardService.deleteBook(this.isbn)
-            .finally(function () { return _this.isRequesting = false; })
-            .subscribe(function (result) {
+        this.deleteBusyPromise = this.dashboardService.deleteBook(this.isbn)
+            .toPromise()
+            .then(function (result) {
             if (result) {
-                _this.saveSuccess = true;
+                _this.toasterService.pop('error', 'Book Deleted', "" + _this.book.title);
                 _this.modalRef.dismiss();
-                window.location.reload();
+                _this.rerender();
             }
-        }, function (errors) { return _this.errors = errors; });
+        }, function (errors) { return _this.errors = errors.error; });
     };
     BookComponent.prototype.getYear = function () {
         var today = new Date();
@@ -149,6 +179,23 @@ var BookComponent = /** @class */ (function () {
             this.years.push(i);
         }
     };
+    BookComponent.prototype.rerender = function () {
+        var _this = this;
+        this.dtElement.dtInstance.then(function (dtInstance) {
+            // Destroy the table first
+            dtInstance.destroy();
+            // get books & Call the dtTrigger to rerender again
+            _this.apiService.get("/dashboard/book").subscribe(function (result) {
+                _this.books = result;
+                // Calling the DT trigger to manually render the table
+                _this.dtTrigger.next();
+            });
+        });
+    };
+    __decorate([
+        core_1.ViewChild(angular_datatables_1.DataTableDirective),
+        __metadata("design:type", angular_datatables_1.DataTableDirective)
+    ], BookComponent.prototype, "dtElement", void 0);
     BookComponent = __decorate([
         core_1.Component({
             selector: 'app-home',

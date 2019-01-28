@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { Directive, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { routing } from './app.routing';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgbModule, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -17,6 +17,7 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { AvailableBookComponent } from './public/availableBook.component';
 import { FooterComponent } from './footer/footer.component';
+import { LoginFormComponent } from './account/login-form/login-form.component';
 
 /* Account Imports */
 import { AccountModule } from './account/account.module';
@@ -30,14 +31,14 @@ import { ApiService } from './shared/utils/api.service';
 import { HttpTokenInterceptor } from './shared/utils/http.token.interceptor';
 import { BusyConfig } from 'ng-busy';
 
-
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    AvailableBookComponent  
+    AvailableBookComponent,
+    LoginFormComponent
   ],
   imports: [
     NgbModule.forRoot(),
@@ -46,6 +47,7 @@ import { BusyConfig } from 'ng-busy';
     DashboardModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     routing,
     CommonModule,
@@ -62,6 +64,7 @@ import { BusyConfig } from 'ng-busy';
     useClass: HttpTokenInterceptor,
       multi: true
     },
+    DatePipe,
     ToasterService
   ],
   bootstrap: [AppComponent]

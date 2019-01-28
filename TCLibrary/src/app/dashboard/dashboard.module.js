@@ -19,7 +19,6 @@ var root_component_1 = require("./root/root.component");
 var home_component_1 = require("./home/home.component");
 var book_component_1 = require("./book/book.component");
 var member_component_1 = require("./member/member.component");
-var member_root_component_1 = require("./root/member.root.component");
 var transaction_component_1 = require("./transaction/transaction.component");
 var return_component_1 = require("./transaction/return.component");
 var email_validator_directive_1 = require("../directives/email.validator.directive");
@@ -51,7 +50,6 @@ var DashboardModule = /** @class */ (function () {
                 book_component_1.BookComponent,
                 transaction_component_1.TransactionComponent,
                 return_component_1.ReturnComponent,
-                member_root_component_1.MemberRootComponent,
                 member_component_1.MemberComponent,
                 filterPipe_1.FilterPipe
             ],

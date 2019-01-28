@@ -1,15 +1,14 @@
-<div class="row" [ngBusy]="{busy:busyPromise}">
-    <div class="col-md-6 center-div">
+<div class="row login-form" [ngBusy]="{busy:busyPromise}">
+    <div class="col-md-6">
         <div class="card">
             <div class="card-block" >
                 <div *ngIf="brandNew" class="alert alert-success" role="alert">
                     <strong>All set!</strong> Please login with your account
                 </div>
 
-                <h4>Login</h4>
                 <form #f="ngForm" novalidate (ngSubmit)="login(f)" >
                     <div class="form-group" >
-                        <label for="email">Email</label>
+                      <label for="email" class="login-label">Username or email address</label>
                         <input id="email" type="text" required name="email" [ngModel]="credentials.email" #email="ngModel" tmFocus validateEmail class="form-control"
                                placeholder="Email">
                         <small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">
@@ -17,12 +16,11 @@
                         </small>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label for="password" class="login-label">Password</label>
                         <input id="password" type="password" required name="password" class="form-control" placeholder="Password" ngModel>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Login</button>
-                        
                     </div>
                     <div *ngIf="errors" class="alert alert-danger" role="alert">
                         <strong>Oops!</strong> {{errors}}

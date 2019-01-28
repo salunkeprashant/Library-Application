@@ -1,282 +1,269 @@
-<div class="card">
-    <div class="row">
-        <div class="col-md-9 col-md-offset-1">
-            <button class="btn btn-primary" (click)='openmodal(addcontent)' style="float: right">Add New Book</button>
-            <div style="overflow: hidden; padding-right: .5em;">
-                <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
-            </div>
-            <br />
-            <br />
-                <table datatable [dtOptions]="dtOptions" class="row-border hover">
-                    <thead>
-                        <tr>
-                            <th>ISBN</th>
-                            <th>Title</th>
-                            <th>Rating</th>
-                            <th>Author</th>
-                            <th>Category</th>
-                            <th>Pages</th>
-                            <th>Published Year</th>
-                            <th>Quantity</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let book of books | filter : 'title' : searchString; let i = index">
-                            <td>
-                                {{book.isbn}}
-                            </td>
-                            <td>
-                                {{book.title}}
-                            </td>
-                            <td>
-                                {{book.ratings}}
-                            </td>
-                            <td>
-                                <div *ngFor="let item of book.author">
-                                    {{item}}
-                                </div>
-                            </td>
-                            <td>
-                                {{book.categoryName}}
-                            </td>
-                            <td>
-                                {{book.pages}}
-                            </td>
-                            <td>
-                                {{book.yearOfPublish}}
-                            </td>
-                            <td>
-                                {{book.quantity}}
-                            </td>
-                            <td>
-                                <div class="actions">
-                                    <span class="glyphicon glyphicon-edit" (click)='openmodal(updatecontent,book)'></span>&nbsp;&nbsp;&nbsp;
-                                    <span class="glyphicon glyphicon-floppy-remove" (click)='openmodal(deletecontent,book)'></span> &nbsp;&nbsp;&nbsp;
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+<div class="dashboard-view col-md-10 col-md-offset-1">
+  <button class="btn btn-primary add-btn" (click)='openmodal(addcontent)'>Add New Book</button>
+  <div class="input-area">
+    <input type="text" placeholder="Find Book here" class="input-lg form-control" name="searchString" [(ngModel)]="searchString" />
+  </div>
+  <br>
+  <br>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" id="book-list-table">
+    <thead>
+      <tr>
+        <th>ISBN</th>
+        <th>Title</th>
+        <th>Rating</th>
+        <th>Authors</th>
+        <th>Category</th>
+        <th>Pages</th>
+        <th>Published Year</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books | filter : {'title' : searchString}; let i = index">
+        <td class="text-cell">
+          {{book.isbn}}
+        </td>
+        <td class="text-cell">
+          {{book.title}}
+        </td>
+        <td class="text-cell">
+          {{book.ratings}}
+        </td>
+        <td class="text-cell">
+          <div *ngFor="let author of book.authors">
+            {{author.author}}
+          </div>
+        </td>
+        <td class="text-cell">
+          {{book.categoryName}}
+        </td>
+        <td class="text-cell">
+          {{book.pages}}
+        </td>
+        <td class="text-cell">
+          {{book.yearOfPublish}}
+        </td>
+        <td class="text-cell">
+          {{book.quantity}}
+        </td>
+        <td class="action-cell">
+          <span class="glyphicon glyphicon-edit" (click)='openmodal(updatecontent,book)' title="Edit Book"></span>
+          <span class="glyphicon glyphicon-trash" style="padding-left:1em" (click)='openmodal(deletecontent,book)' title="Delete Book"></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
 <ng-template #deletecontent let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <div style="overflow: hidden; padding-right: .5em;">
-            <h4 class="modal-title">Delete Book</h4>
-        </div>
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div style="overflow: hidden; padding-right: .5em;">
+      <h4 class="modal-title">Delete Book</h4>
     </div>
-    <div class="modal-body">
-        <form #deletebook="ngForm" class="form-inline" (ngSubmit)="deleteBook(deletebook)">
-            <h3>Do You Wants to Delete {{book.title}}  ? </h3>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary" [disabled]="isRequesting">Delete</button>
-                <app-spinner [isRunning]="isRequesting"></app-spinner>
-            </div>
-            <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
-            <div *ngIf="errors" class="alert alert-danger" role="alert">
-                <strong>Oops!</strong> {{errors}}
-            </div>
-            <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
-                <strong>Book deleted...</strong>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-    </div>
+  </div>
+  <div class="modal-body" [ngBusy]="{busy:deleteBusyPromise}">
+    <form #deletebook="ngForm" class="form-inline" (ngSubmit)="deleteBook(deletebook)">
+      <h3>Do You Wants to Delete {{book.title}}  ? </h3>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Delete</button>
+      </div>
+      <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+      <div *ngIf="errors" class="alert alert-danger" role="alert">
+        <strong>Oops!</strong> {{errors}}
+      </div>
+    </form>
+  </div>
 </ng-template>
 
 <ng-template #addcontent let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <div style="overflow: hidden; padding-right: .5em;">
-            <h4 class="modal-title">Add New Book</h4>
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div style="overflow: hidden; padding-right: .5em;">
+      <h4 class="modal-title">Add New Book</h4>
+    </div>
+  </div>
+  <div class="modal-body" [ngBusy]="{busy:busyPromise}">
+    <form #addbook="ngForm" class="form-horizontal" novalidate (ngSubmit)="addBook(addbook)">
+      <div class="form-group required">
+        <label class="control-label col-sm-4" for="isbn">ISBN Number</label>
+        <div class="col-sm-8">
+          <input id="isbn" type="text" required name="isbn" class="form-control" placeholder="Enter Book ISBN Number" tmFocus ngModel>
         </div>
-    </div>
-    <div class="modal-body" [ngBusy]="{busy:busyPromise}">
-        <form #addbook="ngForm" class="form-horizontal" novalidate (ngSubmit)="addBook(addbook)">
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="isbn">ISBN Number</label>
-                <div class="col-sm-8">
-                    <input id="isbn" type="text" required name="isbn" class="form-control" placeholder="Enter Book ISBN Number" tmFocus ngModel>
-                </div>
-            </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="title">Book Title</label>
-                <div class="col-sm-8">
-                    <input id="title" type="text" required name="title" class="form-control" placeholder="Book Title " ngModel>
-                </div>
-            </div>
+      <div class="form-group required">
+        <label class="control-label col-sm-4" for="title">Book Title</label>
+        <div class="col-sm-8">
+          <input id="title" type="text" required name="title" class="form-control" placeholder="Book Title " ngModel>
+        </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="Author">Author</label>
-                <div class="col-sm-8">
-                    <ng-select [items]="authorList" bindLabel="author" [addTag]="enterAuthor" [multiple]="true"
-                               placeholder="Select Author or enter"
-                               name="authors" ngModel>
-                    </ng-select>
-                </div>
-            </div>
+      <div class="form-group required">
+        <label class="control-label col-sm-4" for="Author">Author</label>
+        <div class="col-sm-8">
+          <ng-select [items]="authorList"
+                     bindLabel="author"
+                     [addTag]="enterAuthor"
+                     [multiple]="true"
+                     placeholder="Select Author or enter"
+                     name="authors" ngModel required>
+          </ng-select>
+        </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="Category">Category</label>
-                <div class="col-sm-8">
-                    <ng-select [items]="categoryList" bindLabel="categoryName" bindValue="categoryId" [addTag]="enterCategory" [multiple]="false"
-                               placeholder="Select or enter category"
-                               name="categoryId" ngModel>
-                    </ng-select>
-                </div>
-            </div>
+      <div class="form-group required">
+        <label class="control-label col-sm-4" for="Category">Category</label>
+        <div class="col-sm-8">
+          <ng-select [items]="categoryList" bindLabel="categoryName" bindValue="categoryId" [addTag]="enterCategory" [multiple]="false"
+                     placeholder="Select or enter category"
+                     name="categoryId" ngModel required>
+          </ng-select>
+        </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="ratings">Ratings</label>
-                <div class="col-sm-8">
-                    <input id="ratings" type="text" required name="ratings" class="form-control" placeholder="Enter Ratings" ngModel>
-                </div>
-            </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="ratings">Ratings</label>
+        <div class="col-sm-8">
+          <input id="ratings" type="text" name="ratings" class="form-control" placeholder="Enter Ratings" ngModel>
+        </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="pages">Pages</label>
-                <div class="col-sm-8">
-                    <input id="pages" type="text" required name="pages" class="form-control" placeholder="Enter Pages" ngModel>
-                </div>
-            </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="pages">Pages</label>
+        <div class="col-sm-8">
+          <input id="pages" type="text" name="pages" class="form-control" placeholder="Enter Pages" ngModel>
+        </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="quantity">Quantity</label>
-                <div class="col-sm-8">
-                    <input id="quantity" type="text" required name="quantity" class="form-control" placeholder="Enter Quantity" ngModel>
-                </div>
-            </div>
+      <div class="form-group required">
+        <label class="control-label col-sm-4" for="quantity">Quantity</label>
+        <div class="col-sm-8">
+          <input id="quantity" type="text" required name="quantity" class="form-control" placeholder="Enter Quantity" ngModel>
+        </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="yearofpublish">Year Of Publish</label>
-                <div class="col-sm-8">
-                    <select id="yearofpublish" #yearofpublish="ngModel" class="form-control" [(ngModel)]="yy" name="yearofpublish" ngModel>
-                        <option *ngFor="let y of years" [selected]="yy === y ">{{y}}</option>
-                    </select>
-                </div>
-            </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="yearofpublish">Year Of Publish</label>
+        <div class="col-sm-8">
+           <select id="yearofpublish" #yearofpublish="ngModel" class="form-control" [(ngModel)]="yy" name="yearofpublish" ngModel>
+            <option *ngFor="let y of years" [selected]="yy === y ">{{y}}</option>
+          </select>
+        </div>
+      </div>
 
-            <div class="form-group">
-                <div class="col-sm-offset-4 col-sm-8">
-                    <button type="submit" data-dismiss="modal" class="btn btn-primary" [disabled]="addbook.invalid || isRequesting">Submit</button>
-                </div>
-            </div>
-            <div *ngIf="errors" class="alert alert-danger" role="alert">
-                <strong>Oops!</strong> {{errors}}
-            </div>
-            <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
-                <strong>Book Succesfullly saved...</strong>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-    </div>
+      <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+          <button type="submit" data-dismiss="modal" class="btn btn-primary" [disabled]="addbook.invalid || isRequesting">Submit</button>
+        </div>
+      </div>
+      <div *ngIf="errors" class="alert alert-danger" role="alert">
+        <strong>Oops!</strong> {{errors}}
+      </div>
+    </form>
+  </div>
 </ng-template>
 
 <ng-template #updatecontent let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <div style="overflow: hidden; padding-right: .5em;">
-            <h4 class="modal-title">Update Book</h4>
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div style="overflow: hidden; padding-right: .5em;">
+      <h4 class="modal-title">Update Book</h4>
+    </div>
+  </div>
+  <div class="modal-body">
+    <form #updatebook="ngForm" class="form-horizontal" novalidate (ngSubmit)="updateBook(updatebook)">
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="isbn">ISBN Number</label>
+        <div class="col-sm-8">
+          <input id="isbn" type="text" required name="isbn" class="form-control" ngModel="{{book.isbn}}" ng-disabled>
         </div>
-    </div>
-    <div class="modal-body">
-        <form #updatebook="ngForm" class="form-horizontal" novalidate (ngSubmit)="updateBook(updatebook)">
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="isbn">ISBN Number</label>
-                <div class="col-sm-8">
-                    <input id="isbn" type="text" required name="isbn" class="form-control" ngModel="{{book.ISBN}}" tmFocus>
-                </div>
-            </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="title">Book Title</label>
-                <div class="col-sm-8">
-                    <input id="title" type="text" required name="title" class="form-control" ngModel="{{book.Title}}">
-                </div>
-            </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="title">Book Title</label>
+        <div class="col-sm-8">
+          <input id="title" type="text" required name="title" class="form-control" ngModel="{{book.title}}">
+        </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="Author">Author</label>
-                <div class="col-sm-8">
-                    <ng-select [items]="authorList" bindLabel="author" [addTag]="enterAuthor" [multiple]="false"
-                               [(ngModel)]="book.author"
-                               name="authorId" ngModel>
-                    </ng-select>
-                </div>
-            </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="Author">Author</label>
+        <div class="col-sm-8">
+          <ng-select [items]="authorList"
+                     bindLabel="author"
+                     [addTag]="enterAuthor"
+                     [multiple]="true"
+                     [(ngModel)]="book.authors"
+                     name="authors" ngModel>
+          </ng-select>
+        </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="Category">Category</label>
-                <div class="col-sm-8">
-                    <ng-select [items]="categoryList"
-                               bindLabel="categoryName"
-                               bindValue="categoryId"
-                               [addTag]="enterCategory"
-                               [multiple]="false"
-                               [(ngModel)]="book.categoryId"
-                               placeholder="{{book.CategoryName}}"
-                               name="categoryId" ngModel>
-                    </ng-select>
-                </div>
-            </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="Category">Category</label>
+        <div class="col-sm-8">
+          <ng-select [items]="categoryList"
+                     bindLabel="categoryName"
+                     bindValue="categoryId"
+                     [addTag]="enterCategory"
+                     [multiple]="false"
+                     [(ngModel)]="book.categoryId"
+                     name="categoryId" ngModel>
+          </ng-select>
+        </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="ratings">Ratings</label>
-                <div class="col-sm-8">
-                    <input id="ratings" type="text" required name="ratings" class="form-control" ngModel="{{book.Ratings}}">
-                </div>
-            </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="ratings">Ratings</label>
+        <div class="col-sm-8">
+          <input id="ratings" type="text" required name="ratings" class="form-control" ngModel="{{book.ratings}}">
+        </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="pages">Pages</label>
-                <div class="col-sm-8">
-                    <input id="pages" type="text" required name="pages" class="form-control" ngModel="{{book.Pages}}">
-                </div>
-            </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="pages">Pages</label>
+        <div class="col-sm-8">
+          <input id="pages" type="text" required name="pages" class="form-control" ngModel="{{book.pages}}">
+        </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="quantity">Quantity</label>
-                <div class="col-sm-8">
-                    <input id="quantity" type="text" required name="quantity" class="form-control" ngModel="{{book.Quantity}}">
-                </div>
-            </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="quantity">Quantity</label>
+        <div class="col-sm-8">
+          <input id="quantity" type="text" required name="quantity" class="form-control" ngModel="{{book.quantity}}">
+        </div>
+      </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-4" for="yearofpublish">Year Of Publish</label>
-                <div class="col-sm-8">
-                    <select id="yearofpublish" #yearofpublish="ngModel" class="form-control" [(ngModel)]="book.yearOfPublish" name="yearofpublish" ngModel>
-                        <option *ngFor="let y of years" [selected]="yy === y">{{y}}</option>
-                    </select>
-                </div>
-            </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4" for="yearofpublish">Year Of Publish</label>
+        <div class="col-sm-8">
+          <select id="yearofpublish" #yearofpublish="ngModel" class="form-control" [(ngModel)]="book.yearOfPublish" name="yearofpublish" ngModel>
+            <option *ngFor="let y of years" [selected]="yy === y">{{y}}</option>
+          </select>
+        </div>
+      </div>
 
-            <div class="form-group">
-                <div class="col-sm-offset-4 col-sm-8">
-                    <button type="submit" class="btn btn-primary" [disabled]="isRequesting">Update Book</button>
-                    <app-spinner [isRunning]="isRequesting"></app-spinner>
-                </div>
-            </div>
-            <div *ngIf="errors" class="alert alert-danger" role="alert">
-                <strong>Oops!</strong> {{errors}}
-            </div>
-            <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
-                <strong>Book Succesfullly updated...</strong>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-    </div>
+      <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+          <button type="submit" class="btn btn-primary" [disabled]="isRequesting">Update Book</button>
+          <app-spinner [isRunning]="isRequesting"></app-spinner>
+        </div>
+      </div>
+      <div *ngIf="errors" class="alert alert-danger" role="alert">
+        <strong>Oops!</strong> {{errors}}
+      </div>
+      <div *ngIf="saveSuccess" class="alert alert-success" role="alert">
+        <strong>Book Succesfullly updated...</strong>
+      </div>
+    </form>
+  </div>
 </ng-template>

@@ -138,7 +138,7 @@ export class ReturnComponent implements OnInit {
           this.rerender();
         }
       },
-      errors => this.errors = errors);
+      errors => this.errors = errors.error);
   }
 
   rerender(): void {

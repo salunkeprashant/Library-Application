@@ -70,6 +70,7 @@ var AppModule = /** @class */ (function () {
                     useClass: http_token_interceptor_1.HttpTokenInterceptor,
                     multi: true
                 },
+                common_1.DatePipe,
                 angular5_toaster_1.ToasterService
             ],
             bootstrap: [app_component_1.AppComponent]

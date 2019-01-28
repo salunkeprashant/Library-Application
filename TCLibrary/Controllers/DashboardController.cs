@@ -267,10 +267,10 @@ namespace TCLibrary.Controllers
     public IActionResult Delete(int isbn)
     {
       var book = appDbContext.Books
-        .Include(x => x.BookTransactions)
+        .Include(x => x.BookMetadatas)
         .Where(x => x.ISBN == isbn).FirstOrDefault();
 
-      if (book.BookTransactions.Count > 0)
+      if (book.BookMetadatas.Any(x=>!x.Status))
       {
         return this.BadRequest("Delete Failed! You already have issued this book to someone");
       }

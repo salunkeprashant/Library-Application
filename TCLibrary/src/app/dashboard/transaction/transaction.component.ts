@@ -100,7 +100,7 @@ export class TransactionComponent implements OnInit {
         }
       ]
     },
-    this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss a')
+    this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
     this.getBooks();
     this.getMemberList();
     this.getAdmins();
@@ -136,10 +136,9 @@ export class TransactionComponent implements OnInit {
 
   bookId: any;
   issueBook({ value, valid }: { value: any, valid: boolean }) {
-    this.bookId = this.row.bookId
     var workingMember = this.memberList.filter(x => x.memberId == value.memberId)[0];
     if (valid) {
-      this.dashboardService.IssueBook(value.isbn, this.bookId, value.memberId, value.adminId, value.issueDate)
+      this.dashboardService.IssueBook(this.row.isbn, this.row.bookId, value.memberId, value.adminId, value.issueDate)
         .subscribe(
         result => {
           if (result) {
@@ -148,7 +147,7 @@ export class TransactionComponent implements OnInit {
             this.rerender();
           }
         },
-        errors => this.errors = errors);
+        errors => this.errors = errors.error);
     }
   }
 

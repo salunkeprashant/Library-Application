@@ -60,14 +60,14 @@
   </div>
   <div class="modal-body">
     <form #addmember="ngForm" class="form-horizontal" novalidate (ngSubmit)="addMember(addmember)">
-      <div class="form-group">
+      <div class="form-group required">
         <label class="control-label col-sm-4" for="firstName">First Name</label>
         <div class="col-sm-8">
           <input id="firstName" type="text" required name="firstName" class="form-control" placeholder="Enter First Name" ngModel>
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group required">
         <label class="control-label col-sm-4" for="lastName">Last Name</label>
         <div class="col-sm-8">
           <input id="lastName" type="text" required name="lastName" class="form-control" placeholder="Enter Last Name" ngModel>
@@ -77,11 +77,11 @@
       <div class="form-group">
         <label class="control-label col-sm-4" for="joiningDate">Date of Joining</label>
         <div class="col-sm-8">
-          <input id="joiningDate" type="date" required name="joiningDate" class="form-control" [(ngModel)]="today" max="{{today}}" ngModel>
+          <input id="joiningDate" type="date" name="joiningDate" class="form-control" [(ngModel)]="today" max="{{today}}" ngModel>
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group required">
         <label class="control-label col-sm-4" for="emailAddress">Email</label>
         <div class="col-sm-8">
           <input id="emailAddress" type="text" required name="emailAddress" validateEmail class="form-control" placeholder="Email Address" ngModel #emailAddress="ngModel">
@@ -89,31 +89,31 @@
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group required">
         <label class="control-label col-sm-4" for="mobileNo">Mobile Number</label>
         <div class="col-sm-8">
-          <input id="mobileNo" type="text" required name="mobileNo" class="form-control" placeholder="Enter Mobile Number" ngModel>
+          <input id="mobileNo" type="text" required name="mobileNo" class="form-control" placeholder="Enter Mobile Number" ngModel maxlength="10">
         </div>
       </div>
 
       <div class="form-group">
         <label class="control-label col-sm-4" for="addressLine">Residential Address</label>
         <div class="col-sm-8">
-          <input id="addressLine" type="text" required name="addressLine" class="form-control" placeholder="Enter Members Address" ngModel>
+          <input id="addressLine" type="text" name="addressLine" class="form-control" placeholder="Enter Members Address" ngModel>
         </div>
       </div>
 
       <div class="form-group">
         <label class="control-label col-sm-4" for="cityName">City</label>
         <div class="col-sm-8">
-          <input id="cityName" type="text" required name="cityName" class="form-control" placeholder="Enter City" ngModel>
+          <input id="cityName" type="text" name="cityName" class="form-control" placeholder="Enter City" ngModel>
         </div>
       </div>
 
       <div class="form-group">
         <label class="control-label col-sm-4" for="stateName">State</label>
         <div class="col-sm-8">
-          <input id="stateName" type="text" required name="stateName" class="form-control" placeholder="Enter State Name" ngModel>
+          <input id="stateName" type="text" name="stateName" class="form-control" placeholder="Enter State Name" ngModel>
         </div>
       </div>
 
@@ -126,8 +126,6 @@
         <strong>Oops!</strong> {{errors}}
       </div>
     </form>
-  </div>
-  <div class="modal-footer">
   </div>
 </ng-template>
 
@@ -153,8 +151,6 @@
       </div>
     </form>
   </div>
-  <div class="modal-footer">
-  </div>
 </ng-template>
 
 <ng-template #updatecontent let-c="close" let-d="dismiss">
@@ -168,17 +164,17 @@
   </div>
   <div class="modal-body">
     <form #updatemember="ngForm" class="form-horizontal" novalidate (ngSubmit)="updateMember(updatemember)">
-      <div class="form-group">
+      <div class="form-group required">
         <label class="control-label col-sm-4" for="firstName">First Name</label>
         <div class="col-sm-8">
-          <input id="firstName" type="text" name="firstName" class="form-control" ngModel="{{member.firstName}}">
+          <input id="firstName" required type="text" name="firstName" class="form-control" ngModel="{{member.firstName}}">
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group required">
         <label class="control-label col-sm-4" for="lastName">Last Name</label>
         <div class="col-sm-8">
-          <input id="lastName" type="text" name="lastName" class="form-control" ngModel="{{member.lastName}}">
+          <input id="lastName" required type="text" name="lastName" class="form-control" ngModel="{{member.lastName}}">
         </div>
       </div>
 
@@ -189,18 +185,18 @@
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group required">
         <label class="control-label col-sm-4" for="emailAddress">Email</label>
         <div class="col-sm-8">
-          <input id="emailAddress" type="text" name="emailAddress" validateEmail class="form-control" ngModel="{{member.emailAddress}}" #emailAddress="ngModel">
+          <input id="emailAddress" type="text" required name="emailAddress" validateEmail class="form-control" ngModel="{{member.emailAddress}}" #emailAddress="ngModel">
           <small [hidden]="emailAddress.valid || (emailAddress.pristine && !submitted)" class="text-danger">Please enter member valid email</small>
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group required">
         <label class="control-label col-sm-4" for="mobileNo">Mobile Number</label>
         <div class="col-sm-8">
-          <input id="mobileNo" type="text" name="mobileNo" class="form-control" ngModel="{{member.mobileNo}}">
+          <input id="mobileNo" required type="text" name="mobileNo" class="form-control" ngModel="{{member.mobileNo}}" maxlength="10">
         </div>
       </div>
 
@@ -235,7 +231,5 @@
         <strong>Oops!</strong> {{errors}}
       </div>
     </form>
-  </div>
-  <div class="modal-footer">
   </div>
 </ng-template>

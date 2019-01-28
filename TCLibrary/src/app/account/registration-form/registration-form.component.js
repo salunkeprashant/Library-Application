@@ -87,7 +87,7 @@ var RegistrationFormComponent = /** @class */ (function () {
                 if (result) {
                     _this.router.navigate(['/login'], { queryParams: { brandNew: true, email: value.email } });
                 }
-            }, function (errors) { return _this.errors = errors; });
+            }, function (errors) { return _this.errors = errors.error; });
         }
     };
     RegistrationFormComponent = __decorate([

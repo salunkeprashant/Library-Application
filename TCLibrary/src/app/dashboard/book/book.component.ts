@@ -171,7 +171,7 @@ export class BookComponent implements OnInit {
             this.rerender();
           }
         },
-        errors => this.errors = errors);
+        errors => this.errors = errors.error);
     }
   }
 
@@ -190,7 +190,7 @@ export class BookComponent implements OnInit {
           this.modalRef.dismiss()
         }
       },
-      errors => this.errors = errors);
+      errors => this.errors = errors.error);
   }
 
   deleteBook({ value }: { value: any }) {

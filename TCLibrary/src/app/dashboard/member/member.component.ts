@@ -139,7 +139,7 @@ export class MemberComponent implements OnInit {
             this.rerender();
           }
         },
-        errors => this.errors = errors);
+        errors => this.errors = errors.error);
     }
   }
 
@@ -155,7 +155,7 @@ export class MemberComponent implements OnInit {
           this.rerender();
         }
       },
-      errors => this.errors = errors);
+      errors => this.errors = errors.error);
   }
 
   updateMember({ value }: { value: any }) {
@@ -171,7 +171,7 @@ export class MemberComponent implements OnInit {
           this.rerender();
         }
       },
-      errors => this.errors = errors);
+      errors => this.errors = errors.error);
   }
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {

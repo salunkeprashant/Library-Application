@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TCLibrary.Model;
+using LibraryApplication.Model;
 
-namespace TCLibrary.ViewModels
+namespace LibraryApplication.ViewModels
 {
     public class AddBookModel
     {

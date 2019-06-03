@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
-namespace TCLibrary.Auth
+namespace LibraryApplication.Auth
 {
 public class JwtIssuerOptions
 {

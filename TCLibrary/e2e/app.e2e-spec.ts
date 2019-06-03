@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('touchcore App', () => {
+describe('library App', () => {
   let page: AppPage;
 
   beforeEach(() => {

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using TCLibrary.Model;
-using TCLibrary.Data;
-using TCLibrary.ViewModels;
+using LibraryApplication.Model;
+using LibraryApplication.Data;
+using LibraryApplication.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace TCLibrary.Controllers
+namespace LibraryApplication.Controllers
 {
     [Route("api/[controller]")]
     public class MemberController : Controller

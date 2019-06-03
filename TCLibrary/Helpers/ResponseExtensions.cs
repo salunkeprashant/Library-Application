@@ -1,7 +1,7 @@
 
 using Microsoft.AspNetCore.Http;
 
-namespace TCLibrary.Helpers
+namespace LibraryApplication.Helpers
 {
     public static class ResponseExtensions
     {

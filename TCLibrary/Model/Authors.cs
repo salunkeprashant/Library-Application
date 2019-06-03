@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace TCLibrary.Model
+namespace LibraryApplication.Model
 {
     /// <summary>Class which represents the entity 'Author'.</summary>
     public partial class Authors

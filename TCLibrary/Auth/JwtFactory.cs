@@ -5,7 +5,7 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 
-namespace TCLibrary.Auth
+namespace LibraryApplication.Auth
 { 
  public class JwtFactory : IJwtFactory
  {

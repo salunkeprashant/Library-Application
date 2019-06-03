@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using TCLibrary.Model;
+using LibraryApplication.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace TCLibrary.Data
+namespace LibraryApplication.Data
 {
     public partial class LibraryDataContext : IdentityDbContext<AppUser>
     {

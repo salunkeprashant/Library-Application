@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TCLibrary.ViewModels
+namespace LibraryApplication.ViewModels
 {
     public class ReturnBookModel
     {

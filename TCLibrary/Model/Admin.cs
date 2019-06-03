@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace TCLibrary.Model
+namespace LibraryApplication.Model
 {
     public partial class Admin 
     {

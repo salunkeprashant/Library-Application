@@ -1,5 +1,5 @@
 {
-  "name": "TCLibrary",
+  "name": "LibraryApplication",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -27,20 +27,22 @@
     "@ng-select/ng-select": "^0.13.0",
     "angular-datatables": "^4.4.1",
     "angular5-toaster": "^1.0.2",
+    "bower": "^1.8.8",
     "core-js": "^2.4.1",
     "datatables.net": "^1.10.16",
     "datatables.net-buttons": "^1.5.4",
     "datatables.net-buttons-dt": "^1.5.4",
     "datatables.net-dt": "^1.10.16",
+    "font-awesome": "4.7.0",
     "jquery": "3.3.1",
     "jszip": "^3.1.5",
     "ng-busy": "1.4.8",
+    "node-sass": "^4.12.0",
     "pdfmake": "^0.1.40",
     "phantomjs": "^2.1.7",
     "rxjs": "^5.5.2",
     "underscore": "^1.8.3",
-    "zone.js": "^0.8.14",
-    "font-awesome": "4.7.0"
+    "zone.js": "^0.8.14"
   },
   "devDependencies": {
     "@angular/cli": "1.5.4",

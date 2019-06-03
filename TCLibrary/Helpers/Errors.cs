@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace TCLibrary.Helpers
+namespace LibraryApplication.Helpers
 {
 
     public static class Errors

@@ -1,6 +1,6 @@
 
 
-namespace TCLibrary.Helpers{
+namespace LibraryApplication.Helpers{
 
  public static class Constants
     {

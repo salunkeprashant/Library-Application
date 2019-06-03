@@ -7,7 +7,7 @@ using System.Text;
 using NUnit.Framework;
 using OpenQA.Selenium.Interactions;
 
-namespace TCLibraryAutomation
+namespace LibraryApplicationAutomation
 {
     public static class ElementHelper
     {

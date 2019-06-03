@@ -4,17 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using TCLibrary.Data;
+using LibraryApplication.Data;
 using Microsoft.EntityFrameworkCore.Internal;
-using TCLibrary.Model;
-using TCLibrary.Helpers;
-using TCLibrary.ViewModels;
+using LibraryApplication.Model;
+using LibraryApplication.Helpers;
+using LibraryApplication.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace TCLibrary.Controllers
+namespace LibraryApplication.Controllers
 {
   [Authorize(Policy = "ApiUser")]
   [Route("api/[controller]")]

@@ -7,11 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TCLibrary.Controllers;
-using TCLibrary.Data;
-using TCLibrary.Model;
+using LibraryApplication.Controllers;
+using LibraryApplication.Data;
+using LibraryApplication.Model;
 
-namespace TCLibrary.Tests
+namespace LibraryApplication.Tests
 {
     [TestFixture]
     public class PublicControllerTest
@@ -28,7 +28,7 @@ namespace TCLibrary.Tests
 
         private void initContext()
         {
-            string path = (Directory.GetCurrentDirectory()) + "\\TCLibrary.sqlite";
+            string path = (Directory.GetCurrentDirectory()) + "\\LibraryApplication.sqlite";
             var connection = "Data Source=" + path;
             var builder = new DbContextOptionsBuilder<LibraryDataContext>()
             .UseSqlite(connection);

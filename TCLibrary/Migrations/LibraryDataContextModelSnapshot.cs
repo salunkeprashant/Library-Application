@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using TCLibrary.Data;
+using LibraryApplication.Data;
 
-namespace TCLibrary.Migrations
+namespace LibraryApplication.Migrations
 {
     [DbContext(typeof(LibraryDataContext))]
     partial class LibraryDataContextModelSnapshot : ModelSnapshot
@@ -122,7 +122,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.Address", b =>
+            modelBuilder.Entity("LibraryApplication.Model.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -142,7 +142,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.Admin", b =>
+            modelBuilder.Entity("LibraryApplication.Model.Admin", b =>
                 {
                     b.Property<int>("AdminId")
                         .ValueGeneratedOnAdd();
@@ -160,7 +160,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("Admins");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.AppUser", b =>
+            modelBuilder.Entity("LibraryApplication.Model.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -210,7 +210,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.Authors", b =>
+            modelBuilder.Entity("LibraryApplication.Model.Authors", b =>
                 {
                     b.Property<int>("AuthorId")
                         .ValueGeneratedOnAdd();
@@ -224,7 +224,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.Book", b =>
+            modelBuilder.Entity("LibraryApplication.Model.Book", b =>
                 {
                     b.Property<int>("ISBN")
                         .ValueGeneratedOnAdd();
@@ -248,7 +248,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.BookAuthor", b =>
+            modelBuilder.Entity("LibraryApplication.Model.BookAuthor", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
@@ -266,7 +266,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("BookAuthors");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.BookCategory", b =>
+            modelBuilder.Entity("LibraryApplication.Model.BookCategory", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd();
@@ -278,7 +278,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("BookCategories");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.BookMetadata", b =>
+            modelBuilder.Entity("LibraryApplication.Model.BookMetadata", b =>
                 {
                     b.Property<Guid>("BookId")
                         .ValueGeneratedOnAdd();
@@ -296,7 +296,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("BookMetadatas");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.BookTransaction", b =>
+            modelBuilder.Entity("LibraryApplication.Model.BookTransaction", b =>
                 {
                     b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd();
@@ -326,7 +326,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("BookTransactions");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.ContactDetail", b =>
+            modelBuilder.Entity("LibraryApplication.Model.ContactDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -344,7 +344,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("ContactDetails");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.Inventory", b =>
+            modelBuilder.Entity("LibraryApplication.Model.Inventory", b =>
                 {
                     b.Property<int>("InventoryId")
                         .ValueGeneratedOnAdd();
@@ -362,7 +362,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("Inventories");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.InventoryMetadata", b =>
+            modelBuilder.Entity("LibraryApplication.Model.InventoryMetadata", b =>
                 {
                     b.Property<int>("ItemId")
                         .ValueGeneratedOnAdd();
@@ -384,7 +384,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("InventoryMetadatas");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.ItemCategory", b =>
+            modelBuilder.Entity("LibraryApplication.Model.ItemCategory", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd();
@@ -396,7 +396,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("ItemCategories");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.ItemTransaction", b =>
+            modelBuilder.Entity("LibraryApplication.Model.ItemTransaction", b =>
                 {
                     b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd();
@@ -426,7 +426,7 @@ namespace TCLibrary.Migrations
                     b.ToTable("ItemTransactions");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.Member", b =>
+            modelBuilder.Entity("LibraryApplication.Model.Member", b =>
                 {
                     b.Property<int>("MemberId")
                         .ValueGeneratedOnAdd();
@@ -452,7 +452,7 @@ namespace TCLibrary.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("TCLibrary.Model.AppUser")
+                    b.HasOne("LibraryApplication.Model.AppUser")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -460,7 +460,7 @@ namespace TCLibrary.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("TCLibrary.Model.AppUser")
+                    b.HasOne("LibraryApplication.Model.AppUser")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -473,114 +473,114 @@ namespace TCLibrary.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("TCLibrary.Model.AppUser")
+                    b.HasOne("LibraryApplication.Model.AppUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.Address", b =>
+            modelBuilder.Entity("LibraryApplication.Model.Address", b =>
                 {
-                    b.HasOne("TCLibrary.Model.Member", "Members")
+                    b.HasOne("LibraryApplication.Model.Member", "Members")
                         .WithMany("Addresses")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.Admin", b =>
+            modelBuilder.Entity("LibraryApplication.Model.Admin", b =>
                 {
-                    b.HasOne("TCLibrary.Model.AppUser", "Identity")
+                    b.HasOne("LibraryApplication.Model.AppUser", "Identity")
                         .WithMany()
                         .HasForeignKey("IdentityId");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.Book", b =>
+            modelBuilder.Entity("LibraryApplication.Model.Book", b =>
                 {
-                    b.HasOne("TCLibrary.Model.BookCategory", "BookCategory")
+                    b.HasOne("LibraryApplication.Model.BookCategory", "BookCategory")
                         .WithMany("Books")
                         .HasForeignKey("CategoryId");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.BookAuthor", b =>
+            modelBuilder.Entity("LibraryApplication.Model.BookAuthor", b =>
                 {
-                    b.HasOne("TCLibrary.Model.Authors", "Authors")
+                    b.HasOne("LibraryApplication.Model.Authors", "Authors")
                         .WithMany("BookAuthors")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("TCLibrary.Model.Book", "Books")
+                    b.HasOne("LibraryApplication.Model.Book", "Books")
                         .WithMany("BookAuthors")
                         .HasForeignKey("ISBN")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.BookMetadata", b =>
+            modelBuilder.Entity("LibraryApplication.Model.BookMetadata", b =>
                 {
-                    b.HasOne("TCLibrary.Model.Book", "books")
+                    b.HasOne("LibraryApplication.Model.Book", "books")
                         .WithMany("BookMetadatas")
                         .HasForeignKey("ISBN")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.BookTransaction", b =>
+            modelBuilder.Entity("LibraryApplication.Model.BookTransaction", b =>
                 {
-                    b.HasOne("TCLibrary.Model.Admin", "Admin")
+                    b.HasOne("LibraryApplication.Model.Admin", "Admin")
                         .WithMany("BookTransactions")
                         .HasForeignKey("AdminId");
 
-                    b.HasOne("TCLibrary.Model.BookMetadata", "BookMetadatas")
+                    b.HasOne("LibraryApplication.Model.BookMetadata", "BookMetadatas")
                         .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("TCLibrary.Model.Book", "Books")
+                    b.HasOne("LibraryApplication.Model.Book", "Books")
                         .WithMany("BookTransactions")
                         .HasForeignKey("ISBN");
 
-                    b.HasOne("TCLibrary.Model.Member", "Member")
+                    b.HasOne("LibraryApplication.Model.Member", "Member")
                         .WithMany("BookTransactions")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.ContactDetail", b =>
+            modelBuilder.Entity("LibraryApplication.Model.ContactDetail", b =>
                 {
-                    b.HasOne("TCLibrary.Model.Member", "Members")
+                    b.HasOne("LibraryApplication.Model.Member", "Members")
                         .WithMany("ContactDetails")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.Inventory", b =>
+            modelBuilder.Entity("LibraryApplication.Model.Inventory", b =>
                 {
-                    b.HasOne("TCLibrary.Model.ItemCategory", "ItemCategory")
+                    b.HasOne("LibraryApplication.Model.ItemCategory", "ItemCategory")
                         .WithMany("Inventories")
                         .HasForeignKey("CategoryId");
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.InventoryMetadata", b =>
+            modelBuilder.Entity("LibraryApplication.Model.InventoryMetadata", b =>
                 {
-                    b.HasOne("TCLibrary.Model.Inventory", "Inventories")
+                    b.HasOne("LibraryApplication.Model.Inventory", "Inventories")
                         .WithMany("InventoryMetadatas")
                         .HasForeignKey("InventoryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TCLibrary.Model.ItemTransaction", b =>
+            modelBuilder.Entity("LibraryApplication.Model.ItemTransaction", b =>
                 {
-                    b.HasOne("TCLibrary.Model.Admin", "Admin")
+                    b.HasOne("LibraryApplication.Model.Admin", "Admin")
                         .WithMany("ItemTransactions")
                         .HasForeignKey("AdminId");
 
-                    b.HasOne("TCLibrary.Model.Inventory", "Inventories")
+                    b.HasOne("LibraryApplication.Model.Inventory", "Inventories")
                         .WithMany("ItemTransactions")
                         .HasForeignKey("InventoryId");
 
-                    b.HasOne("TCLibrary.Model.InventoryMetadata", "InventoryMetadatas")
+                    b.HasOne("LibraryApplication.Model.InventoryMetadata", "InventoryMetadatas")
                         .WithMany()
                         .HasForeignKey("ItemId");
 
-                    b.HasOne("TCLibrary.Model.Member", "Members")
+                    b.HasOne("LibraryApplication.Model.Member", "Members")
                         .WithMany("ItemTransactions")
                         .HasForeignKey("MemberId");
                 });

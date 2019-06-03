@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using System.Security.Claims;
 
-namespace TCLibrary.Auth
+namespace LibraryApplication.Auth
 {
  public interface IJwtFactory
     {

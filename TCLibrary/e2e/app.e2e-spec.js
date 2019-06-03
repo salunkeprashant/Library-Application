@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var app_po_1 = require("./app.po");
-describe('touchcore App', function () {
+describe('library App', function () {
     var page;
     beforeEach(function () {
         page = new app_po_1.AppPage();

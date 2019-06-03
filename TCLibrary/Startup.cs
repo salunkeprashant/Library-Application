@@ -6,18 +6,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
-using TCLibrary.Model;
+using LibraryApplication.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using TCLibrary.Auth;
+using LibraryApplication.Auth;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using TCLibrary.Helpers;
+using LibraryApplication.Helpers;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
-using TCLibrary.Data;
+using LibraryApplication.Data;
 
-namespace TCLibrary
+namespace LibraryApplication
 {
     public class Startup
     {
@@ -40,10 +40,10 @@ namespace TCLibrary
         {
             // Add framework services.
 
-            string path = (Directory.GetCurrentDirectory()) + "\\TCLibrary.sqlite";
+            string path = (Directory.GetCurrentDirectory()) + "\\LibraryApplication.sqlite";
             var connection = "Data Source=" + path;
             services.AddDbContext<LibraryDataContext>(options => options.UseSqlite((connection),
-                x => x.MigrationsAssembly("TCLibrary")));
+                x => x.MigrationsAssembly("LibraryApplication")));
 
             services.AddSingleton<IJwtFactory, JwtFactory>();
             var jwtIssuer = Configuration.GetSection("JwtIssuerOptions").GetSection("Issuer").Value;

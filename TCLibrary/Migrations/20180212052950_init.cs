@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TCLibrary.Migrations
+namespace LibraryApplication.Migrations
 {
     public partial class init : Migration
     {

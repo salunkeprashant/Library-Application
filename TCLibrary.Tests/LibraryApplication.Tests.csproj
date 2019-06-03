@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TCLibrary\TCLibrary.csproj" />
+    <ProjectReference Include="..\TCLibrary\LibraryApplication.csproj" />
   </ItemGroup>
 
 </Project>

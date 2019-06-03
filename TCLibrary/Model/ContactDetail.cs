@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TCLibrary.Model
+namespace LibraryApplication.Model
 {
     public partial class ContactDetail
     {

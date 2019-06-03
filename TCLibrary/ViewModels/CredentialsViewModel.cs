@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TCLibrary.ViewModels
+namespace LibraryApplication.ViewModels
 {
     public class CredentialsViewModel
     {

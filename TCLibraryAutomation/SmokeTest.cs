@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TCLibraryAutomation
+namespace LibraryApplicationAutomation
 {
     [TestFixture]
     public class SmokeTest
@@ -28,8 +28,8 @@ namespace TCLibraryAutomation
             IWebElement passwordField = m_driver.FindElement(By.Id("password"));
             IWebElement loginButton = m_driver.FindElement(By.Id("login-btn"));
 
-            usernameField.SendKeys("prashants@touchcoresystems.com");
-            passwordField.SendKeys("Touchcore123");
+            usernameField.SendKeys("salunkeprashant1@gmail.com");
+            passwordField.SendKeys("Pa$$w0rd");
             ElementHelper.Click(m_driver, loginButton);
 
             System.Threading.Thread.Sleep(5000);

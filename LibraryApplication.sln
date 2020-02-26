@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApplication", "TCLibrary\LibraryApplication.csproj", "{B899F83E-1813-441E-B840-653C2F70A72B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApplication", "LibraryApplication\LibraryApplication.csproj", "{B899F83E-1813-441E-B840-653C2F70A72B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApplication.Tests", "TCLibrary.Tests\LibraryApplication.Tests.csproj", "{70E6C9C1-CAC7-496C-88CE-4A70FF0BC2BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApplication.Tests", "LibraryApplication.Tests\LibraryApplication.Tests.csproj", "{70E6C9C1-CAC7-496C-88CE-4A70FF0BC2BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApplicationAutomation", "TCLibraryAutomation\LibraryApplicationAutomation.csproj", "{6AF6C649-2599-43A4-AB72-25F8FC6D577B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApplicationAutomation", "LibraryApplicationAutomation\LibraryApplicationAutomation.csproj", "{6AF6C649-2599-43A4-AB72-25F8FC6D577B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

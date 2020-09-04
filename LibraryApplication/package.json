@@ -37,7 +37,7 @@
     "jquery": "3.3.1",
     "jszip": "^3.1.5",
     "ng-busy": "1.4.8",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "pdfmake": "^0.1.40",
     "phantomjs": "^2.1.7",
     "rxjs": "^5.5.2",
